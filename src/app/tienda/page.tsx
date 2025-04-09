@@ -132,7 +132,7 @@ const ShopPage = () => {
     });
     const [searchQuery, setSearchQuery] = useState('');
 
-    const handleFilterChange = (filterType: keyof FilterOptions, value: any) => {
+    const handleFilterChange = (filterType: keyof FilterOptions, value: unknown) => {
         setFilters(prev => ({
             ...prev,
             [filterType]: value
