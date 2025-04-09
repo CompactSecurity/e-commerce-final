@@ -236,9 +236,8 @@ const Navbar = () => {
                                 <FaTag className="w-4 h-4" />
                             </button>
 
-                            {/* Redes sociales móvil */}
-                            <div className="flex items-center justify-center space-x-6 pt-4">
-                                <Link href="https://www.instagram.com/compactepp/" target="_blank" className="text-white hover:text-orange-500 transition-colors">
+                            {/* Redes sociales móvil meter dentro del div de abajo*/}
+                            {/*<Link href="https://www.instagram.com/compactepp/" target="_blank" className="text-white hover:text-orange-500 transition-colors">
                                     <FaInstagram className="w-6 h-6" />
                                 </Link>
                                 <Link href="https://www.facebook.com/compactseguridad" target="_blank" className="text-white hover:text-orange-500 transition-colors">
@@ -246,6 +245,22 @@ const Navbar = () => {
                                 </Link>
                                 <Link href="https://www.youtube.com/@Compactepp" target="_blank" className="text-white hover:text-orange-500 transition-colors">
                                     <FaYoutube className="w-6 h-6" />
+                                </Link> */}
+                            <div className="flex items-center justify-center space-x-6 pt-4">
+                                
+                                <Link href="" className="text-white hover:text-orange-500 transition-colors">
+                                    <button 
+                                    onClick={() => setIsLoginModalOpen(true)}
+                                    className='text-white hover:text-orange-500 transition-colors'
+                                >
+                                    <FaUser className='w-5 h-5' />
+                                </button>
+                                </Link>
+                                <Link href="/carrito" className="relative text-white hover:text-orange-500 transition-colors">
+                                    <span className="text-2xl">🛒</span>
+                                    <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                        0
+                                    </span>
                                 </Link>
                             </div>
                         </div>
