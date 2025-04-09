@@ -1,16 +1,37 @@
 'use client'
 //Componente de la Navbar
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import logo from '../assets/logo.png';
 import logo2 from '../assets/logo2.jpg';
 import Image from 'next/image';
-import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes } from 'react-icons/fa';
+import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 const Navbar = () => {
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isOffersOpen, setIsOffersOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    // Efecto para detectar scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Cerrar menú móvil al hacer clic fuera
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (isMobileMenuOpen && !(event.target as Element).closest('.mobile-menu')) {
+                setIsMobileMenuOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [isMobileMenuOpen]);
 
     const categories = [
         { name: 'BLOQUEO Y ETIQUETADO', href: '/categoria/bloqueo-etiquetado' },
@@ -31,7 +52,7 @@ const Navbar = () => {
 
     return (
         <>
-            <header className="fixed w-full top-0 left-0 right-0 z-50">
+            <header className={`fixed w-full top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'shadow-lg' : ''}`}>
                 {/* Barra superior - Ocultar en móvil */}
                 <div className="bg-[#255270] text-white py-2 hidden md:block">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm">
@@ -63,24 +84,33 @@ const Navbar = () => {
                 </div>
 
                 {/* Barra principal */}
-                <div className="bg-[#255270] shadow-md py-3">
+                <div className={`bg-[#255270] transition-all duration-300 ${isScrolled ? 'py-2' : 'py-3'}`}>
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex flex-col md:flex-row justify-between items-center h-auto md:h-20 gap-4">
+                        <div className="flex items-center justify-between h-16 md:h-20">
                             {/* Logo y menú hamburguesa */}
-                            <div className="flex items-center justify-between w-full md:w-auto">
+                            <div className="flex items-center">
                                 <Link href="/" className="flex-shrink-0">
-                                    <Image src={logo} alt="Logo" width={200} height={150} className='object-contain' />
+                                    <Image 
+                                        src={logo} 
+                                        alt="Logo" 
+                                        width={isScrolled ? 180 : 200} 
+                                        height={isScrolled ? 60 : 80} 
+                                        className='object-contain transition-all duration-300'
+                                    />
                                 </Link>
-                                <button 
-                                    className="md:hidden text-white text-2xl"
-                                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                >
-                                    {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
-                                </button>
                             </div>
 
+                            {/* Menú hamburguesa */}
+                            <button 
+                                className="md:hidden text-white p-2 rounded-full hover:bg-white/10 transition-colors"
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                aria-label="Toggle menu"
+                            >
+                                {isMobileMenuOpen ? <FaTimes className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
+                            </button>
+
                             {/* Buscador - Ocultar en móvil cuando el menú está abierto */}
-                            <div className={`w-full md:w-auto md:flex-1 max-w-2xl mx-0 md:mx-8 ${isMobileMenuOpen ? 'hidden' : 'block'}`}>
+                            <div className={`hidden md:block flex-1 max-w-2xl mx-8`}>
                                 <div className="relative">
                                     <input
                                         type="text"
@@ -93,17 +123,13 @@ const Navbar = () => {
                                 </div>
                             </div>
 
-                            {/* Carrito y Usuario - Ocultar en móvil cuando el menú está abierto */}
-                            <div className={`flex items-center ${isMobileMenuOpen ? 'hidden' : 'flex'}`}>
-                                <Link href='/login' className='text-white relative text-gray-600 hover:text-orange-500'>
-                                    <button className='cursor-pointer text-white px-2 py-2 space-x-2 rounded-md'>
-                                        <FaUser className='text-2xl'/>
-                                    </button>
+                            {/* Carrito y Usuario */}
+                            <div className="hidden md:flex items-center space-x-4">
+                                <Link href='/login' className='text-white hover:text-orange-500 transition-colors'>
+                                    <FaUser className='w-5 h-5' />
                                 </Link>
-                                <span className='text-white mx-2'>
-                                    |
-                                </span>
-                                <Link href="/carrito" className="relative p-2 text-white hover:text-orange-500">
+                                <span className='text-white'>|</span>
+                                <Link href="/carrito" className="relative text-white hover:text-orange-500 transition-colors">
                                     <span className="text-2xl">🛒</span>
                                     <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                                         0
@@ -115,53 +141,109 @@ const Navbar = () => {
                 </div>
 
                 {/* Menú móvil */}
-                <div className={`md:hidden bg-[#255270] transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen' : 'max-h-0 overflow-hidden'}`}>
-                    <div className="px-4 py-2 space-y-2">
-                        <Link href="/" className="block text-white hover:text-orange-500 py-2">
-                            Inicio
-                        </Link>
-                        <Link href="/nosotros" className="block text-white hover:text-orange-500 py-2">
-                            Nosotros
-                        </Link>
-                        <Link href="/tienda" className="block text-white hover:text-orange-500 py-2">
-                            Tienda
-                        </Link>
-                        <Link href="/contacto" className="block text-white hover:text-orange-500 py-2">
-                            Contacto
-                        </Link>
-                        <Link href="/faq" className="block text-white hover:text-orange-500 py-2">
-                            FAQ
-                        </Link>
-                        <Link href="/blog" className="block text-white hover:text-orange-500 py-2">
-                            Blog
-                        </Link>
-                        <button 
-                            onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                            className="w-full text-left text-white hover:text-orange-500 py-2 flex items-center"
-                        >
-                            <FaBars className="mr-2" />
-                            Categorías
-                        </button>
-                        {isCategoryOpen && (
-                            <div className="pl-4 space-y-2">
-                                {categories.map((category) => (
-                                    <Link
-                                        key={category.href}
-                                        href={category.href}
-                                        className="block text-white hover:text-orange-500 py-1"
-                                    >
-                                        {category.name}
-                                    </Link>
-                                ))}
+                <div className={`mobile-menu md:hidden fixed inset-0 bg-[#255270] z-50 transform transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                    <div className="h-full overflow-y-auto">
+                        {/* Encabezado del menú móvil */}
+                        <div className="sticky top-0 bg-[#255270] z-10 p-4 flex items-center justify-between border-b border-white/10">
+                            <div className="flex items-center">
+                                <Image 
+                                    src={logo} 
+                                    alt="Logo" 
+                                    width={120} 
+                                    height={40} 
+                                    className='object-contain'
+                                />
                             </div>
-                        )}
-                        <button 
-                            onClick={() => setIsOffersOpen(!isOffersOpen)}
-                            className="w-full text-left text-white hover:text-orange-500 py-2 flex items-center"
-                        >
-                            <FaTag className="mr-2" />
-                            ¡Top Ofertas!
-                        </button>
+                            <button 
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="text-white p-2 rounded-full hover:bg-white/10 transition-colors"
+                                aria-label="Cerrar menú"
+                            >
+                                <FaTimes className="w-6 h-6" />
+                            </button>
+                        </div>
+
+                        <div className="p-4 space-y-4">
+                            {/* Buscador móvil */}
+                            <div className="relative">
+                                <input
+                                    type="text"
+                                    placeholder="Buscar productos..."
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-orange-500 bg-white"
+                                />
+                                <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-orange-500">
+                                    <FaSearch />
+                                </button>
+                            </div>
+
+                            {/* Enlaces principales */}
+                            <div className="space-y-2">
+                                <Link href="/" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
+                                    Inicio
+                                </Link>
+                                <Link href="/nosotros" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
+                                    Nosotros
+                                </Link>
+                                <Link href="/tienda" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
+                                    Tienda
+                                </Link>
+                                <Link href="/contacto" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
+                                    Contacto
+                                </Link>
+                                <Link href="/faq" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
+                                    FAQ
+                                </Link>
+                                <Link href="/blog" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
+                                    Blog
+                                </Link>
+                            </div>
+
+                            {/* Categorías móvil */}
+                            <div className="space-y-2">
+                                <button 
+                                    onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+                                    className="w-full flex items-center justify-between text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors"
+                                >
+                                    <span>Categorías</span>
+                                    {isCategoryOpen ? <FaChevronUp className="w-4 h-4" /> : <FaChevronDown className="w-4 h-4" />}
+                                </button>
+                                {isCategoryOpen && (
+                                    <div className="pl-4 space-y-2">
+                                        {categories.map((category) => (
+                                            <Link
+                                                key={category.href}
+                                                href={category.href}
+                                                className="block text-white hover:text-orange-500 py-2 px-4 rounded-lg hover:bg-white/10 transition-colors"
+                                            >
+                                                {category.name}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Ofertas móvil */}
+                            <button 
+                                onClick={() => setIsOffersOpen(!isOffersOpen)}
+                                className="w-full flex items-center justify-between text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors"
+                            >
+                                <span>¡Top Ofertas!</span>
+                                <FaTag className="w-4 h-4" />
+                            </button>
+
+                            {/* Redes sociales móvil */}
+                            <div className="flex items-center justify-center space-x-6 pt-4">
+                                <Link href="https://www.instagram.com/compactepp/" target="_blank" className="text-white hover:text-orange-500 transition-colors">
+                                    <FaInstagram className="w-6 h-6" />
+                                </Link>
+                                <Link href="https://www.facebook.com/compactseguridad" target="_blank" className="text-white hover:text-orange-500 transition-colors">
+                                    <FaFacebook className="w-6 h-6" />
+                                </Link>
+                                <Link href="https://www.youtube.com/@Compactepp" target="_blank" className="text-white hover:text-orange-500 transition-colors">
+                                    <FaYoutube className="w-6 h-6" />
+                                </Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -267,7 +349,7 @@ const Navbar = () => {
                 </div>
             </header>
             {/* Spacer div to prevent content from being hidden under the navbar */}
-            <div className="h-[122px] md:h-[122px]"></div>
+            <div className={`h-[20px] md:h-[122px] transition-all duration-300 ${isScrolled ? 'md:h-[104px]' : ''}`}></div>
         </>
     );
 };
