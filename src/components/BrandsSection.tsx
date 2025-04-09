@@ -5,14 +5,14 @@ import { DM_Sans } from "next/font/google";
 import { useEffect, useState } from "react";
 import Image from 'next/image';
 import logo3m from '../assets/marcas/tesm.png';
-import logoTruper from '../assets/marcas/truper.png';
+
 import logoAsaki from '../assets/marcas/asaki.png';
 import logoStanley from '../assets/marcas/stanley.png';
 import logoPretrul from '../assets/marcas/pretul.png';
 import logoKamasa from '../assets/marcas/kamasa.png';
 import logoC from '../assets/marcas/ca.png';
 import logoSM from '../assets/marcas/steelpro.png';
-import logoXTREME from '../assets/marcas/bellota.png';
+
 const DMSans = DM_Sans({
     weight: ["900", "800", "700", "600"],
     subsets: ["latin"],
@@ -22,10 +22,6 @@ const brands = [
     {
         name: "3M",
         image: logo3m,
-    },
-    {
-        name: "Truper",
-        image: logoTruper,
     },
     {
         name: "Asaki",
@@ -51,10 +47,7 @@ const brands = [
         name: "Steelpro",
         image: logoSM,
     },
-    {
-        name: "Bellota",
-        image: logoXTREME,
-    }
+
 ];
 
 const BrandsSection: React.FC = () => {
