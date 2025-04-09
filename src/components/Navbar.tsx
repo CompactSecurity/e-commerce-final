@@ -6,12 +6,14 @@ import logo from '../assets/logo.png';
 import logo2 from '../assets/logo2.jpg';
 import Image from 'next/image';
 import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import LoginModal from './LoginModal';
 
 const Navbar = () => {
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isOffersOpen, setIsOffersOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     // Efecto para detectar scroll
     useEffect(() => {
@@ -125,9 +127,12 @@ const Navbar = () => {
 
                             {/* Carrito y Usuario */}
                             <div className="hidden md:flex items-center space-x-4">
-                                <Link href='/login' className='text-white hover:text-orange-500 transition-colors'>
+                                <button 
+                                    onClick={() => setIsLoginModalOpen(true)}
+                                    className='text-white hover:text-orange-500 transition-colors'
+                                >
                                     <FaUser className='w-5 h-5' />
-                                </Link>
+                                </button>
                                 <span className='text-white'>|</span>
                                 <Link href="/carrito" className="relative text-white hover:text-orange-500 transition-colors">
                                     <span className="text-2xl">🛒</span>
@@ -348,6 +353,13 @@ const Navbar = () => {
                     </div>
                 </div>
             </header>
+
+            {/* Login Modal */}
+            <LoginModal 
+                isOpen={isLoginModalOpen} 
+                onClose={() => setIsLoginModalOpen(false)} 
+            />
+
             {/* Spacer div to prevent content from being hidden under the navbar */}
             <div className={`h-[20px] md:h-[122px] transition-all duration-300 ${isScrolled ? 'md:h-[104px]' : ''}`}></div>
         </>
