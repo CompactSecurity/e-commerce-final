@@ -1,7 +1,7 @@
 'use client'
 //Componente que muestra las ventajas de la empresa (confianza)
 import React from 'react';
-import { FaTruck, FaShieldAlt, FaMapMarkerAlt, FaTags } from 'react-icons/fa';
+import { FaTruck, FaShieldAlt, FaTags } from 'react-icons/fa';
 
 const TrustSection = () => {
     const trustItems = [

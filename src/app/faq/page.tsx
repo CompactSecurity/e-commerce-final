@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { DM_Sans } from "next/font/google";
-import Link from "next/link";
 import React, { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 

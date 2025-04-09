@@ -135,7 +135,7 @@ const CategoryGrid = () => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         <AnimatePresence mode="wait" custom={direction}>
-                            {visibleCategories.map((category, index) => (
+                            {visibleCategories.map((category) => (
                                 <motion.div
                                     key={category.id}
                                     custom={direction}
