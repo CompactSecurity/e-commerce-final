@@ -1,5 +1,5 @@
 'use client';
-
+//Componente de registro
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaEye, FaEyeSlash } from 'react-icons/fa';

@@ -1,9 +1,8 @@
 'use client';
-
+//Componente de login
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaEye, FaEyeSlash  } from 'react-icons/fa';
-import Link from 'next/link';
 import logo from '../assets/logo.png';
 import Image from 'next/image';
 
@@ -12,9 +11,10 @@ interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
     onOpenRegister: () => void;
+    onOpenForgotPassword: () => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister, onOpenForgotPassword }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
@@ -84,7 +84,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
                     exit={{ opacity: 0 }}
                     className="fixed inset-0 z-50 overflow-y-auto"
                 >
-                    {/* Fondo que muestra algo del fondo, con opacidad*/}
+                    {/* Fondo con filtro blur*/}
                     <div className="fixed inset-0 bg-black/30 backdrop-blur-sm" onClick={onClose} />
 
                     {/* Contenedor del modal */}
@@ -109,7 +109,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
                                 <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
                                 <div className="flex justify-center">
                                         <Image 
-
                                             src={logo} 
                                             alt="logo" 
                                             width={100} 
@@ -183,12 +182,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
                                                 Recordarme
                                             </label>
                                         </div>
-                                        <Link
-                                            href="/recuperar-contrasena"
+                                        <button
+                                            onClick={onOpenForgotPassword}
                                             className="text-sm font-medium text-orange-500 hover:text-orange-600"
                                         >
                                             ¿Olvidaste tu contraseña?
-                                        </Link>
+                                        </button>
                                     </div>
 
                                     <button

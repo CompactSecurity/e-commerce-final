@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
+import ForgotPasswordModal from './ForgotPasswordModal';
 
 const Navbar = () => {
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -16,6 +17,7 @@ const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+    const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
 
     // Efecto para detectar scroll
     useEffect(() => {
@@ -62,6 +64,15 @@ const Navbar = () => {
     const handleOpenLogin = () => {
         setIsRegisterModalOpen(false);
         setIsLoginModalOpen(true);
+    };
+
+    const handleOpenForgotPassword = () => {
+        setIsLoginModalOpen(false);
+        setIsForgotPasswordModalOpen(true);
+    };
+
+    const handleCloseForgotPassword = () => {
+        setIsForgotPasswordModalOpen(false);
     };
 
     return (
@@ -386,12 +397,20 @@ const Navbar = () => {
                 isOpen={isLoginModalOpen} 
                 onClose={() => setIsLoginModalOpen(false)}
                 onOpenRegister={handleOpenRegister}
+                onOpenForgotPassword={handleOpenForgotPassword}
             />
 
             {/* Register Modal */}
             <RegisterModal 
                 isOpen={isRegisterModalOpen} 
                 onClose={() => setIsRegisterModalOpen(false)}
+                onOpenLogin={handleOpenLogin}
+            />
+
+            {/* Forgot Password Modal */}
+            <ForgotPasswordModal
+                isOpen={isForgotPasswordModalOpen}
+                onClose={handleCloseForgotPassword}
                 onOpenLogin={handleOpenLogin}
             />
 
