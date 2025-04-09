@@ -2,15 +2,19 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaTimes, FaEye, FaEyeSlash  } from 'react-icons/fa';
 import Link from 'next/link';
+import logo from '../assets/logo.png';
+import Image from 'next/image';
+
 
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
+    onOpenRegister: () => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
@@ -103,6 +107,16 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                             {/* Contenido del modal */}
                             <div className="p-6 md:p-8">
                                 <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+                                <div className="flex justify-center">
+                                        <Image 
+
+                                            src={logo} 
+                                            alt="logo" 
+                                            width={100} 
+                                            height={100} 
+                                            className="w-50 h-25 object-contain"
+                                        />
+                                    </div>
                                     Iniciar Sesión
                                 </h2>
 
@@ -201,33 +215,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                 </div>
 
                                 {/* Botones de redes sociales */}
-                                {/*                                <div className="grid grid-cols-2 gap-3">
-                                    <button
-                                        type="button"
-                                        className="w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                    >
-                                        <FaGoogle className="w-5 h-5 mr-2" />
-                                        Google
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="w-full inline-flex justify-center items-center px-4 py-2 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                    >
-                                        <FaFacebook className="w-5 h-5 mr-2" />
-                                        Facebook
-                                    </button>
-                                </div> */}
 
                                 {/* Enlace de registro */}
                                 <div className="mt-6 text-center">
                                     <p className="text-sm text-gray-600">
                                         ¿No tienes una cuenta?{' '}
-                                        <Link
-                                            href="/registro"
-                                            className="font-medium text-orange-500 hover:text-orange-600"
+                                        <button
+                                            onClick={onOpenRegister}
+                                            className="text-orange-500 hover:text-orange-600 font-medium cursor-pointer"
                                         >
                                             Regístrate
-                                        </Link>
+                                        </button>
                                     </p>
                                 </div>
                             </div>

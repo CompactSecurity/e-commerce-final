@@ -7,6 +7,7 @@ import logo2 from '../assets/logo2.jpg';
 import Image from 'next/image';
 import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes, FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import LoginModal from './LoginModal';
+import RegisterModal from './RegisterModal';
 
 const Navbar = () => {
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -14,6 +15,7 @@ const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
     // Efecto para detectar scroll
     useEffect(() => {
@@ -51,6 +53,16 @@ const Navbar = () => {
         { name: 'ROPA INDUSTRIAL', href: '/categoria/ropa-industrial' },
         { name: 'SEÑALIZACIÓN Y SEGURIDAD VIAL', href: '/categoria/senalizacion' },
     ];
+
+    const handleOpenRegister = () => {
+        setIsLoginModalOpen(false);
+        setIsRegisterModalOpen(true);
+    };
+
+    const handleOpenLogin = () => {
+        setIsRegisterModalOpen(false);
+        setIsLoginModalOpen(true);
+    };
 
     return (
         <>
@@ -372,7 +384,15 @@ const Navbar = () => {
             {/* Login Modal */}
             <LoginModal 
                 isOpen={isLoginModalOpen} 
-                onClose={() => setIsLoginModalOpen(false)} 
+                onClose={() => setIsLoginModalOpen(false)}
+                onOpenRegister={handleOpenRegister}
+            />
+
+            {/* Register Modal */}
+            <RegisterModal 
+                isOpen={isRegisterModalOpen} 
+                onClose={() => setIsRegisterModalOpen(false)}
+                onOpenLogin={handleOpenLogin}
             />
 
             {/* Spacer div to prevent content from being hidden under the navbar */}
