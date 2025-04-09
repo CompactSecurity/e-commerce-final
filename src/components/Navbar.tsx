@@ -5,12 +5,12 @@ import Link from 'next/link';
 import logo from '../assets/logo.png';
 import logo2 from '../assets/logo2.jpg';
 import Image from 'next/image';
-import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt } from 'react-icons/fa';
+import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes } from 'react-icons/fa';
 
 const Navbar = () => {
-    const [isOpen, setIsOpen] = useState(false);
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isOffersOpen, setIsOffersOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const categories = [
         { name: 'BLOQUEO Y ETIQUETADO', href: '/categoria/bloqueo-etiquetado' },
@@ -32,8 +32,8 @@ const Navbar = () => {
     return (
         <>
             <header className="fixed w-full top-0 left-0 right-0 z-50">
-                {/* Barra superior */}
-                <div className="bg-[#255270] text-white py-2">
+                {/* Barra superior - Ocultar en móvil */}
+                <div className="bg-[#255270] text-white py-2 hidden md:block">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center text-sm">
                         <div className="flex items-center space-x-6">
                             <div className="flex items-center">
@@ -63,19 +63,24 @@ const Navbar = () => {
                 </div>
 
                 {/* Barra principal */}
-                <div className="bg-[#255270] shadow-md py-3" >
+                <div className="bg-[#255270] shadow-md py-3">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex justify-between items-center h-20">
-                            {/* Logo */}
-                            <Link href="/" className="flex-shrink-0">
-                                <span className="text-2xl font-bold">
-                                    <Image src={logo} alt="Logo" width={200} height={150}
-                                     className='w-full h-full object-contain' />
-                                </span>
-                            </Link>
+                        <div className="flex flex-col md:flex-row justify-between items-center h-auto md:h-20 gap-4">
+                            {/* Logo y menú hamburguesa */}
+                            <div className="flex items-center justify-between w-full md:w-auto">
+                                <Link href="/" className="flex-shrink-0">
+                                    <Image src={logo} alt="Logo" width={200} height={150} className='object-contain' />
+                                </Link>
+                                <button 
+                                    className="md:hidden text-white text-2xl"
+                                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                >
+                                    {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
+                                </button>
+                            </div>
 
-                            {/* Buscador */}
-                            <div className="flex-1 max-w-2xl mx-8">
+                            {/* Buscador - Ocultar en móvil cuando el menú está abierto */}
+                            <div className={`w-full md:w-auto md:flex-1 max-w-2xl mx-0 md:mx-8 ${isMobileMenuOpen ? 'hidden' : 'block'}`}>
                                 <div className="relative">
                                     <input
                                         type="text"
@@ -88,8 +93,8 @@ const Navbar = () => {
                                 </div>
                             </div>
 
-                            {/* Carrito y Usuario */}
-                            <div className="flex items-center">
+                            {/* Carrito y Usuario - Ocultar en móvil cuando el menú está abierto */}
+                            <div className={`flex items-center ${isMobileMenuOpen ? 'hidden' : 'flex'}`}>
                                 <Link href='/login' className='text-white relative text-gray-600 hover:text-orange-500'>
                                     <button className='cursor-pointer text-white px-2 py-2 space-x-2 rounded-md'>
                                         <FaUser className='text-2xl'/>
@@ -109,66 +114,101 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                {/* Barra de navegación naranja */}
-                <nav className="bg-orange-500">
+                {/* Menú móvil */}
+                <div className={`md:hidden bg-[#255270] transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen' : 'max-h-0 overflow-hidden'}`}>
+                    <div className="px-4 py-2 space-y-2">
+                        <Link href="/" className="block text-white hover:text-orange-500 py-2">
+                            Inicio
+                        </Link>
+                        <Link href="/nosotros" className="block text-white hover:text-orange-500 py-2">
+                            Nosotros
+                        </Link>
+                        <Link href="/tienda" className="block text-white hover:text-orange-500 py-2">
+                            Tienda
+                        </Link>
+                        <Link href="/contacto" className="block text-white hover:text-orange-500 py-2">
+                            Contacto
+                        </Link>
+                        <Link href="/faq" className="block text-white hover:text-orange-500 py-2">
+                            FAQ
+                        </Link>
+                        <Link href="/blog" className="block text-white hover:text-orange-500 py-2">
+                            Blog
+                        </Link>
+                        <button 
+                            onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+                            className="w-full text-left text-white hover:text-orange-500 py-2 flex items-center"
+                        >
+                            <FaBars className="mr-2" />
+                            Categorías
+                        </button>
+                        {isCategoryOpen && (
+                            <div className="pl-4 space-y-2">
+                                {categories.map((category) => (
+                                    <Link
+                                        key={category.href}
+                                        href={category.href}
+                                        className="block text-white hover:text-orange-500 py-1"
+                                    >
+                                        {category.name}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                        <button 
+                            onClick={() => setIsOffersOpen(!isOffersOpen)}
+                            className="w-full text-left text-white hover:text-orange-500 py-2 flex items-center"
+                        >
+                            <FaTag className="mr-2" />
+                            ¡Top Ofertas!
+                        </button>
+                    </div>
+                </div>
+
+                {/* Barra de navegación naranja - Solo visible en desktop */}
+                <nav className="bg-orange-500 hidden md:block">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between h-12">
-                            <div className="flex items-center">
-                                {/* Botón de menú móvil */}
-                                <button 
-                                    className="md:hidden text-white"
-                                    onClick={() => setIsOpen(!isOpen)}
-                                >
-                                    <span className="block w-6 h-0.5 bg-white mb-1"></span>
-                                    <span className="block w-6 h-0.5 bg-white mb-1"></span>
-                                    <span className="block w-6 h-0.5 bg-white"></span>
-                                </button>
-
-                                {/* Menú principal y categorías */}
-                                <div className={`md:flex md:items-center md:space-x-8 ${isOpen ? 'block absolute top-full left-0 right-0 bg-orange-500 shadow-md' : 'hidden'}`}>
-                                    <div className="relative group">
-                                        <button 
-                                            onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                                            className="text-white hover:text-gray-200 font-medium px-3 py-2 flex items-center space-x-1"
-                                        >
-                                            <FaBars className="text-sm" />
-                                            <span>Categorías</span>
-                                        </button>
-                                        <div className={`absolute left-0 w-72 bg-white shadow-lg z-50 ${isCategoryOpen ? 'block' : 'hidden'}`}>
-                                            {categories.map((category) => (
-                                                <Link
-                                                    key={category.href}
-                                                    href={category.href}
-                                                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500"
-                                                >
-                                                    {category.name}
-                                                </Link>
-                                            ))}
-                                        </div>
+                            <div className="flex items-center space-x-8">
+                                <div className="relative group">
+                                    <button 
+                                        onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+                                        className="text-white hover:text-gray-200 font-medium px-3 py-2 flex items-center space-x-1"
+                                    >
+                                        <FaBars className="text-sm" />
+                                        <span>Categorías</span>
+                                    </button>
+                                    <div className={`absolute left-0 w-72 bg-white shadow-lg z-50 ${isCategoryOpen ? 'block' : 'hidden'}`}>
+                                        {categories.map((category) => (
+                                            <Link
+                                                key={category.href}
+                                                href={category.href}
+                                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500"
+                                            >
+                                                {category.name}
+                                            </Link>
+                                        ))}
                                     </div>
-                                    <Link href="/" className="text-white hover:text-gray-200 font-medium px-3 py-2">
-                                        Inicio
-                                    </Link>
-                                    <Link href="/nosotros" className="text-white hover:text-gray-200 font-medium px-3 py-2">
-                                        Nosotros
-                                    </Link>
-                                    <Link href="/tienda" className="text-white hover:text-gray-200 font-medium px-3 py-2">
-                                        Tienda
-                                    </Link>
-                                    <Link href="/contacto" className="text-white hover:text-gray-200 font-medium px-3 py-2">
-                                        Contacto
-                                    </Link>
-                                    <Link href="/faq" className="text-white hover:text-gray-200 font-medium px-3 py-2">
-                                        FAQ
-                                    </Link>
-                                    <Link href="/blog" className="text-white hover:text-gray-200 font-medium px-3 py-2">
-                                        Blog
-                                    </Link>
-                                    
                                 </div>
+                                <Link href="/" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                    Inicio
+                                </Link>
+                                <Link href="/nosotros" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                    Nosotros
+                                </Link>
+                                <Link href="/tienda" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                    Tienda
+                                </Link>
+                                <Link href="/contacto" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                    Contacto
+                                </Link>
+                                <Link href="/faq" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                    FAQ
+                                </Link>
+                                <Link href="/blog" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                    Blog
+                                </Link>
                             </div>
-
-                            {/* Botón Top Ofertas con icono */}
                             <button 
                                 onClick={() => setIsOffersOpen(!isOffersOpen)}
                                 className="text-white hover:text-gray-200 font-medium px-3 py-2 flex items-center space-x-2"
@@ -181,7 +221,7 @@ const Navbar = () => {
                 </nav>
 
                 {/* Panel de ofertas */}
-                <div className={`fixed top-[0px] right-0 w-80 h-[calc(100vh-0px)] bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${isOffersOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                <div className={`fixed top-0 right-0 w-full md:w-80 h-screen bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${isOffersOpen ? 'translate-x-0' : 'translate-x-full'}`}>
                     <div className="p-4">
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-xl font-bold text-gray-800">Ofertas del día</h2>
@@ -193,7 +233,6 @@ const Navbar = () => {
                             </button>
                         </div>
                         <div className="space-y-4">
-                            {/* Producto en oferta */}
                             <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
                                 <div className="relative w-full h-48">
                                     <Image 
@@ -228,7 +267,7 @@ const Navbar = () => {
                 </div>
             </header>
             {/* Spacer div to prevent content from being hidden under the navbar */}
-            <div className="h-[122px]"></div>
+            <div className="h-[122px] md:h-[122px]"></div>
         </>
     );
 };
