@@ -180,6 +180,13 @@ const Footer = () => {
                             >
                                 Términos y Condiciones
                             </Link>
+                            <Link 
+                                href="https://github.com/PetusoTwo"
+                                target="_blank"
+                                className="text-sm text-gray-400 hover:text-white transition-colors"
+                            >
+                                Desarrollado por PetusoTwo
+                            </Link>
                         </div>
                     </div>
                 </div>

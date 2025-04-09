@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
-// Importa tus imágenes locales
+// seccion de categorias
 import audio from '../assets/Categorias/audio.jpg';
 import respiratorio from '../assets/Categorias/respiratorio.jpg';
 import pies from '../assets/Categorias/pies.jpg';
