@@ -10,7 +10,7 @@ import FeaturedProducts from '@/components/FeaturedProducts';
 import BrandsSection from '@/components/BrandsSection';
 import DownloadCatalog from '@/components/DownloadCatalog';
 import YoutubeSection from '@/components/YoutubeSection';
-
+import Testimonials from '@/components/Testimonials';
 export default function Home() {
   return (
     <>
@@ -22,6 +22,7 @@ export default function Home() {
         <BrandsSection />
         <DownloadCatalog />
         <FeaturedProducts />
+        <Testimonials />
         <YoutubeSection />
       </main>
       <Footer />
