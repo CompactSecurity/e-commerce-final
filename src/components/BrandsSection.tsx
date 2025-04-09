@@ -106,7 +106,7 @@ const BrandsSection: React.FC = () => {
                             {brands.map((brand, index) => (
                                 <motion.div
                                     key={`${brand.name}-1-${index}`}
-                                    className="flex-shrink-0 w-[200px]"
+                                    className="flex-shrink-0 w-[250px]"
                                 >
                                     <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all border border-gray-100 h-[120px] flex items-center justify-center">
                                         <div className="relative w-full h-[200px]">
@@ -127,7 +127,7 @@ const BrandsSection: React.FC = () => {
                                     className="flex-shrink-0 w-[200px]"
                                 >
                                     <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all border border-gray-100 h-[120px] flex items-center justify-center">
-                                        <div className="relative w-full h-[200px]">
+                                        <div className="relative w-full h-[250px]">
                                             <Image
                                                 src={brand.image}
                                                 alt={brand.name}
