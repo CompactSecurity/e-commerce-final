@@ -48,11 +48,11 @@ const brands = [
         image: logoC,
     },
     {
-        name: "SM",
+        name: "Steelpro",
         image: logoSM,
     },
     {
-        name: "XTREME",
+        name: "Bellota",
         image: logoXTREME,
     }
 ];
