@@ -103,14 +103,14 @@ const CategoryGrid = () => {
     const visibleCategories = categories.slice(currentIndex, currentIndex + itemsPerPage);
 
     return (
-        <section className="py-16 bg-white">
+        <section className="py-8 md:py-16 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
+                <div className="text-center mb-8 md:mb-16">
                     <motion.h3 
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="text-4xl font-bold text-gray-800 mb-4 text-center"
+                        className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 md:mb-4 text-center"
                     >
                         ¿Qué tipo de Implemento de Seguridad estás buscando?
                     </motion.h3>
@@ -118,7 +118,7 @@ const CategoryGrid = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-xl text-gray-500 max-w-2xl mx-auto text-center"
+                        className="text-base md:text-xl text-gray-500 max-w-2xl mx-auto text-center"
                     >
                         Encuentra el equipo de protección que necesitas para tu seguridad laboral
                     </motion.p>
@@ -127,13 +127,13 @@ const CategoryGrid = () => {
                 <div className="relative">
                     <button
                         onClick={prevSlide}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white p-3 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white p-2 md:p-3 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
                         aria-label="Previous slide"
                     >
-                        <FaArrowLeft className="text-gray-600" />
+                        <FaArrowLeft className="text-gray-600 w-4 h-4 md:w-5 md:h-5" />
                     </button>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                         <AnimatePresence mode="wait" custom={direction}>
                             {visibleCategories.map((category) => (
                                 <motion.div
@@ -145,25 +145,27 @@ const CategoryGrid = () => {
                                     transition={{ duration: 0.5 }}
                                 >
                                     <Link href={category.href}>
-                                        <div className="group relative bg-white rounded-lg overflow-hidden border border-gray-100">
-                                            <div className="relative h-56 w-full">
+                                        <div className="group relative bg-white rounded-lg overflow-hidden border border-gray-100 hover:shadow-md transition-shadow duration-300">
+                                            <div className="relative h-40 md:h-56 w-full">
                                                 <Image
                                                     src={category.image}
                                                     alt={category.name}
                                                     fill
                                                     className="object-cover"
+                                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                                    priority
                                                 />
                                             </div>
-                                            <div className="p-6">
-                                                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                                            <div className="p-4 md:p-6">
+                                                <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 md:mb-2 line-clamp-2">
                                                     {category.name}
                                                 </h3>
-                                                <p className="text-gray-600 text-sm mb-4">
+                                                <p className="text-xs md:text-sm text-gray-600 mb-2 md:mb-4 line-clamp-2">
                                                     {category.description}
                                                 </p>
                                                 <div className="flex items-center text-orange-500">
-                                                    <span className="text-sm font-medium">Ver productos</span>
-                                                    <FaArrowRight className="ml-2" />
+                                                    <span className="text-xs md:text-sm font-medium">Ver productos</span>
+                                                    <FaArrowRight className="ml-1 md:ml-2 w-3 h-3 md:w-4 md:h-4" />
                                                 </div>
                                             </div>
                                         </div>
@@ -175,10 +177,10 @@ const CategoryGrid = () => {
 
                     <button
                         onClick={nextSlide}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white p-3 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
+                        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white p-2 md:p-3 rounded-full shadow-lg hover:bg-gray-50 transition-colors"
                         aria-label="Next slide"
                     >
-                        <FaArrowRight className="text-gray-600" />
+                        <FaArrowRight className="text-gray-600 w-4 h-4 md:w-5 md:h-5" />
                     </button>
                 </div>
             </div>
