@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { DM_Sans } from "next/font/google";
 import { useEffect, useState } from "react";
 import Image from 'next/image';
-import logo3m from '../assets/marcas/3M.png';
+import logo3m from '../assets/marcas/tesm.png';
 import logoTruper from '../assets/marcas/truper.png';
 import logoAsaki from '../assets/marcas/asaki.png';
 import logoStanley from '../assets/marcas/stanley.png';
