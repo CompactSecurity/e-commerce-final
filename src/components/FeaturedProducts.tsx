@@ -115,13 +115,13 @@ const ProductCard = ({ product }: { product: Product }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col h-[600px]"
+            className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col h-auto min-h-[400px] md:min-h-[500px]"
             onClick={handleViewDetails}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
             {/* Imagen y Badges */}
-            <div className="relative aspect-square bg-gray-50 p-6">
+            <div className="relative aspect-square bg-gray-50 p-4 md:p-6">
                 <motion.div
                     animate={{ scale: isHovered ? 1.05 : 1 }}
                     transition={{ duration: 0.3 }}
@@ -186,61 +186,59 @@ const ProductCard = ({ product }: { product: Product }) => {
             </div>
 
             {/* Contenido */}
-            <div className="p-6 flex-1 flex flex-col">
-                {/* Categoría */}
-                <div className="text-sm font-medium text-gray-500 mb-2">{product.category}</div>
+            <div className="p-4 md:p-6 flex-1 flex flex-col justify-between">
+                <div>
+                    {/* Categoría */}
+                    <div className="text-xs md:text-sm font-medium text-gray-500 mb-1 md:mb-2">{product.category}</div>
 
-                {/* Nombre del producto */}
-                <h3 className="text-lg font-bold text-gray-900 mb-4 line-clamp-2">
-                    {product.name}
-                </h3>
+                    {/* Nombre del producto */}
+                    <h3 className="text-base md:text-lg font-bold text-gray-900 mb-2 md:mb-4 line-clamp-2">
+                        {product.name}
+                    </h3>
 
-                {/* Rating */}
-                <div className="flex items-center gap-2 mb-4">
-                    <div className="flex text-yellow-400">
-                        {[...Array(5)].map((_, i) => (
-                            <FiStar
-                                key={i}
-                                className={`w-4 h-4 ${
-                                    i < Math.floor(product.rating) ? 'fill-current' : 'text-gray-300'
-                                }`}
-                            />
-                        ))}
+                    {/* Rating */}
+                    <div className="flex items-center gap-1 md:gap-2 mb-2 md:mb-4">
+                        <div className="flex text-yellow-400">
+                            {[...Array(5)].map((_, i) => (
+                                <FiStar
+                                    key={i}
+                                    className={`w-3 h-3 md:w-4 md:h-4 ${
+                                        i < Math.floor(product.rating) ? 'fill-current' : 'text-gray-300'
+                                    }`}
+                                />
+                            ))}
+                        </div>
+                        <span className="text-xs md:text-sm text-gray-500">({product.reviews})</span>
                     </div>
-                    <span className="text-sm text-gray-500">({product.reviews})</span>
-                </div>
 
-                {/* Precio */}
-                <div className="flex items-center gap-2 mb-4">
-                    <span className="text-2xl font-bold text-gray-900">
-                        S/ {product.price.toFixed(2)}
-                    </span>
-                    {product.originalPrice > product.price && (
-                        <span className="text-sm text-gray-500 line-through">
-                            S/ {product.originalPrice.toFixed(2)}
+                    {/* Precio */}
+                    <div className="flex items-center gap-1 md:gap-2 mb-4">
+                        <span className="text-xl md:text-2xl font-bold text-gray-900">
+                            S/ {product.price.toFixed(2)}
                         </span>
-                    )}
+                        {product.originalPrice > product.price && (
+                            <span className="text-xs md:text-sm text-gray-500 line-through">
+                                S/ {product.originalPrice.toFixed(2)}
+                            </span>
+                        )}
+                    </div>
                 </div>
 
-                {/* Espaciador para empujar el botón al fondo */}
-                <div className="flex-grow"></div>
-
-                {/* Botón de acción */}
-                <div className="flex justify-center w-full">
+                {/* Botón de acción - Siempre visible en la parte inferior */}
+                <div className="mt-auto pt-4">
                     <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={handleAddToCart}
-                        className="bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-xl
-                                font-medium flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20 cursor-pointer w-full"
+                        className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 md:py-3 px-4 md:px-6 rounded-xl
+                                font-medium flex items-center justify-center gap-1 md:gap-2 shadow-lg shadow-orange-500/20 cursor-pointer text-sm md:text-base"
                     >
-                        <FiShoppingCart className="w-5 h-5" />
+                        <FiShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
                         <span>Agregar al Carrito</span>
                     </motion.button>
                 </div>
             </div>
         </motion.div>
-                    
     );
 };
 
