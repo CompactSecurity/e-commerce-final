@@ -176,7 +176,7 @@ const ShopPage = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Header de la tienda */}
-            <div className="bg-white shadow-sm mt-[88px]">
+            <div className="bg-white shadow-sm mt-[70px]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <h1 className="text-2xl font-bold text-gray-900">Tienda</h1>
                     <p className="mt-1 text-gray-600">
