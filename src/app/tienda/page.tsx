@@ -176,7 +176,7 @@ const ShopPage = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Header de la tienda */}
-            <div className="bg-white shadow-sm mt-20">
+            <div className="bg-white shadow-sm mt-[88px]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <h1 className="text-2xl font-bold text-gray-900">Tienda</h1>
                     <p className="mt-1 text-gray-600">
@@ -197,186 +197,185 @@ const ShopPage = () => {
                     </button>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-6">
-                    {/* Overlay para móvil */}
-                    {showMobileFilters && (
-                        <div 
-                            className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
-                            onClick={closeMobileFilters}
-                        />
-                    )}
+                {/* Overlay para móvil */}
+                {showMobileFilters && (
+                    <div 
+                        className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+                        onClick={closeMobileFilters}
+                    />
+                )}
 
+                <div className="flex flex-col lg:flex-row lg:gap-8">
                     {/* Sidebar de filtros */}
                     <div
                         className={`
+                            lg:block lg:w-64 lg:flex-shrink-0
+                            ${!showMobileFilters && 'hidden'}
                             fixed inset-y-0 left-0 w-full max-w-xs bg-white z-50 transform transition-transform duration-300 ease-in-out
-                            lg:relative lg:inset-auto lg:transform-none lg:w-64 lg:flex-shrink-0
-                            ${showMobileFilters ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+                            lg:static lg:inset-auto lg:transform-none lg:max-w-none lg:z-0
                         `}
                     >
                         <div className="h-full overflow-y-auto lg:h-auto">
-                            <div className="sticky top-[calc(5rem+1px)] pt-6">
-                                <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
-                                    {/* Botón cerrar en móvil */}
-                                    <div className="flex justify-between items-center lg:hidden">
-                                        <h2 className="text-lg font-semibold text-gray-900">Filtros</h2>
-                                        <button
-                                            onClick={closeMobileFilters}
-                                            className="p-2 text-gray-500 hover:text-gray-700"
-                                        >
-                                            ✕
-                                        </button>
-                                    </div>
+                            <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
+                                {/* Botón cerrar en móvil */}
+                                <div className="flex justify-between items-center lg:hidden">
+                                    <h2 className="text-lg font-semibold text-gray-900">Filtros</h2>
+                                    <button
+                                        onClick={closeMobileFilters}
+                                        className="p-2 text-gray-500 hover:text-gray-700"
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
 
-                                    {/* Contenido de filtros existente */}
-                                    {/* Búsqueda */}
-                                    <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                                            Buscar
-                                        </label>
-                                        <div className="relative">
+                                {/* Contenido de filtros existente */}
+                                {/* Búsqueda */}
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Buscar
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                                            placeholder="Buscar productos..."
+                                        />
+                                        <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                    </div>
+                                </div>
+
+                                {/* Marcas */}
+                                <div>
+                                    <h3 className="text-sm font-semibold text-gray-900 mb-3">Marcas</h3>
+                                    <div className="space-y-2 max-h-48 overflow-auto pr-2">
+                                        {brands.map((brand) => (
+                                            <label key={brand} className="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={filters.brands.includes(brand)}
+                                                    onChange={(e) => {
+                                                        const newBrands = e.target.checked
+                                                            ? [...filters.brands, brand]
+                                                            : filters.brands.filter(b => b !== brand);
+                                                        handleFilterChange('brands', newBrands);
+                                                    }}
+                                                    className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+                                                />
+                                                <span className="ml-2 text-sm text-gray-700">{brand}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Categorías */}
+                                <div>
+                                    <h3 className="text-sm font-semibold text-gray-900 mb-3">Categorías</h3>
+                                    <div className="space-y-2 max-h-48 overflow-auto pr-2">
+                                        {categories.map((category) => (
+                                            <label key={category} className="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={filters.categories.includes(category)}
+                                                    onChange={(e) => {
+                                                        const newCategories = e.target.checked
+                                                            ? [...filters.categories, category]
+                                                            : filters.categories.filter(c => c !== category);
+                                                        handleFilterChange('categories', newCategories);
+                                                    }}
+                                                    className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+                                                />
+                                                <span className="ml-2 text-sm text-gray-700">{category}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Rango de precios */}
+                                <div>
+                                    <h3 className="text-sm font-semibold text-gray-900 mb-3">Rango de precios</h3>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center gap-2">
                                             <input
-                                                type="text"
-                                                value={searchQuery}
-                                                onChange={(e) => setSearchQuery(e.target.value)}
-                                                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500"
-                                                placeholder="Buscar productos..."
+                                                type="number"
+                                                value={filters.priceRange[0]}
+                                                onChange={(e) => handleFilterChange('priceRange', [Number(e.target.value), filters.priceRange[1]])}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                                                placeholder="Min"
                                             />
-                                            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                                            <span>-</span>
+                                            <input
+                                                type="number"
+                                                value={filters.priceRange[1]}
+                                                onChange={(e) => handleFilterChange('priceRange', [filters.priceRange[0], Number(e.target.value)])}
+                                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                                                placeholder="Max"
+                                            />
                                         </div>
-                                    </div>
-
-                                    {/* Marcas */}
-                                    <div>
-                                        <h3 className="text-sm font-semibold text-gray-900 mb-3">Marcas</h3>
-                                        <div className="space-y-2 max-h-48 overflow-auto pr-2">
-                                            {brands.map((brand) => (
-                                                <label key={brand} className="flex items-center">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={filters.brands.includes(brand)}
-                                                        onChange={(e) => {
-                                                            const newBrands = e.target.checked
-                                                                ? [...filters.brands, brand]
-                                                                : filters.brands.filter(b => b !== brand);
-                                                            handleFilterChange('brands', newBrands);
-                                                        }}
-                                                        className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
-                                                    />
-                                                    <span className="ml-2 text-sm text-gray-700">{brand}</span>
-                                                </label>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Categorías */}
-                                    <div>
-                                        <h3 className="text-sm font-semibold text-gray-900 mb-3">Categorías</h3>
-                                        <div className="space-y-2 max-h-48 overflow-auto pr-2">
-                                            {categories.map((category) => (
-                                                <label key={category} className="flex items-center">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={filters.categories.includes(category)}
-                                                        onChange={(e) => {
-                                                            const newCategories = e.target.checked
-                                                                ? [...filters.categories, category]
-                                                                : filters.categories.filter(c => c !== category);
-                                                            handleFilterChange('categories', newCategories);
-                                                        }}
-                                                        className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
-                                                    />
-                                                    <span className="ml-2 text-sm text-gray-700">{category}</span>
-                                                </label>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Rango de precios */}
-                                    <div>
-                                        <h3 className="text-sm font-semibold text-gray-900 mb-3">Rango de precios</h3>
-                                        <div className="space-y-2">
-                                            <div className="flex items-center gap-2">
-                                                <input
-                                                    type="number"
-                                                    value={filters.priceRange[0]}
-                                                    onChange={(e) => handleFilterChange('priceRange', [Number(e.target.value), filters.priceRange[1]])}
-                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500"
-                                                    placeholder="Min"
-                                                />
-                                                <span>-</span>
-                                                <input
-                                                    type="number"
-                                                    value={filters.priceRange[1]}
-                                                    onChange={(e) => handleFilterChange('priceRange', [filters.priceRange[0], Number(e.target.value)])}
-                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-orange-500 focus:border-orange-500"
-                                                    placeholder="Max"
-                                                />
-                                            </div>
-                                            <button 
-                                                onClick={() => handleFilterChange('priceRange', [0, 1000])}
-                                                className="text-sm text-orange-500 hover:text-orange-600"
-                                            >
-                                                Limpiar
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    {/* Calificación */}
-                                    <div>
-                                        <h3 className="text-sm font-semibold text-gray-900 mb-3">Calificación</h3>
-                                        <div className="space-y-2">
-                                            {[5, 4, 3, 2, 1].map((rating) => (
-                                                <label key={rating} className="flex items-center">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={filters.ratings.includes(rating)}
-                                                        onChange={(e) => {
-                                                            const newRatings = e.target.checked
-                                                                ? [...filters.ratings, rating]
-                                                                : filters.ratings.filter(r => r !== rating);
-                                                            handleFilterChange('ratings', newRatings);
-                                                        }}
-                                                        className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
-                                                    />
-                                                    <div className="ml-2 flex items-center">
-                                                        {[...Array(rating)].map((_, i) => (
-                                                            <FaStar key={i} className="text-yellow-400 w-4 h-4" />
-                                                        ))}
-                                                        {[...Array(5 - rating)].map((_, i) => (
-                                                            <FaStar key={i} className="text-gray-300 w-4 h-4" />
-                                                        ))}
-                                                    </div>
-                                                </label>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    {/* Botón para limpiar filtros */}
-                                    <div className="pt-4 border-t border-gray-200">
-                                        <button
-                                            onClick={() => {
-                                                setFilters({
-                                                    categories: [],
-                                                    brands: [],
-                                                    priceRange: [0, 1000],
-                                                    ratings: [],
-                                                    sortBy: 'newest'
-                                                });
-                                                setSearchQuery('');
-                                            }}
-                                            className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors"
+                                        <button 
+                                            onClick={() => handleFilterChange('priceRange', [0, 1000])}
+                                            className="text-sm text-orange-500 hover:text-orange-600"
                                         >
-                                            Limpiar todos los filtros
+                                            Limpiar
                                         </button>
                                     </div>
+                                </div>
+
+                                {/* Calificación */}
+                                <div>
+                                    <h3 className="text-sm font-semibold text-gray-900 mb-3">Calificación</h3>
+                                    <div className="space-y-2">
+                                        {[5, 4, 3, 2, 1].map((rating) => (
+                                            <label key={rating} className="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={filters.ratings.includes(rating)}
+                                                    onChange={(e) => {
+                                                        const newRatings = e.target.checked
+                                                            ? [...filters.ratings, rating]
+                                                            : filters.ratings.filter(r => r !== rating);
+                                                        handleFilterChange('ratings', newRatings);
+                                                    }}
+                                                    className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+                                                />
+                                                <div className="ml-2 flex items-center">
+                                                    {[...Array(rating)].map((_, i) => (
+                                                        <FaStar key={i} className="text-yellow-400 w-4 h-4" />
+                                                    ))}
+                                                    {[...Array(5 - rating)].map((_, i) => (
+                                                        <FaStar key={i} className="text-gray-300 w-4 h-4" />
+                                                    ))}
+                                                </div>
+                                            </label>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Botón para limpiar filtros */}
+                                <div className="pt-4 border-t border-gray-200">
+                                    <button
+                                        onClick={() => {
+                                            setFilters({
+                                                categories: [],
+                                                brands: [],
+                                                priceRange: [0, 1000],
+                                                ratings: [],
+                                                sortBy: 'newest'
+                                            });
+                                            setSearchQuery('');
+                                        }}
+                                        className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        Limpiar todos los filtros
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* Contenido principal */}
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                         {/* Controles de vista y ordenamiento */}
                         <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
                             <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
