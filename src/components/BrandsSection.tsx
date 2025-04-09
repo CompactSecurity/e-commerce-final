@@ -5,10 +5,10 @@ import { DM_Sans } from "next/font/google";
 import { useEffect, useState } from "react";
 import Image from 'next/image';
 import logo3m from '../assets/marcas/tesm.png';
-
+import logoTruper from '../assets/marcas/truper.png';
 import logoAsaki from '../assets/marcas/asaki.png';
 import logoStanley from '../assets/marcas/stanley.png';
-import logoPretrul from '../assets/marcas/pretul.png';
+
 import logoKamasa from '../assets/marcas/kamasa.png';
 import logoC from '../assets/marcas/ca.png';
 import logoSM from '../assets/marcas/steelpro.png';
@@ -24,6 +24,10 @@ const brands = [
         image: logo3m,
     },
     {
+        name: "Truper",
+        image: logoTruper,
+    },
+    {
         name: "Asaki",
         image: logoAsaki,
     },
@@ -31,10 +35,7 @@ const brands = [
         name: "Stanley",
         image: logoStanley,
     },
-    {
-        name: "Pretrul",
-        image: logoPretrul,
-    },
+
     {
         name: "Kamasa",
         image: logoKamasa,
