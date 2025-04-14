@@ -7,6 +7,7 @@ import { StaticImageData } from 'next/image'
 import epp01 from '@/assets/carrousel1.png'
 import epp02 from '@/assets/carrousel2.png'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 interface BlogPost {
   id_blog: number
@@ -89,9 +90,14 @@ export default function Blog() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section remains the same */}
-      {/* ... */}
+    <div className="min-h-screen bg-gray-50 mt-17">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center ">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Nuestro Blog</h1>
+          <p className="text-lg text-gray-600">Descubre las últimas noticias y actualizaciones de nuestra empresa.</p>
+        </div>
+      </div>
+        {/* Featured Post */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Admin Controls */}
@@ -115,53 +121,61 @@ export default function Blog() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post) => (
               <article key={post.id_blog} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <div className="relative h-48">
-                  <Image
-                    src={post.imagen_portada || epp01}
-                    alt={post.titulo}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                      {post.category}
-                    </span>
-                    <span className="text-gray-500 text-sm flex items-center gap-1">
-                      <Calendar size={16} />
-                      {new Date(post.fecha_publicacion).toLocaleDateString()}
-                    </span>
-                  </div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-2">{post.titulo}</h2>
-                  <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                  <div className="flex items-center justify-between text-sm text-gray-500">
-                    <div className="flex items-center gap-2">
-                      <User size={16} />
-                      <span>{post.author}</span>
+                <Link href={`/blog/${post.id_blog}`} className="block" onClick={(e) => e.stopPropagation()}>
+                    <div className="relative h-48">
+                        <Image
+                            src={post.imagen_portada || '/placeholder-image.jpg'}
+                            alt={post.titulo}
+                            fill
+                            className="object-cover"
+                        />
                     </div>
-                    <span>{post.read_time}</span>
-                  </div>
-                  
-                  {/* Admin Controls for each post */}
-                  {isAdmin && (
-                    <div className="mt-4 flex gap-2 justify-end">
-                      <button
-                        onClick={() => window.location.href = `/admin/blog/edit/${post.id_blog}`}
-                        className="p-2 text-green-600 hover:bg-green-50 rounded"
-                      >
-                        <Edit size={20} />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(post.id_blog)}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded"
-                      >
-                        <Trash size={20} />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </article>
+                    <div className="p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                            <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                              {post.category}
+                            </span>
+                            <span className="text-gray-500 text-sm flex items-center gap-1">
+                              <Calendar size={16} />
+                              {new Date(post.fecha_publicacion).toLocaleDateString()}
+                            </span>
+                          </div>
+                          <h2 className="text-xl font-semibold text-gray-900 mb-2">{post.titulo}</h2>
+                          <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                          <div className="flex items-center justify-between text-sm text-gray-500">
+                            <div className="flex items-center gap-2">
+                              <User size={16} />
+                              <span>{post.author}</span>
+                            </div>
+                            <span>{post.read_time}</span>
+                          </div>
+                          
+                          {/* Admin Controls for each post */}
+                          {isAdmin && (
+                            <div className="mt-4 flex gap-2 justify-end">
+                              <button
+                                onClick={() => window.location.href = `/admin/blog/edit/${post.id_blog}`}
+                                className="p-2 text-green-600 hover:bg-green-50 rounded"
+                              >
+                                <Edit size={20} />
+                              </button>
+                              <button
+                                onClick={() => handleDelete(post.id_blog)}
+                                className="p-2 text-red-600 hover:bg-red-50 rounded"
+                              >
+                                <Trash size={20} />
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </Link>
+                      {/* Admin controls remain outside the link */}
+                      {isAdmin && (
+                          <div className="p-6 pt-0 flex gap-2 justify-end">
+                              {/* ... admin controls ... */}
+                          </div>
+                      )}
+                </article>
             ))}
           </div>
         </div>

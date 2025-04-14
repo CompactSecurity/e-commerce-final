@@ -60,6 +60,9 @@ if ($controller === 'blog') {
         case 'update':
             $controller_instance->update($id);
             exit;
+        case 'get-by-id':
+            $controller_instance->getById($id);
+            exit;
     }
 }
 

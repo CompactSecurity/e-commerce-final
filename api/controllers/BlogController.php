@@ -125,6 +125,24 @@ class BlogController {
         }
     }
 
+    public function getById($id) {
+        if (!$id) {
+            $this->response->sendError(400, "ID no proporcionado");
+            return;
+        }
+
+        $blog = $this->blog->getById($id);
+        if ($blog) {
+            // Ensure the image path is complete
+            if ($blog['imagen_portada']) {
+                $blog['imagen_portada'] = 'http://localhost/e-commerce' . $blog['imagen_portada'];
+            }
+            $this->response->sendSuccess(200, $blog);
+        } else {
+            $this->response->sendError(404, "Blog no encontrado");
+        }
+    }
+
     private function createSlug($string) {
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $string)));
         return $slug;

@@ -102,4 +102,12 @@ class Blog {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+    
+    public function getBySlug($slug) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE slug = :slug AND estado = 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":slug", $slug);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
