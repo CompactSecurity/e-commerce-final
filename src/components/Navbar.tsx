@@ -11,6 +11,14 @@ import RegisterModal from './RegisterModal';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import Cart from './Cart';
 
+interface User {
+    id_usuario: number;
+    nombre: string;
+    apellidos: string;
+    email: string;
+    rol: string;
+}
+
 const Navbar = () => {
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isOffersOpen, setIsOffersOpen] = useState(false);
@@ -19,8 +27,8 @@ const Navbar = () => {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
     const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
 
-    // Efecto para detectar scroll
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
@@ -29,16 +37,12 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Cerrar menú móvil al hacer clic fuera
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (isMobileMenuOpen && !(event.target as Element).closest('.mobile-menu')) {
-                setIsMobileMenuOpen(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [isMobileMenuOpen]);
+        const userData = localStorage.getItem('user');
+        if (userData) {
+            setUser(JSON.parse(userData));
+        }
+    }, []);
 
     const categories = [
         { name: 'BLOQUEO Y ETIQUETADO', href: '/categoria/bloqueo-etiquetado' },
@@ -74,6 +78,22 @@ const Navbar = () => {
 
     const handleCloseForgotPassword = () => {
         setIsForgotPasswordModalOpen(false);
+    };
+
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('http://localhost/e-commerce/api/auth/logout', {
+                method: 'POST',
+            });
+
+            if (response.ok) {
+                localStorage.removeItem('user');
+                setUser(null);
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
@@ -270,22 +290,27 @@ const Navbar = () => {
                                 <Link href="https://www.youtube.com/@Compactepp" target="_blank" className="text-white hover:text-orange-500 transition-colors">
                                     <FaYoutube className="w-6 h-6" />
                                 </Link> */}
+                            // In the mobile menu section
                             <div className="flex items-center justify-center space-x-6 pt-4">
-                                
-                                <Link href="" className="text-white hover:text-orange-500 transition-colors">
+                                {user ? (
+                                    <div className="text-white">
+                                        <div className="text-center mb-2">{`${user.nombre} ${user.apellidos}`}</div>
+                                        <button 
+                                            onClick={handleLogout}
+                                            className="text-red-500 hover:text-red-600 transition-colors"
+                                        >
+                                            Cerrar Sesión
+                                        </button>
+                                    </div>
+                                ) : (
                                     <button 
-                                    onClick={() => setIsLoginModalOpen(true)}
-                                    className='text-white hover:text-orange-500 transition-colors'
-                                >
-                                    <FaUser className='w-5 h-5' />
-                                </button>
-                                </Link>
-                                <Link href="/carrito" className="relative text-white hover:text-orange-500 transition-colors">
-                                    <span className="text-2xl">🛒</span>
-                                    <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                                        0
-                                    </span>
-                                </Link>
+                                        onClick={() => setIsLoginModalOpen(true)}
+                                        className='text-white hover:text-orange-500 transition-colors'
+                                    >
+                                        <FaUser className='w-5 h-5' />
+                                    </button>
+                                )}
+                                {/* ... rest of the mobile menu */}
                             </div>
                         </div>
                     </div>

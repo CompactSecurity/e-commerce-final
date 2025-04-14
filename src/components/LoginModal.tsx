@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaEye, FaEyeSlash  } from 'react-icons/fa';
 import logo from '../assets/logo.png';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 
 interface LoginModalProps {
@@ -67,11 +68,46 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
         return isValid;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const router = useRouter();
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
-            // Aquí iría la lógica de autenticación
-            console.log('Formulario válido:', formData);
+            try {
+                const response = await fetch('http://localhost/e-commerce/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: formData.email,
+                        password: formData.password
+                    }),
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+                console.log('Login response:', data); // Debug line
+
+                if (data.status === 'success') {
+                    localStorage.setItem('user', JSON.stringify(data.data.usuario));
+                    onClose();
+                    window.location.reload();
+                } else {
+                    setErrors(prev => ({
+                        ...prev,
+                        email: data.mensaje,
+                        password: data.mensaje
+                    }));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                setErrors(prev => ({
+                    ...prev,
+                    email: 'Error de conexión',
+                    password: 'Error de conexión'
+                }));
+            }
         }
     };
 
@@ -236,4 +272,4 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
     );
 };
 
-export default LoginModal; 
+export default LoginModal;

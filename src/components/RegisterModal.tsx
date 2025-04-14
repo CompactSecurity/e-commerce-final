@@ -108,11 +108,38 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose, onOpenLo
         return isValid;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (validateForm()) {
-            // Aquí iría la lógica de registro
-            console.log('Formulario válido:', formData);
+            try {
+                const response = await fetch('http://localhost/e-commerce/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        nombre: formData.nombre,
+                        apellidos: formData.apellido,
+                        email: formData.email,
+                        password: formData.password,
+                        telefono: formData.telefono
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    onClose();
+                    onOpenLogin();
+                } else {
+                    setErrors(prev => ({
+                        ...prev,
+                        email: data.mensaje
+                    }));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
         }
     };
 
@@ -376,4 +403,4 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose, onOpenLo
     );
 };
 
-export default RegisterModal; 
+export default RegisterModal;

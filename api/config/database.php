@@ -1,11 +1,10 @@
 <?php
-
 class Database {
     private $host = "localhost";
     private $db_name = "ecommerce";
     private $username = "root";
     private $password = "";
-    public $conn;
+    private $conn;
 
     public function getConnection() {
         $this->conn = null;
@@ -16,13 +15,12 @@ class Database {
                 $this->username,
                 $this->password
             );
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->exec("set names utf8");
-        } catch(PDOException $exception) {
-            echo "Error de conexión: " . $exception->getMessage();
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch(PDOException $e) {
+            echo "Connection Error: " . $e->getMessage();
         }
 
         return $this->conn;
     }
 }
-?> 
