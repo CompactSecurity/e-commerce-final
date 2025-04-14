@@ -7,6 +7,7 @@ class User {
     public $nombre;
     public $apellidos;
     public $email;
+    public $telefono;
     public $password;
     public $rol;
     
@@ -20,6 +21,7 @@ class User {
                     nombre = :nombre,
                     apellidos = :apellidos,
                     email = :email,
+                    telefono = :telefono,
                     password = :password,
                     rol = :rol";
     
@@ -29,6 +31,7 @@ class User {
             ":nombre" => $this->nombre,
             ":apellidos" => $this->apellidos,
             ":email" => $this->email,
+            ":telefono" => $this->telefono,
             ":password" => $this->password,
             ":rol" => $this->rol
         ]);
