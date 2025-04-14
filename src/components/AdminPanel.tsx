@@ -123,7 +123,7 @@ const AdminPanel = () => {
                             <FaBlog className="text-4xl text-teal-600" />
                             <span className="text-lg font-medium text-teal-800">Editar Blog</span>
                         </button>
-                        {/* Product buttons */}
+                        {/* Product buttons prrecio/cotizar */}
                         <button
                             onClick={() => setCurrentView('edit-blog')}
                             className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4"
