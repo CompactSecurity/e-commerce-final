@@ -17,6 +17,14 @@ $controller = isset($uri[0]) && $uri[0] !== '' ? $uri[0] : 'home';
 $action = isset($uri[1]) && $uri[1] !== '' ? $uri[1] : 'index';
 $id = isset($uri[2]) && $uri[2] !== '' ? $uri[2] : null;
 
+// Special route handling for auth/register-admin
+if ($controller === 'auth' && $action === 'register-admin') {
+    require_once __DIR__ . '/controllers/AuthController.php';
+    $controller_instance = new AuthController();
+    $controller_instance->registerAdmin();
+    exit;
+}
+
 // Load and execute controller
 $controller_name = ucfirst($controller) . 'Controller';
 $controller_file = __DIR__ . '/controllers/' . $controller_name . '.php';

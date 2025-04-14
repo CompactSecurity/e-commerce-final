@@ -13,7 +13,7 @@ import Cart from './Cart';
 
 // Add this interface if not already present
 interface User {
-    id: number;
+    id_usuario: number;  // Changed from id to id_usuario to match DB
     nombre: string;
     apellidos: string;
     email: string;
@@ -193,6 +193,16 @@ const Navbar = () => {
                     Cerrar Sesión
                 </button>
             </div>
+            {user && user.rol === 'admin' && (
+    <div className="p-2">
+        <Link 
+            href="/admin"
+            className="w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100 rounded-md transition-colors block"
+        >
+            Panel de Administración
+        </Link>
+    </div>
+)}
         </div>
     </div>
 ) : ( 

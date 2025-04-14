@@ -88,6 +88,35 @@ class AuthController {
         }
     }
 
+    public function registerAdmin() {
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if(!empty($data->nombre) && !empty($data->apellidos) && 
+           !empty($data->email) && !empty($data->password)) {
+            
+            if($this->user->emailExists($data->email)) {
+                $this->response->sendError(400, "El correo ya está registrado");
+                return;
+            }
+
+            $this->user->nombre = $data->nombre;
+            $this->user->apellidos = $data->apellidos;
+            $this->user->email = $data->email;
+            $this->user->password = password_hash($data->password, PASSWORD_DEFAULT);
+            $this->user->rol = 'admin'; // Force role to be admin
+            
+            if($this->user->create()) {
+                $this->response->sendSuccess(201, [
+                    "mensaje" => "Administrador registrado exitosamente"
+                ]);
+            } else {
+                $this->response->sendError(500, "Error al crear el administrador");
+            }
+        } else {
+            $this->response->sendError(400, "Datos incompletos");
+        }
+    }
+
     public function logout() {
         session_destroy();
         $this->response->sendSuccess(200, [
