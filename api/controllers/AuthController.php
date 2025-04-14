@@ -136,8 +136,6 @@ class AuthController {
             $this->response->sendError(401, "No hay sesión activa");
         }
     }
-
-    // Add these new methods to your AuthController class
     
     public function getAdmins() {
         $admins = $this->user->getAdmins();
@@ -184,7 +182,7 @@ class AuthController {
                         "id" => $id
                     ]);
                 } else {
-                    $this->response->sendError(500, "Error al actualizar administrador");
+                    $this->response->sendError(500, "Error al actualizar el administrador");
                 }
             } else {
                 $this->response->sendError(400, "Datos incompletos");
