@@ -42,6 +42,27 @@ if ($controller === 'auth') {
     }
 }
 
+// Add this to your special route handlers section
+if ($controller === 'blog') {
+    require_once __DIR__ . '/controllers/BlogController.php';
+    $controller_instance = new BlogController();
+    
+    switch ($action) {
+        case 'create':
+            $controller_instance->create();
+            exit;
+        case 'get-all':
+            $controller_instance->getAll();
+            exit;
+        case 'delete':
+            $controller_instance->delete($id);
+            exit;
+        case 'update':
+            $controller_instance->update($id);
+            exit;
+    }
+}
+
 // Load and execute controller
 $controller_name = ucfirst($controller) . 'Controller';
 $controller_file = __DIR__ . '/controllers/' . $controller_name . '.php';

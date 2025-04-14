@@ -1,9 +1,12 @@
 'use client'
 import React, { useState } from 'react';
-import { FaUserPlus, FaUserMinus, FaUserEdit, FaArrowLeft } from 'react-icons/fa';
+import { FaUserPlus, FaUserMinus, FaUserEdit, FaArrowLeft, FaBlog } from 'react-icons/fa';
 import AddAdmin from './admin/AddAdmin';
 import DeleteAdmin from './admin/DeleteAdmin';
 import EditAdmin from './admin/EditAdmin';
+import AddBlog from './admin/AddBlog';
+import DeleteBlog from './admin/DeleteBlog';
+import EditBlog from './admin/EditBlog';
 
 interface AdminFormData {
     nombre: string;
@@ -66,6 +69,12 @@ const AdminPanel = () => {
                 return <DeleteAdmin onBack={() => setCurrentView('main')} />;
             case 'edit':
                 return <EditAdmin onBack={() => setCurrentView('main')} />;
+            case 'add-blog':
+                return <AddBlog onBack={() => setCurrentView('main')} />;
+            case 'delete-blog':
+                return <DeleteBlog onBack={() => setCurrentView('main')} />;
+            case 'edit-blog':
+                return <EditBlog onBack={() => setCurrentView('main')} />;
             default:
                 return (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -89,6 +98,29 @@ const AdminPanel = () => {
                         >
                             <FaUserEdit className="text-4xl text-green-600" />
                             <span className="text-lg font-medium text-green-800">Editar Administrador</span>
+                        </button>
+
+                        {/* Blog management buttons */}
+                        <button
+                            onClick={() => setCurrentView('add-blog')}
+                            className="p-6 bg-purple-100 rounded-lg hover:bg-purple-200 transition-colors flex flex-col items-center gap-4"
+                        >
+                            <FaBlog className="text-4xl text-purple-600" />
+                            <span className="text-lg font-medium text-purple-800">Agregar Blog</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('delete-blog')}
+                            className="p-6 bg-orange-100 rounded-lg hover:bg-orange-200 transition-colors flex flex-col items-center gap-4"
+                        >
+                            <FaBlog className="text-4xl text-orange-600" />
+                            <span className="text-lg font-medium text-orange-800">Eliminar Blog</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('edit-blog')}
+                            className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4"
+                        >
+                            <FaBlog className="text-4xl text-teal-600" />
+                            <span className="text-lg font-medium text-teal-800">Editar Blog</span>
                         </button>
                     </div>
                 );
