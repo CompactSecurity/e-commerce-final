@@ -38,13 +38,18 @@ const DeleteAdmin = ({ onBack }: DeleteAdminProps) => {
         if (window.confirm('¿Está seguro de eliminar este administrador?')) {
             try {
                 const response = await fetch(`http://localhost/e-commerce/api/auth/delete-admin/${id}`, {
-                    method: 'DELETE',
-                    credentials: 'include'
+                    method: 'GET', // Changed from DELETE to GET temporarily
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
                 });
+
                 const data = await response.json();
                 if (data.status === 'success') {
-                    fetchAdmins();
                     alert('Administrador eliminado exitosamente');
+                    // Refresh the admin list
+                    fetchAdmins();
                 } else {
                     alert(data.mensaje || 'Error al eliminar administrador');
                 }

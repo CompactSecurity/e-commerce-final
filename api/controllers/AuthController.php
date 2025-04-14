@@ -149,29 +149,48 @@ class AuthController {
     }
     
     public function deleteAdmin($id) {
-        if ($this->user->delete($id)) {
-            $this->response->sendSuccess(200, ["mensaje" => "Administrador eliminado exitosamente"]);
-        } else {
-            $this->response->sendError(500, "Error al eliminar administrador");
+        try {
+            if (!$id) {
+                $this->response->sendError(400, "ID no proporcionado");
+                return;
+            }
+    
+            if ($this->user->delete($id)) {
+                $this->response->sendSuccess(200, [
+                    "mensaje" => "Administrador eliminado exitosamente",
+                    "id" => $id
+                ]);
+            } else {
+                $this->response->sendError(500, "Error al eliminar el administrador");
+            }
+        } catch (Exception $e) {
+            $this->response->sendError(500, $e->getMessage());
         }
     }
     
     public function updateAdmin($id) {
-        $data = json_decode(file_get_contents("php://input"));
-        
-        if(!empty($data->nombre) && !empty($data->apellidos) && !empty($data->email)) {
-            $this->user->id_usuario = $id;
-            $this->user->nombre = $data->nombre;
-            $this->user->apellidos = $data->apellidos;
-            $this->user->email = $data->email;
+        try {
+            $data = json_decode(file_get_contents("php://input"));
             
-            if($this->user->update()) {
-                $this->response->sendSuccess(200, ["mensaje" => "Administrador actualizado exitosamente"]);
+            if(!empty($data->nombre) && !empty($data->apellidos) && !empty($data->email)) {
+                $this->user->id_usuario = $id;
+                $this->user->nombre = $data->nombre;
+                $this->user->apellidos = $data->apellidos;
+                $this->user->email = $data->email;
+                
+                if($this->user->update()) {
+                    $this->response->sendSuccess(200, [
+                        "mensaje" => "Administrador actualizado exitosamente",
+                        "id" => $id
+                    ]);
+                } else {
+                    $this->response->sendError(500, "Error al actualizar administrador");
+                }
             } else {
-                $this->response->sendError(500, "Error al actualizar administrador");
+                $this->response->sendError(400, "Datos incompletos");
             }
-        } else {
-            $this->response->sendError(400, "Datos incompletos");
+        } catch (Exception $e) {
+            $this->response->sendError(500, $e->getMessage());
         }
     }
 }

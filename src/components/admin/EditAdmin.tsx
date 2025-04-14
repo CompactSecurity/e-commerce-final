@@ -40,7 +40,7 @@ const EditAdmin = ({ onBack }: EditAdminProps) => {
 
         try {
             const response = await fetch(`http://localhost/e-commerce/api/auth/update-admin/${editingAdmin.id_usuario}`, {
-                method: 'PUT',
+                method: 'POST', // Changed from PUT to POST
                 headers: {
                     'Content-Type': 'application/json',
                 },
