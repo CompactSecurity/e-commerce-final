@@ -9,6 +9,7 @@ import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSear
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import ForgotPasswordModal from './ForgotPasswordModal';
+import Cart from './Cart';
 
 const Navbar = () => {
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -150,19 +151,19 @@ const Navbar = () => {
 
                             {/* Carrito y Usuario */}
                             <div className="hidden md:flex items-center space-x-4">
-                                <button 
-                                    onClick={() => setIsLoginModalOpen(true)}
-                                    className='text-white hover:text-orange-500 transition-colors'
+                            <button
+                                    onClick={handleOpenLogin}
+                                    className="text-white hover:text-orange-500 transition-colors"
                                 >
-                                    <FaUser className='w-5 h-5' />
+                                    <FaUser className="text-xl" />
                                 </button>
-                                <span className='text-white'>|</span>
-                                <Link href="/carrito" className="relative text-white hover:text-orange-500 transition-colors">
-                                    <span className="text-2xl">🛒</span>
-                                    <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                                        0
-                                    </span>
-                                </Link>
+                                <button 
+                                    onClick={() => setIsOffersOpen(!isOffersOpen)}
+                                    className="text-white hover:text-orange-500 transition-colors"
+                                >
+                                </button>
+                                <Cart />
+                                
                             </div>
                         </div>
                     </div>
