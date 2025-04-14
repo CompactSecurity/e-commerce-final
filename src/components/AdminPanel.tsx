@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
-import { FaUserPlus, FaUserMinus, FaUserEdit, FaArrowLeft, FaBlog } from 'react-icons/fa';
+import { FaUserPlus, FaUserMinus, FaUserEdit, FaArrowLeft, FaBlog, FaEdit } from 'react-icons/fa';
+import { AiFillDelete, AiFillProduct } from "react-icons/ai";
 import AddAdmin from './admin/AddAdmin';
 import DeleteAdmin from './admin/DeleteAdmin';
 import EditAdmin from './admin/EditAdmin';
@@ -121,6 +122,28 @@ const AdminPanel = () => {
                         >
                             <FaBlog className="text-4xl text-teal-600" />
                             <span className="text-lg font-medium text-teal-800">Editar Blog</span>
+                        </button>
+                        {/* Product buttons */}
+                        <button
+                            onClick={() => setCurrentView('edit-blog')}
+                            className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4"
+                        >
+                            <AiFillProduct className="text-4xl text-teal-600" />
+                            <span className="text-lg font-medium text-teal-800">Agregar Producto</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('edit-blog')}
+                            className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4"
+                        >
+                            <AiFillDelete className="text-4xl text-teal-600" />
+                            <span className="text-lg font-medium text-teal-800">Eliminar Producto</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('edit-blog')}
+                            className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4"
+                        >
+                            <FaEdit className="text-4xl text-teal-600" />
+                            <span className="text-lg font-medium text-teal-800">Editar Producto</span>
                         </button>
                     </div>
                 );
