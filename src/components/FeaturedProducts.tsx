@@ -344,7 +344,11 @@ const FeaturedProducts = () => {
                     className="bg-orange-500 hover:bg-orange-600 text-white py-3 px-6 rounded-xl
                                 font-medium flex items-center justify-center gap-2 shadow-lg shadow-orange-500/20 cursor-pointer mt-10"
                 >
-                    <span>Ver Todos los Productos</span>
+                    <span>
+                        <a href="/tienda">
+                        Ver Todos los Productos
+                        </a>
+                    </span>
                 </motion.button>
             </div>
         </section>
