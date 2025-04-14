@@ -18,15 +18,15 @@ import cabeza from '../assets/Categorias/cabeza.jpg';
 import visual from '../assets/Categorias/visual.jpg';
 
 const categories = [
-  { id: 1, name: 'Protección para la Cabeza', image: cabeza, href: '/categoria/proteccion-cabeza', description: 'Cascos y accesorios para la cabeza' },
-  { id: 2, name: 'Protección Auditiva', image: audio, href: '/categoria/proteccion-auditiva', description: 'Protectores auditivos y tapones' },
-  { id: 3, name: 'Protección Respiratoria', image: respiratorio, href: '/categoria/proteccion-respiratoria', description: 'Mascarillas y respiradores' },
-  { id: 4, name: 'Protección para Manos', image: manos, href: '/categoria/proteccion-manos', description: 'Guantes de seguridad y protección' },
-  { id: 5, name: 'Protección para Pies', image: pies, href: '/categoria/proteccion-pies', description: 'Calzado de seguridad industrial' },
-  { id: 6, name: 'Protección Facial', image: facial, href: '/categoria/proteccion-facial', description: 'Caretas y gafas de protección' },
-  { id: 7, name: 'Protección para Caídas', image: caidas, href: '/categoria/proteccion-caidas', description: 'Arneses y equipos anti-caídas' },
-  { id: 8, name: 'Ropa Industrial', image: ropa, href: '/categoria/ropa-industrial', description: 'Ropa de trabajo y protección' },
-  { id: 9, name: 'Protección Visual', image: visual, href: '/categoria/proteccion-visual', description: 'Protección visual para la seguridad' },
+  { id: 1, name: 'Protección para la Cabeza', image: cabeza, href: '/tienda', description: 'Cascos y accesorios para la cabeza' },
+  { id: 2, name: 'Protección Auditiva', image: audio, href: '/tienda', description: 'Protectores auditivos y tapones' },
+  { id: 3, name: 'Protección Respiratoria', image: respiratorio, href: '/tienda', description: 'Mascarillas y respiradores' },
+  { id: 4, name: 'Protección para Manos', image: manos, href: '/tienda', description: 'Guantes de seguridad y protección' },
+  { id: 5, name: 'Protección para Pies', image: pies, href: '/tienda', description: 'Calzado de seguridad industrial' },
+  { id: 6, name: 'Protección Facial', image: facial, href: '/tienda', description: 'Caretas y gafas de protección' },
+  { id: 7, name: 'Protección para Caídas', image: caidas, href: '/tienda', description: 'Arneses y equipos anti-caídas' },
+  { id: 8, name: 'Ropa Industrial', image: ropa, href: '/tienda', description: 'Ropa de trabajo y protección' },
+  { id: 9, name: 'Protección Visual', image: visual, href: '/tienda', description: 'Protección visual para la seguridad' },
 ];
 
 const getItemsPerPage = () => {
