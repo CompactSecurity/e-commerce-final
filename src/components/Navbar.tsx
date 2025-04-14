@@ -316,7 +316,6 @@ const Navbar = () => {
                                 <Link href="https://www.youtube.com/@Compactepp" target="_blank" className="text-white hover:text-orange-500 transition-colors">
                                     <FaYoutube className="w-6 h-6" />
                                 </Link> */}
-                            // In the mobile menu section
                             <div className="flex items-center justify-center space-x-6 pt-4">
                                 {user ? (
                                     <div className="text-white">
@@ -336,7 +335,6 @@ const Navbar = () => {
                                         <FaUser className='w-5 h-5' />
                                     </button>
                                 )}
-                                {/* ... rest of the mobile menu */}
                             </div>
                         </div>
                     </div>
