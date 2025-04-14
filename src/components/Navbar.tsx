@@ -11,8 +11,9 @@ import RegisterModal from './RegisterModal';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import Cart from './Cart';
 
+// Add this interface if not already present
 interface User {
-    id_usuario: number;
+    id: number;
     nombre: string;
     apellidos: string;
     email: string;
@@ -37,6 +38,7 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Add this useEffect to check for user data
     useEffect(() => {
         const userData = localStorage.getItem('user');
         if (userData) {
@@ -171,20 +173,44 @@ const Navbar = () => {
 
                             {/* Carrito y Usuario */}
                             <div className="hidden md:flex items-center space-x-4">
-                            <button
-                                    onClick={handleOpenLogin}
-                                    className="text-white hover:text-orange-500 transition-colors"
-                                >
-                                    <FaUser className="text-xl" />
-                                </button>
-                                <button 
-                                    onClick={() => setIsOffersOpen(!isOffersOpen)}
-                                    className="text-white hover:text-orange-500 transition-colors"
-                                >
-                                </button>
-                                <Cart />
-                                
-                            </div>
+                            {user ? (
+    <div className="relative group">
+        <button className="flex items-center space-x-2 text-white hover:text-orange-500 transition-colors">
+            <FaUser className="text-xl" />
+            <span className="font-medium">{user.nombre}</span>
+        </button>
+        <div className="absolute right-0 w-64 mt-2 bg-white rounded-lg shadow-xl hidden group-hover:block">
+            <div className="p-4 border-b">
+                <p className="text-gray-900 font-medium">{`${user.nombre} ${user.apellidos}`}</p>
+                <p className="text-gray-600 text-sm">{user.email}</p>
+                <p className="text-gray-500 text-xs mt-1 capitalize">{user.rol}</p>
+            </div>
+            <div className="p-2">
+                <button 
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-md transition-colors"
+                >
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </div>
+) : ( 
+    <button
+        onClick={() => setIsLoginModalOpen(true)}
+        className="text-white hover:text-orange-500 transition-colors"
+    >
+        <FaUser className="text-xl" />
+    </button>
+)}
+
+                                    <button 
+                                        onClick={() => setIsOffersOpen(!isOffersOpen)}
+                                        className="text-white hover:text-orange-500 transition-colors"
+                                    >
+                                    </button>
+                                    <Cart />
+                                </div>
                         </div>
                     </div>
                 </div>
