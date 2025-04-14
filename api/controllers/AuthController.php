@@ -9,7 +9,9 @@ class AuthController {
     private $response;
 
     public function __construct() {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         $database = new Database();
         $this->db = $database->getConnection();
         $this->user = new User($this->db);
@@ -132,6 +134,44 @@ class AuthController {
             ]);
         } else {
             $this->response->sendError(401, "No hay sesión activa");
+        }
+    }
+
+    // Add these new methods to your AuthController class
+    
+    public function getAdmins() {
+        $admins = $this->user->getAdmins();
+        if ($admins) {
+            $this->response->sendSuccess(200, $admins);
+        } else {
+            $this->response->sendError(500, "Error al obtener administradores");
+        }
+    }
+    
+    public function deleteAdmin($id) {
+        if ($this->user->delete($id)) {
+            $this->response->sendSuccess(200, ["mensaje" => "Administrador eliminado exitosamente"]);
+        } else {
+            $this->response->sendError(500, "Error al eliminar administrador");
+        }
+    }
+    
+    public function updateAdmin($id) {
+        $data = json_decode(file_get_contents("php://input"));
+        
+        if(!empty($data->nombre) && !empty($data->apellidos) && !empty($data->email)) {
+            $this->user->id_usuario = $id;
+            $this->user->nombre = $data->nombre;
+            $this->user->apellidos = $data->apellidos;
+            $this->user->email = $data->email;
+            
+            if($this->user->update()) {
+                $this->response->sendSuccess(200, ["mensaje" => "Administrador actualizado exitosamente"]);
+            } else {
+                $this->response->sendError(500, "Error al actualizar administrador");
+            }
+        } else {
+            $this->response->sendError(400, "Datos incompletos");
         }
     }
 }

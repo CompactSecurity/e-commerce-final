@@ -59,4 +59,42 @@ class User {
         $stmt->execute([":email" => $email]);
         return $stmt->rowCount() > 0;
     }
+    
+    // Add these methods to your User class
+    
+    public function getAdmins() {
+        $query = "SELECT id_usuario, nombre, apellidos, email FROM " . $this->table_name . " WHERE rol = 'admin'";
+        $stmt = $this->conn->prepare($query);
+        
+        if($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return false;
+    }
+    
+    public function delete($id) {
+        $query = "DELETE FROM " . $this->table_name . " WHERE id_usuario = :id";
+        $stmt = $this->conn->prepare($query);
+        
+        $stmt->bindParam(":id", $id);
+        
+        return $stmt->execute();
+    }
+    
+    public function update() {
+        $query = "UPDATE " . $this->table_name . "
+                SET nombre = :nombre,
+                    apellidos = :apellidos,
+                    email = :email
+                WHERE id_usuario = :id";
+        
+        $stmt = $this->conn->prepare($query);
+        
+        $stmt->bindParam(":nombre", $this->nombre);
+        $stmt->bindParam(":apellidos", $this->apellidos);
+        $stmt->bindParam(":email", $this->email);
+        $stmt->bindParam(":id", $this->id_usuario);
+        
+        return $stmt->execute();
+    }
 }

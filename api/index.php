@@ -1,4 +1,8 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once __DIR__ . '/config/cors.php';
 require_once __DIR__ . '/config/config.php';
 require_once __DIR__ . '/config/database.php';
@@ -17,12 +21,25 @@ $controller = isset($uri[0]) && $uri[0] !== '' ? $uri[0] : 'home';
 $action = isset($uri[1]) && $uri[1] !== '' ? $uri[1] : 'index';
 $id = isset($uri[2]) && $uri[2] !== '' ? $uri[2] : null;
 
-// Special route handling for auth/register-admin
-if ($controller === 'auth' && $action === 'register-admin') {
+// Add these special route handlers
+if ($controller === 'auth') {
     require_once __DIR__ . '/controllers/AuthController.php';
     $controller_instance = new AuthController();
-    $controller_instance->registerAdmin();
-    exit;
+    
+    switch ($action) {
+        case 'register-admin':
+            $controller_instance->registerAdmin();
+            exit;
+        case 'get-admins':
+            $controller_instance->getAdmins();
+            exit;
+        case 'delete-admin':
+            $controller_instance->deleteAdmin($id);
+            exit;
+        case 'update-admin':
+            $controller_instance->updateAdmin($id);
+            exit;
+    }
 }
 
 // Load and execute controller

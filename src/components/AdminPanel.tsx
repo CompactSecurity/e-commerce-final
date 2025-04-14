@@ -1,6 +1,9 @@
 'use client'
 import React, { useState } from 'react';
-import { FaUserPlus } from 'react-icons/fa';
+import { FaUserPlus, FaUserMinus, FaUserEdit, FaArrowLeft } from 'react-icons/fa';
+import AddAdmin from './admin/AddAdmin';
+import DeleteAdmin from './admin/DeleteAdmin';
+import EditAdmin from './admin/EditAdmin';
 
 interface AdminFormData {
     nombre: string;
@@ -53,58 +56,56 @@ const AdminPanel = () => {
         }
     };
 
+    const [currentView, setCurrentView] = useState<string>('main');
+
+    const renderView = () => {
+        switch(currentView) {
+            case 'add':
+                return <AddAdmin onBack={() => setCurrentView('main')} />;
+            case 'delete':
+                return <DeleteAdmin onBack={() => setCurrentView('main')} />;
+            case 'edit':
+                return <EditAdmin onBack={() => setCurrentView('main')} />;
+            default:
+                return (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <button
+                            onClick={() => setCurrentView('add')}
+                            className="p-6 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors flex flex-col items-center gap-4"
+                        >
+                            <FaUserPlus className="text-4xl text-blue-600" />
+                            <span className="text-lg font-medium text-blue-800">Agregar Administrador</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('delete')}
+                            className="p-6 bg-red-100 rounded-lg hover:bg-red-200 transition-colors flex flex-col items-center gap-4"
+                        >
+                            <FaUserMinus className="text-4xl text-red-600" />
+                            <span className="text-lg font-medium text-red-800">Eliminar Administrador</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('edit')}
+                            className="p-6 bg-green-100 rounded-lg hover:bg-green-200 transition-colors flex flex-col items-center gap-4"
+                        >
+                            <FaUserEdit className="text-4xl text-green-600" />
+                            <span className="text-lg font-medium text-green-800">Editar Administrador</span>
+                        </button>
+                    </div>
+                );
+        }
+    };
+
     return (
-        <div className="p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-6 text-gray-800">Registrar Nuevo Administrador</h2>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                    <label className="block text-gray-700 mb-2">Nombre</label>
-                    <input
-                        type="text"
-                        value={formData.nombre}
-                        onChange={(e) => setFormData({...formData, nombre: e.target.value})}
-                        className="w-full p-2 border rounded"
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="block text-gray-700 mb-2">Apellidos</label>
-                    <input
-                        type="text"
-                        value={formData.apellidos}
-                        onChange={(e) => setFormData({...formData, apellidos: e.target.value})}
-                        className="w-full p-2 border rounded"
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="block text-gray-700 mb-2">Email</label>
-                    <input
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                        className="w-full p-2 border rounded"
-                        required
-                    />
-                </div>
-                <div>
-                    <label className="block text-gray-700 mb-2">Contraseña</label>
-                    <input
-                        type="password"
-                        value={formData.password}
-                        onChange={(e) => setFormData({...formData, password: e.target.value})}
-                        className="w-full p-2 border rounded"
-                        required
-                    />
-                </div>
+        <div className="p-6">
+            {currentView !== 'main' && (
                 <button
-                    type="submit"
-                    className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 flex items-center justify-center gap-2"
+                    onClick={() => setCurrentView('main')}
+                    className="mb-6 flex items-center text-gray-600 hover:text-gray-800"
                 >
-                    <FaUserPlus />
-                    Registrar Administrador
+                    <FaArrowLeft className="mr-2" /> Volver al Panel
                 </button>
-            </form>
+            )}
+            {renderView()}
         </div>
     );
 };
