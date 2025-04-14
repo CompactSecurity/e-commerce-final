@@ -154,7 +154,9 @@ function Hero() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      Ver Productos
+                      <a href='/tienda'>
+                        Ver Productos
+                      </a>
                     </motion.button>
                   </motion.div>
                 </div>

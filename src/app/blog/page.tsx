@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Search, Calendar, User, Plus, Trash, Edit } from 'lucide-react'
 import { StaticImageData } from 'next/image'
-import epp01 from '@/assets/carrousel1.png'
+import imagee from '@/assets/carrousel1.png'
 import epp02 from '@/assets/carrousel2.png'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -90,13 +90,31 @@ export default function Blog() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 mt-17">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center ">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Nuestro Blog</h1>
-          <p className="text-lg text-gray-600">Descubre las últimas noticias y actualizaciones de nuestra empresa.</p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gray-50 mt-16">
+            {/* HeroSection */}
+            <section className="relative bg-gray-900 text-white py-24">
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-900 to-transparent">
+                    <div className="absolute inset-0 bg-black/50" />
+                    <Image src={imagee} alt="Compact Seguridad y Construcción" fill className="object-cover opacity-40" />
+                </div>
+                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <motion.h1
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-4xl md:text-5xl font-bold mb-6"
+                    >
+                        Nuestro Blog
+                    </motion.h1>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                        className="text-xl text-gray-300 max-w-2xl mx-auto"
+                    >
+                        Aqui encontraras todo lo relacionado con la seguridad industrial y el EPP. Todo lo que necesitas saber en un solo lugar.
+                    </motion.p>
+                </div>
+            </section>
         {/* Featured Post */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

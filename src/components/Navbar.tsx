@@ -175,7 +175,7 @@ const Navbar = () => {
                             <div className="hidden md:flex items-center space-x-4">
                             {user ? (
     <div className="relative group">
-        <button className="flex items-center space-x-2 text-white hover:text-orange-500 transition-colors">
+        <button className="flex items-center space-x-2 text-white hover:text-orange-500 transition-colors cursor-pointer">
             <FaUser className="text-xl" />
             <span className="font-medium">{user.nombre}</span>
         </button>
@@ -188,7 +188,7 @@ const Navbar = () => {
             <div className="p-2">
                 <button 
                     onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-md transition-colors"
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
                 >
                     Cerrar Sesión
                 </button>
