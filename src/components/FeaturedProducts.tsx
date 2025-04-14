@@ -234,7 +234,11 @@ const ProductCard = ({ product }: { product: Product }) => {
                                 font-medium flex items-center justify-center gap-1 md:gap-2 shadow-lg shadow-orange-500/20 cursor-pointer text-sm md:text-base"
                     >
                         <FiShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
-                        <span>Agregar al Carrito</span>
+                        <span>
+                            <a href="/tienda">
+                            Agregar al Carrito
+                            </a>
+                        </span>
                     </motion.button>
                 </div>
             </div>
