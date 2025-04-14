@@ -50,7 +50,7 @@ const Cart = () => {
             {/* Cart Icon */}
             <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative text-white hover:text-orange-500 transition-colors"
+                className="relative text-white hover:text-orange-500 transition-colors cursor-pointer z-10"
             >
                 <FaShoppingCart className="text-xl" />
                 {cartItems.length > 0 && (

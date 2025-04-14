@@ -210,13 +210,13 @@ const Navbar = () => {
         onClick={() => setIsLoginModalOpen(true)}
         className="text-white hover:text-orange-500 transition-colors"
     >
-        <FaUser className="text-xl" />
+        <FaUser className="text-xl cursor-pointer" />
     </button>
 )}
 
-                                    <button 
+                                    <button
                                         onClick={() => setIsOffersOpen(!isOffersOpen)}
-                                        className="text-white hover:text-orange-500 transition-colors"
+                                        className="text-white hover:text-orange-500 transition-colors cursor-pointer"
                                     >
                                     </button>
                                     <Cart />
@@ -289,7 +289,7 @@ const Navbar = () => {
                                     onClick={() => setIsCategoryOpen(!isCategoryOpen)}
                                     className="w-full flex items-center justify-between text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors"
                                 >
-                                    <span>Categorías</span>
+                                    <span className='cursor-pointer'>Categorías</span>
                                     {isCategoryOpen ? <FaChevronUp className="w-4 h-4" /> : <FaChevronDown className="w-4 h-4" />}
                                 </button>
                                 {isCategoryOpen && (
@@ -313,7 +313,7 @@ const Navbar = () => {
                                 className="w-full flex items-center justify-between text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors"
                             >
                                 <span>¡Top Ofertas!</span>
-                                <FaTag className="w-4 h-4" />
+                                <FaTag className="w-4 h-4 cursor-pointer" />
                             </button>
 
                             {/* Redes sociales móvil meter dentro del div de abajo*/}
@@ -360,8 +360,8 @@ const Navbar = () => {
                                         onClick={() => setIsCategoryOpen(!isCategoryOpen)}
                                         className="text-white hover:text-gray-200 font-medium px-3 py-2 flex items-center space-x-1"
                                     >
-                                        <FaBars className="text-sm" />
-                                        <span>Categorías</span>
+                                        <FaBars className="text-sm cursor-pointer" />
+                                        <span className='cursor-pointer'>Categorías</span>
                                     </button>
                                     <div className={`absolute left-0 w-72 bg-white shadow-lg z-50 ${isCategoryOpen ? 'block' : 'hidden'}`}>
                                         {categories.map((category) => (
@@ -398,8 +398,8 @@ const Navbar = () => {
                                 onClick={() => setIsOffersOpen(!isOffersOpen)}
                                 className="text-white hover:text-gray-200 font-medium px-3 py-2 flex items-center space-x-2"
                             >
-                                <FaTag className="text-sm" />
-                                <span>¡Top Ofertas!</span>
+                                <FaTag className="text-sm cursor-pointer" />
+                                <span className='cursor-pointer'>¡Top Ofertas!</span>
                             </button>
                         </div>
                     </div>
