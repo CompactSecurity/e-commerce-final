@@ -36,7 +36,7 @@ const DeleteBlog = ({ onBack }: DeleteBlogProps) => {
         if (window.confirm('¿Está seguro de eliminar este blog?')) {
             try {
                 const response = await fetch(`http://localhost/e-commerce/api/blog/delete/${id}`, {
-                    method: 'POST', // Changed from DELETE to POST
+                    method: 'POST',
                     credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'

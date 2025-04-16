@@ -65,6 +65,28 @@ if ($controller === 'blog') {
             exit;
     }
 }
+if ($controller === 'category') {
+    require_once __DIR__. '/controllers/CategoryController.php';
+    $controller_instance = new CategoryController();
+
+    switch ($action){
+        case 'create':
+            $controller_instance->create();
+            exit;
+        case 'get-all':
+            $controller_instance->getAll();
+            exit;
+        case 'delete':
+            $controller_instance->delete($id);
+            exit;
+        case 'update':
+            $controller_instance->update($id);
+            exit;
+        case 'get-by-id': 
+            $controller_instance->delete($id);
+            exit;
+    } 
+}
 
 // Load and execute controller
 $controller_name = ucfirst($controller) . 'Controller';

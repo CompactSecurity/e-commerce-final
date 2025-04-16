@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { FaUserPlus, FaUserMinus, FaUserEdit, FaArrowLeft, FaBlog, FaEdit } from 'react-icons/fa';
+import { FaUserPlus, FaUserMinus, FaUserEdit, FaArrowLeft, FaBlog, FaEdit, FaFolderMinus, FaFolderPlus, FaFolder } from 'react-icons/fa';
 import { AiFillDelete, AiFillProduct } from "react-icons/ai";
 import AddAdmin from './admin/AddAdmin';
 import DeleteAdmin from './admin/DeleteAdmin';
@@ -8,6 +8,9 @@ import EditAdmin from './admin/EditAdmin';
 import AddBlog from './admin/AddBlog';
 import DeleteBlog from './admin/DeleteBlog';
 import EditBlog from './admin/EditBlog';
+import AddCategory from './admin/AddCategory';
+import DeleteCategory from './admin/DeleteCategory';
+import EditCategory from './admin/EditCategory';
 
 interface AdminFormData {
     nombre: string;
@@ -37,7 +40,7 @@ const AdminPanel = () => {
                 credentials: 'include',
                 body: JSON.stringify({
                     ...formData,
-                    rol: 'admin' // Explicitly setting role as admin
+                    rol: 'admin' //solo para el rol de admin
                 }),
             });
 
@@ -76,6 +79,12 @@ const AdminPanel = () => {
                 return <DeleteBlog onBack={() => setCurrentView('main')} />;
             case 'edit-blog':
                 return <EditBlog onBack={() => setCurrentView('main')} />;
+            case 'add-category':
+                return <AddCategory onBack={() => setCurrentView('main')} />;
+            case 'delete-category':
+                return <DeleteCategory onBack={() => setCurrentView('main')} />;
+            case 'edit-category':
+                return <EditCategory onBack={() => setCurrentView('main')} />;
             default:
                 return (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -123,27 +132,28 @@ const AdminPanel = () => {
                             <FaBlog className="text-4xl text-teal-600" />
                             <span className="text-lg font-medium text-teal-800">Editar Blog</span>
                         </button>
-                        {/* Product buttons prrecio/cotizar */}
+
+                        {/* Category management buttons */}
                         <button
-                            onClick={() => setCurrentView('edit-blog')}
-                            className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4"
+                            onClick={() => setCurrentView('add-category')}
+                            className="p-6 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition-colors flex flex-col items-center gap-4"
                         >
-                            <AiFillProduct className="text-4xl text-teal-600" />
-                            <span className="text-lg font-medium text-teal-800">Agregar Producto</span>
+                            <FaFolderPlus className="text-4xl text-indigo-600" />
+                            <span className="text-lg font-medium text-indigo-800">Agregar Categoría</span>
                         </button>
                         <button
-                            onClick={() => setCurrentView('edit-blog')}
-                            className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4"
+                            onClick={() => setCurrentView('delete-category')}
+                            className="p-6 bg-pink-100 rounded-lg hover:bg-pink-200 transition-colors flex flex-col items-center gap-4"
                         >
-                            <AiFillDelete className="text-4xl text-teal-600" />
-                            <span className="text-lg font-medium text-teal-800">Eliminar Producto</span>
+                            <FaFolderMinus className="text-4xl text-pink-600" />
+                            <span className="text-lg font-medium text-pink-800">Eliminar Categoría</span>
                         </button>
                         <button
-                            onClick={() => setCurrentView('edit-blog')}
-                            className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4"
+                            onClick={() => setCurrentView('edit-category')}
+                            className="p-6 bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors flex flex-col items-center gap-4"
                         >
-                            <FaEdit className="text-4xl text-teal-600" />
-                            <span className="text-lg font-medium text-teal-800">Editar Producto</span>
+                            <FaFolder className="text-4xl text-yellow-600" />
+                            <span className="text-lg font-medium text-yellow-800">Editar Categoría</span>
                         </button>
                     </div>
                 );
