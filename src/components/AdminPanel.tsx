@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { FaUserPlus, FaUserMinus, FaUserEdit, FaArrowLeft, FaBlog, FaEdit, FaFolderMinus, FaFolderPlus, FaFolder } from 'react-icons/fa';
+import { AiOutlineProduct, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { AiFillDelete, AiFillProduct } from "react-icons/ai";
 import AddAdmin from './admin/AddAdmin';
 import DeleteAdmin from './admin/DeleteAdmin';
@@ -90,21 +91,21 @@ const AdminPanel = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <button
                             onClick={() => setCurrentView('add')}
-                            className="p-6 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors flex flex-col items-center gap-4"
+                            className="p-6 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
                         >
                             <FaUserPlus className="text-4xl text-blue-600" />
                             <span className="text-lg font-medium text-blue-800">Agregar Administrador</span>
                         </button>
                         <button
                             onClick={() => setCurrentView('delete')}
-                            className="p-6 bg-red-100 rounded-lg hover:bg-red-200 transition-colors flex flex-col items-center gap-4"
+                            className="p-6 bg-red-100 rounded-lg hover:bg-red-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
                         >
                             <FaUserMinus className="text-4xl text-red-600" />
                             <span className="text-lg font-medium text-red-800">Eliminar Administrador</span>
                         </button>
                         <button
                             onClick={() => setCurrentView('edit')}
-                            className="p-6 bg-green-100 rounded-lg hover:bg-green-200 transition-colors flex flex-col items-center gap-4"
+                            className="p-6 bg-green-100 rounded-lg hover:bg-green-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
                         >
                             <FaUserEdit className="text-4xl text-green-600" />
                             <span className="text-lg font-medium text-green-800">Editar Administrador</span>
@@ -113,21 +114,21 @@ const AdminPanel = () => {
                         {/* Blog management buttons */}
                         <button
                             onClick={() => setCurrentView('add-blog')}
-                            className="p-6 bg-purple-100 rounded-lg hover:bg-purple-200 transition-colors flex flex-col items-center gap-4"
+                            className="p-6 bg-purple-100 rounded-lg hover:bg-purple-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
                         >
                             <FaBlog className="text-4xl text-purple-600" />
                             <span className="text-lg font-medium text-purple-800">Agregar Blog</span>
                         </button>
                         <button
                             onClick={() => setCurrentView('delete-blog')}
-                            className="p-6 bg-orange-100 rounded-lg hover:bg-orange-200 transition-colors flex flex-col items-center gap-4"
+                            className="p-6 bg-orange-100 rounded-lg hover:bg-orange-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
                         >
                             <FaBlog className="text-4xl text-orange-600" />
                             <span className="text-lg font-medium text-orange-800">Eliminar Blog</span>
                         </button>
                         <button
                             onClick={() => setCurrentView('edit-blog')}
-                            className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4"
+                            className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
                         >
                             <FaBlog className="text-4xl text-teal-600" />
                             <span className="text-lg font-medium text-teal-800">Editar Blog</span>
@@ -136,21 +137,21 @@ const AdminPanel = () => {
                         {/* Category management buttons */}
                         <button
                             onClick={() => setCurrentView('add-category')}
-                            className="p-6 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition-colors flex flex-col items-center gap-4"
+                            className="p-6 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
                         >
                             <FaFolderPlus className="text-4xl text-indigo-600" />
                             <span className="text-lg font-medium text-indigo-800">Agregar Categoría</span>
                         </button>
                         <button
                             onClick={() => setCurrentView('delete-category')}
-                            className="p-6 bg-pink-100 rounded-lg hover:bg-pink-200 transition-colors flex flex-col items-center gap-4"
+                            className="p-6 bg-pink-100 rounded-lg hover:bg-pink-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
                         >
                             <FaFolderMinus className="text-4xl text-pink-600" />
                             <span className="text-lg font-medium text-pink-800">Eliminar Categoría</span>
                         </button>
                         <button
                             onClick={() => setCurrentView('edit-category')}
-                            className="p-6 bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors flex flex-col items-center gap-4"
+                            className="p-6 bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
                         >
                             <FaFolder className="text-4xl text-yellow-600" />
                             <span className="text-lg font-medium text-yellow-800">Editar Categoría</span>

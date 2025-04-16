@@ -61,20 +61,6 @@ CREATE TABLE `categorias` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `faq`
---
-
-CREATE TABLE `faq` (
-  `id_faq` int(11) NOT NULL,
-  `pregunta` varchar(255) NOT NULL,
-  `respuesta` text NOT NULL,
-  `orden` int(11) DEFAULT 0,
-  `estado` tinyint(1) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `imagenes_productos`
 --
 
