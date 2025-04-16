@@ -87,7 +87,27 @@ if ($controller === 'category') {
             exit;
     } 
 }
-
+if ($controller === 'marcas') {
+    require_once __DIR__. '/controllers/MarcaController.php';
+    $controller_instance = new MarcaController();
+    switch ($action){
+        case 'create':
+            $controller_instance->create();
+            exit;
+        case 'get-all':
+            $controller_instance->getAll();
+            exit;
+        case 'delete':
+            $controller_instance->delete($id);
+            exit;
+        case 'update':
+            $controller_instance->update($id);
+            exit;
+        case 'get-by-id':
+            $controller_instance->getById($id); // Fixed: Changed from delete to getById
+            exit;  
+    }
+}
 // Load and execute controller
 $controller_name = ucfirst($controller) . 'Controller';
 $controller_file = __DIR__ . '/controllers/' . $controller_name . '.php';

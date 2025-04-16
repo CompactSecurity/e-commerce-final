@@ -12,6 +12,9 @@ import EditBlog from './admin/EditBlog';
 import AddCategory from './admin/AddCategory';
 import DeleteCategory from './admin/DeleteCategory';
 import EditCategory from './admin/EditCategory';
+import AddMarca from './admin/AddMarca';
+import DeleteMarca from './admin/DeleteMarca';
+import EditMarca from './admin/EditMarca';
 
 interface AdminFormData {
     nombre: string;
@@ -86,6 +89,12 @@ const AdminPanel = () => {
                 return <DeleteCategory onBack={() => setCurrentView('main')} />;
             case 'edit-category':
                 return <EditCategory onBack={() => setCurrentView('main')} />;
+            case 'add-marca':
+                return <AddMarca onBack={() => setCurrentView('main')} />;
+            case 'delete-marca':
+                return <DeleteMarca onBack={() => setCurrentView('main')} />;
+            case 'edit-marca':
+                return <EditMarca onBack={() => setCurrentView('main')} />;
             default:
                 return (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -155,6 +164,27 @@ const AdminPanel = () => {
                         >
                             <FaFolder className="text-4xl text-yellow-600" />
                             <span className="text-lg font-medium text-yellow-800">Editar Categoría</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('add-marca')}
+                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                        >
+                            <AiFillProduct className="text-4xl text-gray-600" />
+                            <span className="text-lg font-medium text-gray-800">Agregar Marca</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('delete-marca')}
+                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                        >
+                            <AiFillDelete className="text-4xl text-gray-600" />
+                            <span className="text-lg font-medium text-gray-800">Eliminar Marca</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('edit-marca')}
+                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                        >
+                            <AiOutlineEdit className="text-4xl text-gray-600" />
+                            <span className="text-lg font-medium text-gray-800">Editar Marca</span>
                         </button>
                     </div>
                 );
