@@ -60,6 +60,12 @@ CREATE TABLE `categorias` (
 
 -- --------------------------------------------------------
 
+CREATE TABLE marcas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    logo VARCHAR(255) NOT NULL
+);
 --
 -- Estructura de tabla para la tabla `imagenes_productos`
 --
