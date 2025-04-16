@@ -24,22 +24,21 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     const articleLinks = [
-        { name: 'Cascos de seguridad', href: '/articulos/cascos-seguridad' },
-        { name: 'Guantes de seguridad', href: '/articulos/guantes-seguridad' },
-        { name: 'Lentes de seguridad', href: '/articulos/lentes-seguridad' },
-        { name: 'Protección respiratoria', href: '/articulos/proteccion-respiratoria' },
-        { name: 'Zapatos de seguridad', href: '/articulos/zapatos-seguridad' },
-        { name: 'Protectores auditivos', href: '/articulos/protectores-auditivos' },
+        { name: 'Cascos de seguridad', href: '/tienda' },
+        { name: 'Guantes de seguridad', href: '/tienda' },
+        { name: 'Lentes de seguridad', href: '/tienda' },
+        { name: 'Protección respiratoria', href: '/tienda' },
+        { name: 'Zapatos de seguridad', href: '/tienda' },
+        { name: 'Protectores auditivos', href: '/tienda' },
     ];
 
     const productLinks = [
-        { name: 'Absorbentes', href: '/productos/absorbentes' },
-        { name: 'Arnés y líneas de vida', href: '/productos/arnes-lineas-vida' },
-        { name: 'Candados de bloqueo', href: '/productos/candados-bloqueo' },
-        { name: 'Cintas antideslizantes', href: '/productos/cintas-antideslizantes' },
-        { name: 'Duchas y lavaojos', href: '/productos/duchas-lavaojos' },
-        { name: 'Seguridad vial', href: '/productos/seguridad-vial' },
-        { name: 'Vestuario laboral', href: '/productos/vestuario-laboral' },
+        { name: 'Absorbentes', href: '/tienda' },
+        { name: 'Arnés y líneas de vida', href: '/tienda' },
+        { name: 'Candados de bloqueo', href: '/tienda' },
+        { name: 'Cintas antideslizantes', href: '/tienda' },
+        { name: 'Seguridad vial', href: '/tienda' },
+        { name: 'Ropa industrial', href: '/tienda' },
     ];
 
     return (
@@ -124,7 +123,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link 
-                                    href="tel:976687566" 
+                                    href="https://wa.me/51976687566" target='_blank' 
                                     className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors"
                                 >
                                     <FiPhone className="w-5 h-5 flex-shrink-0" />
@@ -133,7 +132,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link 
-                                    href="mailto:ventas@compactseguridadindustrial.com" 
+                                    href="mailto:compact.estudios@gmail.com" 
                                     className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors"
                                 >
                                     <FiMail className="w-5 h-5 flex-shrink-0" />
@@ -150,7 +149,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link 
-                                    href="tel:976 687 566" 
+                                    href="https://wa.me/51976687566" target='_blank' 
                                     className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors"
                                 >
                                     <FiPhone className="w-5 h-5 flex-shrink-0" />
