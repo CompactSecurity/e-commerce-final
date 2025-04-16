@@ -3,11 +3,11 @@ class Marca {
     private $conn;
     private $table_name = "marcas";
     
-    public $id;
+    public $id_marca;
     public $nombre;
     public $slug;
     public $descripcion;
-    public $logo;
+    public $logo; // Changed from imagen_logo to logo
     public $estado;
     
     public function __construct($db) {
@@ -19,19 +19,15 @@ class Marca {
         $query = "INSERT INTO " . $this->table_name . "
                 SET
                     nombre = :nombre,
-                    slug = :slug,
                     descripcion = :descripcion,
-                    logo = :logo,
-                    estado = :estado";
+                    logo = :logo"; // Changed from imagen_logo to logo
     
         $stmt = $this->conn->prepare($query);
         
         return $stmt->execute([
             ":nombre" => $this->nombre,
-            ":slug" => $this->slug,
             ":descripcion" => $this->descripcion,
-            ":logo" => $this->logo,
-            ":estado" => $this->estado ?? 1
+            ":logo" => $this->logo // Changed from imagen_logo to logo
         ]);
     }
     
@@ -46,7 +42,7 @@ class Marca {
     // Eliminar una marca
     public function delete($id) {
         try {
-            $query = "DELETE FROM " . $this->table_name . " WHERE id = :id";
+            $query = "DELETE FROM " . $this->table_name . " WHERE id = :id"; // Changed id_marca to id
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(":id", $id);
             return $stmt->execute();
@@ -65,23 +61,23 @@ class Marca {
                     descripcion = :descripcion,
                     logo = :logo,
                     estado = :estado
-                WHERE id = :id";
+                WHERE id = :id"; // Changed id_marca to id
     
         $stmt = $this->conn->prepare($query);
-        
+    
         return $stmt->execute([
             ":nombre" => $this->nombre,
             ":slug" => $this->slug,
             ":descripcion" => $this->descripcion,
             ":logo" => $this->logo,
             ":estado" => $this->estado ?? 1,
-            ":id" => $this->id
+            ":id" => $this->id // Changed id_marca to id
         ]);
     }
     
     // Obtener una marca por su ID
     public function getById($id) {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id"; // Changed id_marca to id
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         $stmt->execute();

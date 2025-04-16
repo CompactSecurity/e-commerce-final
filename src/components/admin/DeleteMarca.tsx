@@ -36,7 +36,7 @@ const DeleteMarcas = ({ onBack }: DeleteMarcasProps) => {
         if (window.confirm('¿Está seguro de eliminar esta marca?')) {
             try {
                 const response = await fetch(`http://localhost/e-commerce/api/marcas/delete/${id}`, {
-                    method: 'POST', // Changed from DELETE to POST
+                    method: 'POST', // Use POST for compatibility
                     credentials: 'include'
                 });
 
