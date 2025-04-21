@@ -95,7 +95,7 @@ const AddMarcas = ({ onBack }: AddMarcasProps) => {
                                 file:rounded-md file:border-0
                                 file:text-sm file:font-semibold
                                 file:bg-blue-50 file:text-blue-700
-                                hover:file:bg-blue-100"
+                                hover:file:bg-blue-100 cursor-pointer"
                         />
                         {previewUrl && (
                             <div className="relative w-24 h-24">
@@ -103,7 +103,7 @@ const AddMarcas = ({ onBack }: AddMarcasProps) => {
                                     src={previewUrl}
                                     alt="Preview"
                                     fill
-                                    className="object-cover rounded"
+                                    className="object-cover rounded "
                                 />
                             </div>
                         )}
@@ -113,13 +113,13 @@ const AddMarcas = ({ onBack }: AddMarcasProps) => {
                     <button
                         type="button"
                         onClick={onBack}
-                        className="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                        className="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer"
                     >
                         Cancelar
                     </button>
                     <button
                         type="submit"
-                        className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                        className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 cursor-pointer"
                     >
                         Crear Marca
                     </button>

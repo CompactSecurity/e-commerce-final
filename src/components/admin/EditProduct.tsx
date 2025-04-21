@@ -177,7 +177,7 @@ const EditProduct = ({ onBack }: EditProductProps) => {
                 <h2 className="text-xl font-semibold text-gray-800">Editar Productos</h2>
                 <button
                     onClick={onBack}
-                    className="text-gray-600 hover:text-gray-800"
+                    className="text-gray-600 hover:text-gray-800 cursor-pointer"
                 >
                     ✕
                 </button>
@@ -395,7 +395,7 @@ const EditProduct = ({ onBack }: EditProductProps) => {
                                 name="cotizable"
                                 checked={selectedProduct.cotizable === 1}
                                 onChange={handleInputChange}
-                                className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded cursor-pointer"
                             />
                             <label className="ml-2 block text-sm text-gray-700">
                                 Producto cotizable
@@ -407,7 +407,7 @@ const EditProduct = ({ onBack }: EditProductProps) => {
                                 name="agregable_carrito"
                                 checked={selectedProduct.agregable_carrito === 1}
                                 onChange={handleInputChange}
-                                className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded cursor-pointer"
                             />
                             <label className="ml-2 block text-sm text-gray-700">
                                 Se puede agregar al carrito
@@ -419,7 +419,7 @@ const EditProduct = ({ onBack }: EditProductProps) => {
                                 name="estado"
                                 checked={selectedProduct.estado === 1}
                                 onChange={handleInputChange}
-                                className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded cursor-pointer"
                             />
                             <label className="ml-2 block text-sm text-gray-700">
                                 Activo

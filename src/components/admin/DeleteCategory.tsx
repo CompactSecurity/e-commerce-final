@@ -69,7 +69,7 @@ const DeleteCategory = ({ onBack }: DeleteCategoryProps) => {
             </div>
             <button
               onClick={() => handleDelete(category.id_categoria)}
-              className="p-2 text-red-600 hover:bg-red-50 rounded"
+              className="p-2 text-red-600 hover:bg-red-50 rounded cursor-pointer"
             >
               <FaTrash />
             </button>

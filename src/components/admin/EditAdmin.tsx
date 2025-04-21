@@ -40,7 +40,7 @@ const EditAdmin = ({ onBack }: EditAdminProps) => {
 
         try {
             const response = await fetch(`http://localhost/e-commerce/api/auth/update-admin/${editingAdmin.id_usuario}`, {
-                method: 'POST', // Changed from PUT to POST
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -94,13 +94,13 @@ const EditAdmin = ({ onBack }: EditAdminProps) => {
                                 <div className="flex justify-end space-x-2">
                                     <button
                                         onClick={() => setEditingAdmin(null)}
-                                        className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
+                                        className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded cursor-pointer "
                                     >
                                         Cancelar
                                     </button>
                                     <button
                                         onClick={handleEdit}
-                                        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 flex items-center"
+                                        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 flex items-center cursor-pointer"
                                     >
                                         <FaSave className="mr-2" /> Guardar
                                     </button>
@@ -114,7 +114,7 @@ const EditAdmin = ({ onBack }: EditAdminProps) => {
                                 </div>
                                 <button
                                     onClick={() => setEditingAdmin(admin)}
-                                    className="p-2 text-blue-600 hover:bg-blue-100 rounded-full transition-colors"
+                                    className="p-2 text-blue-600 hover:bg-blue-100 rounded-full transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white"
                                 >
                                     <FaEdit />
                                 </button>

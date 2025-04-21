@@ -283,7 +283,7 @@ const AddProduct = ({ onBack }: AddProductProps) => {
                         <button
                             type="button"
                             onClick={() => fileInputRef.current?.click()}
-                            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200"
+                            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 cursor-pointer"
                         >
                             Seleccionar imagen
                         </button>
@@ -310,13 +310,13 @@ const AddProduct = ({ onBack }: AddProductProps) => {
                     <button
                         type="button"
                         onClick={onBack}
-                        className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+                        className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 cursor-pointer"
                     >
                         Cancelar
                     </button>
                     <button
                         type="submit"
-                        className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 flex items-center"
+                        className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 flex items-center cursor-pointer"
                     >
                         <FaPlus className="mr-2" />
                         Agregar Producto

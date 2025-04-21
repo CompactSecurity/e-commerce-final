@@ -115,7 +115,7 @@ const EditCategory = ({ onBack }: EditCategoryProps) => {
               type="checkbox"
               checked={selectedCategory.estado === 1}
               onChange={(e) => setSelectedCategory({ ...selectedCategory, estado: e.target.checked ? 1 : 0 })}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded cursor-pointer"
             />
             <label className="ml-2 block text-sm text-gray-900">Categoría activa</label>
           </div>
@@ -124,13 +124,13 @@ const EditCategory = ({ onBack }: EditCategoryProps) => {
             <button
               type="button"
               onClick={() => setSelectedCategory(null)}
-              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+              className="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer"
             >
               Cancelar
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+              className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 cursor-pointer"
             >
               Actualizar Categoría
             </button>
@@ -152,7 +152,7 @@ const EditCategory = ({ onBack }: EditCategoryProps) => {
             </div>
             <button
               onClick={() => setSelectedCategory(category)}
-              className="p-2 text-blue-600 hover:bg-blue-50 rounded"
+              className="p-2 text-blue-600 hover:bg-blue-50 rounded cursor-pointer"
             >
               <FaEdit />
             </button>

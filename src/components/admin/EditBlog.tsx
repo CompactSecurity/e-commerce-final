@@ -158,7 +158,7 @@ const EditBlog = ({ onBack }: EditBlogProps) => {
                             type="checkbox"
                             checked={selectedBlog.is_featured}
                             onChange={(e) => setSelectedBlog({...selectedBlog, is_featured: e.target.checked})}
-                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                            className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded cursor-pointer"
                         />
                         <label className="ml-2 block text-sm text-gray-900">Destacar este blog</label>
                     </div>
@@ -167,13 +167,13 @@ const EditBlog = ({ onBack }: EditBlogProps) => {
                         <button
                             type="button"
                             onClick={() => setSelectedBlog(null)}
-                            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+                            className="px-4 py-2 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 cursor-pointer"
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
-                            className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                            className="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 cursor-pointer"
                         >
                             Actualizar Blog
                         </button>
@@ -195,7 +195,7 @@ const EditBlog = ({ onBack }: EditBlogProps) => {
                         </div>
                         <button
                             onClick={() => setSelectedBlog(blog)}
-                            className="p-2 text-blue-600 hover:bg-blue-50 rounded"
+                            className="p-2 text-blue-600 hover:bg-blue-50 rounded cursor-pointer"
                         >
                             <FaEdit />
                         </button>

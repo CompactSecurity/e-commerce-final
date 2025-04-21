@@ -75,7 +75,7 @@ const DeleteProduct = ({ onBack }: DeleteProductProps) => {
                 <h2 className="text-xl font-semibold text-gray-800">Eliminar Productos</h2>
                 <button
                     onClick={onBack}
-                    className="text-gray-600 hover:text-gray-800"
+                    className="text-gray-600 hover:text-gray-800 cursor-pointer"
                 >
                     ✕
                 </button>
