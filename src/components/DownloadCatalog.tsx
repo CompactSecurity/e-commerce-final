@@ -144,7 +144,7 @@ const DownloadCatalog = () => {
                                         type="submit"
                                         className="w-full bg-orange-500 text-white px-8 py-4 rounded-xl font-medium
                                                  shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50
-                                                 flex items-center justify-center gap-3"
+                                                 flex items-center justify-center gap-3 cursor-pointer"
                                         whileHover={{ scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
                                     >
