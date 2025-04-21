@@ -21,7 +21,6 @@ interface User {
 }
 
 const Navbar = () => {
-    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [isOffersOpen, setIsOffersOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);

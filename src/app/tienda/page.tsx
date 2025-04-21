@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaSearch, FaStar, FaShoppingCart, FaFilter } from 'react-icons/fa';
+import { FaSearch, FaStar, FaShoppingCart, FaFilter, FaTimes } from 'react-icons/fa';
 import { IoGrid, IoList } from 'react-icons/io5';
 import Image from 'next/image';
 import { StaticImageData } from 'next/image';
@@ -46,6 +46,18 @@ interface FilterOptions {
 }
 
 const ShopPage = () => {
+    // Add these new states with the existing ones
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+    // Add these new functions after the existing ones
+    const handleProductClick = (product: Product) => {
+        setSelectedProduct(product);
+    };
+
+    const closeModal = () => {
+        setSelectedProduct(null);
+    };
+
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [brands, setBrands] = useState<Brand[]>([]);
@@ -335,6 +347,127 @@ const ShopPage = () => {
                             </div>
                         </div>
 
+                        {selectedProduct && (
+  <div className="fixed inset-0 backdrop-blur-md bg-black/30 z-50 flex items-center justify-center p-4 transition-all duration-300 ease-in-out">
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl w-full max-h-[85vh] flex flex-col">
+      
+      {/* Header */}
+      <div className="px-6 py-4 border-b flex justify-between items-center">
+        <h2 className="text-xl font-semibold text-gray-800 tracking-tight">
+          Detalles del producto
+        </h2>
+        <button
+          onClick={closeModal}
+          className="text-gray-500 hover:text-gray-700 transition-colors duration-200 ease-in-out cursor-pointer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Content */}
+      <div className="p-6 flex-grow overflow-y-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          {/* Imagen */}
+          <div className="relative aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
+            <Image
+              src={selectedProduct.imagen_principal || '/placeholder.jpg'}
+              alt={selectedProduct.nombre}
+              fill
+              className="object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+            />
+          </div>
+
+          {/* Información estilo formulario */}
+          <div className="space-y-4 text-sm text-gray-700">
+            <div>
+              <label className="block text-gray-500 text-xs font-semibold uppercase mb-1">
+                Nombre del producto
+              </label>
+              <p className="text-base font-medium text-gray-800">{selectedProduct.nombre}</p>
+            </div>
+
+            <div>
+              <label className="block text-gray-500 text-xs font-semibold uppercase mb-1">
+                Marca
+              </label>
+              <p className="text-sm text-gray-700">
+                {brands.find(brand => brand.id_marca === selectedProduct.id_marca)?.nombre || 'N/A'}
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-gray-500 text-xs font-semibold uppercase mb-1">
+                Descripción
+              </label>
+              <p className="text-sm text-gray-600">{selectedProduct.descripcion}</p>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <div>
+                <label className="block text-gray-500 text-xs font-semibold uppercase mb-1">
+                  Precio
+                </label>
+                <p className="text-lg font-bold text-orange-600">
+                  S/ {selectedProduct.precio.toFixed(2)}
+                </p>
+              </div>
+            </div>
+            <div>
+              <label className="block text-gray-500 text-xs font-semibold uppercase mb-1">
+                Stock disponible
+              </label>
+              <p className={`text-sm font-medium ${selectedProduct.stock > 0 ? 'text-gray-700' : 'text-red-500'}`}>
+                {selectedProduct.stock > 0 ? selectedProduct.stock : 'Agotado'}
+              </p>
+            </div>
+
+            {/* Botones */}
+            <div className="pt-2 space-y-3">
+              {selectedProduct.agregable_carrito === 1 && selectedProduct.stock > 0 && (
+                <button className="w-full bg-orange-500 text-white py-3 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M4 2h16l-3 9H5.83l-.27-1H5l-1.99 1L4 2zm1 13a1 1 0 100 2 1 1 0 000-2zm10 0a1 1 0 100 2 1 1 0 000-2z" />
+                  </svg>
+                  Agregar al carrito
+                </button>
+              )}
+              {selectedProduct.cotizable === 1 && (
+                <button className="w-full bg-blue-500 text-white py-3 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out text-sm font-medium">
+                  Solicitar cotización
+                </button>
+              )}
+              {(selectedProduct.agregable_carrito === 0 || selectedProduct.stock === 0) && selectedProduct.cotizable !== 1 && (
+                <div className="w-full bg-gray-100 text-gray-500 py-3 px-4 rounded-md text-sm font-medium text-center">
+                  {selectedProduct.stock === 0 ? 'Producto agotado' : 'No disponible para agregar al carrito'}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
                         {/* Grid de productos */}
                         <div className={
                             viewMode === 'grid' 
@@ -346,7 +479,8 @@ const ShopPage = () => {
                                     key={product.id_producto}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className={`bg-white rounded-lg shadow-sm overflow-hidden ${
+                                    onClick={() => handleProductClick(product)}
+                                    className={`bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer hover:shadow-md transition-shadow ${
                                         viewMode === 'list' ? 'flex flex-col sm:flex-row' : ''
                                     }`}
                                 >
