@@ -237,7 +237,7 @@ const AddProduct = ({ onBack }: AddProductProps) => {
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Opciones de compra
+                            Opciones de Venta
                         </label>
                         <div className="space-y-2">
                             <label className="flex items-center">
