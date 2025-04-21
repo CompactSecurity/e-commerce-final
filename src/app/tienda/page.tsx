@@ -358,7 +358,7 @@ const ShopPage = () => {
         </h2>
         <button
           onClick={closeModal}
-          className="text-gray-500 hover:text-gray-700 transition-colors duration-200 ease-in-out cursor-pointer"
+          className="text-gray-500 hover:text-gray-700 transition-colors duration-200 ease-in-out cursor-po"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -425,7 +425,19 @@ const ShopPage = () => {
                   S/ {selectedProduct.precio.toFixed(2)}
                 </p>
               </div>
+            {/*Precio de oferta */}
+              {selectedProduct.precio_oferta > 0 && (
+                <div>
+                  <label className="block text-gray-500 text-xs font-semibold uppercase mb-1">
+                    Precio oferta
+                  </label>
+                  <p className="text-lg  text-gray-500 line-through">
+                    S/ {selectedProduct.precio_oferta.toFixed(2)}
+                  </p>
+                </div>
+              )}
             </div>
+
             <div>
               <label className="block text-gray-500 text-xs font-semibold uppercase mb-1">
                 Stock disponible
