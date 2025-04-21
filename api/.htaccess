@@ -13,3 +13,7 @@ Header set Access-Control-Allow-Origin "http://192.168.18.29:3000"
 Header set Access-Control-Allow-Credentials "true"
 Header set Access-Control-Allow-Methods "POST, GET, OPTIONS"
 Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]

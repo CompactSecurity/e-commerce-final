@@ -28,6 +28,12 @@ export default function AdminPage() {
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-8">Panel de Administración</h1>
+            <button 
+                onClick={() => router.push('/')}
+                className="mb-6 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer"
+            >
+                Ir a la Página Principal
+            </button>
             <AdminPanel />
         </div>
     );

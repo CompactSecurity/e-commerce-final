@@ -46,22 +46,7 @@ const Navbar = () => {
         }
     }, []);
 
-    const categories = [
-        { name: 'BLOQUEO Y ETIQUETADO', href: '/categoria/bloqueo-etiquetado' },
-        { name: 'CONTROL DE DERRAMES', href: '/categoria/control-derrames' },
-        { name: 'EQUIPOS DE SEGURIDAD ELECTRICA', href: '/categoria/seguridad-electrica' },
-        { name: 'ESCALERAS', href: '/categoria/escaleras' },
-        { name: 'LINTERNAS', href: '/categoria/linternas' },
-        { name: 'PROTECCION AUDITIVA', href: '/categoria/proteccion-auditiva' },
-        { name: 'PROTECCION FACIAL', href: '/categoria/proteccion-facial' },
-        { name: 'PROTECCION PARA CAIDAS', href: '/categoria/proteccion-caidas' },
-        { name: 'PROTECCIÓN PARA LA CABEZA', href: '/categoria/proteccion-cabeza' },
-        { name: 'PROTECCIÓN PARA MANOS', href: '/categoria/proteccion-manos' },
-        { name: 'PROTECCION PARA PIES', href: '/categoria/proteccion-pies' },
-        { name: 'PROTECCION RESPIRATORIA', href: '/categoria/proteccion-respiratoria' },
-        { name: 'ROPA INDUSTRIAL', href: '/categoria/ropa-industrial' },
-        { name: 'SEÑALIZACIÓN Y SEGURIDAD VIAL', href: '/categoria/senalizacion' },
-    ];
+
 
     const handleOpenRegister = () => {
         setIsLoginModalOpen(false);
@@ -283,30 +268,6 @@ const Navbar = () => {
                                 </Link>
                             </div>
 
-                            {/* Categorías móvil */}
-                            <div className="space-y-2">
-                                <button 
-                                    onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                                    className="w-full flex items-center justify-between text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors"
-                                >
-                                    <span className='cursor-pointer'>Categorías</span>
-                                    {isCategoryOpen ? <FaChevronUp className="w-4 h-4" /> : <FaChevronDown className="w-4 h-4" />}
-                                </button>
-                                {isCategoryOpen && (
-                                    <div className="pl-4 space-y-2">
-                                        {categories.map((category) => (
-                                            <Link
-                                                key={category.href}
-                                                href={category.href}
-                                                className="block text-white hover:text-orange-500 py-2 px-4 rounded-lg hover:bg-white/10 transition-colors"
-                                            >
-                                                {category.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-
                             {/* Ofertas móvil */}
                             <button 
                                 onClick={() => setIsOffersOpen(!isOffersOpen)}
@@ -355,26 +316,6 @@ const Navbar = () => {
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between h-12">
                             <div className="flex items-center space-x-8">
-                                <div className="relative group">
-                                    <button 
-                                        onClick={() => setIsCategoryOpen(!isCategoryOpen)}
-                                        className="text-white hover:text-gray-200 font-medium px-3 py-2 flex items-center space-x-1"
-                                    >
-                                        <FaBars className="text-sm cursor-pointer" />
-                                        <span className='cursor-pointer'>Categorías</span>
-                                    </button>
-                                    <div className={`absolute left-0 w-72 bg-white shadow-lg z-50 ${isCategoryOpen ? 'block' : 'hidden'}`}>
-                                        {categories.map((category) => (
-                                            <Link
-                                                key={category.href}
-                                                href={category.href}
-                                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-orange-500"
-                                            >
-                                                {category.name}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
                                 <Link href="/" className="text-white hover:text-gray-200 font-medium px-3 py-2">
                                     Inicio
                                 </Link>

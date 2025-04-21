@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaSearch, FaStar, FaShoppingCart, FaFilter } from 'react-icons/fa';
 import { IoGrid, IoList } from 'react-icons/io5';
@@ -12,115 +12,43 @@ import lentes from '../../assets/Categorias/manos.jpg';
 
 // Tipos de datos
 interface Product {
-    id: number;
-    name: string;
-    price: number;
-    originalPrice?: number;
-    image: StaticImageData;
-    category: string;
-    brand: string;
-    rating: number;
-    reviews: number;
-    isNew?: boolean;
-    discount?: number;
+    id_producto: number;
+    nombre: string;
+    precio: number;
+    precio_oferta: number;
+    imagen_principal: string;
+    descripcion: string;
+    id_categoria: number;
+    id_marca: number;
+    stock: number;
+    cotizable: number;
+    agregable_carrito: number;
+    estado: number;
 }
 
+interface Category {
+    id_categoria: number;
+    nombre: string;
+}
+
+interface Brand {
+    id_marca: number;
+    nombre: string;
+}
+
+// Add this interface before the ShopPage component
 interface FilterOptions {
     categories: string[];
     brands: string[];
     priceRange: [number, number];
     ratings: number[];
-    sortBy: 'price-asc' | 'price-desc' | 'rating' | 'newest';
+    sortBy: string;
 }
 
-const brands = [
-    '3M',
-    'Truper',
-    'Asaki',
-    'Stanley',
-    'Pretul',
-    'Kamasa',
-    'C&A',
-    'SM',
-    'XTREME'    
-];
-
-const categories = [
-    'Protección para la Cabeza',
-    'Protección Auditiva',
-    'Protección Respiratoria',
-    'Protección para Manos',
-    'Protección para Pies',
-    'Protección Facial',
-    'Protección Visual',
-    'Protección para Caídas',
-    'Ropa Industrial',
-    'Señalización y Seguridad Vial',
-    'Otros'
-];
-
-// Datos de ejemplo
-const sampleProducts: Product[] = [
-    {
-        id: 1,
-        name: 'Casco de Seguridad Industrial',
-        price: 89.90,
-        originalPrice: 129.90,
-        image: casco,
-        category: 'Cascos de Seguridad',
-        brand: '3M',
-        rating: 4.5,
-        reviews: 128,
-        isNew: true,
-        discount: 30
-    },
-    {
-        id: 2,
-        name: 'Guantes de Seguridad',
-        price: 45.90,
-        image: guantes,
-        category: 'Guantes de Seguridad',
-        brand: 'DELTA PLUS',
-        rating: 4.2,
-        reviews: 95
-    },
-    {
-        id: 3,
-        name: 'Lentes de Seguridad',
-        price: 35.90,
-        image: lentes,
-        category: 'Lentes de Seguridad',
-        brand: 'MSA',
-        rating: 4.8,
-        reviews: 64,
-        isNew: true
-    },
-    {
-        id: 4,
-        name: 'Block Retráctil 20m',
-        price: 2433.76,
-        image: casco,
-        category: 'Arnés y líneas de vida',
-        brand: 'SAFEWAZE',
-        rating: 4.9,
-        reviews: 32,
-        isNew: true
-    },
-    {
-        id: 5,
-        name: 'Arnés de Seguridad',
-        price: 299.90,
-        originalPrice: 399.90,
-        image: guantes,
-        category: 'Arnés y líneas de vida',
-        brand: 'STEELPRO',
-        rating: 4.7,
-        reviews: 156,
-        discount: 25
-    }
-];
-
 const ShopPage = () => {
+    const [products, setProducts] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [brands, setBrands] = useState<Brand[]>([]);
     const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
     const [showMobileFilters, setShowMobileFilters] = useState(false);
     const [filters, setFilters] = useState<FilterOptions>({
@@ -131,47 +59,81 @@ const ShopPage = () => {
         sortBy: 'newest'
     });
     const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true);
 
-    const handleFilterChange = (filterType: keyof FilterOptions, value: unknown) => {
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [productsRes, categoriesRes, brandsRes] = await Promise.all([
+                    fetch('http://localhost/e-commerce/api/productos/get-all'),
+                    fetch('http://localhost/e-commerce/api/category/getAll'),
+                    fetch('http://localhost/e-commerce/api/marca/getAll')
+                ]);
+
+                const productsData = await productsRes.json();
+                const categoriesData = await categoriesRes.json();
+                const brandsData = await brandsRes.json();
+
+                // Check if the responses contain the data property
+                setProducts(Array.isArray(productsData.data) ? productsData.data : []);
+                setCategories(Array.isArray(categoriesData.data) ? categoriesData.data : []);
+                setBrands(Array.isArray(brandsData.data) ? brandsData.data : []);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                // Initialize with empty arrays on error
+                setProducts([]);
+                setCategories([]);
+                setBrands([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // Add the missing handleFilterChange function
+    const handleFilterChange = (filterType: keyof typeof filters, value: any) => {
         setFilters(prev => ({
             ...prev,
             [filterType]: value
         }));
     };
 
-    const filteredProducts = sampleProducts.filter(product => {
-        const matchesCategory = filters.categories.length === 0 || 
-            filters.categories.includes(product.category);
-        const matchesBrand = filters.brands.length === 0 ||
-            filters.brands.includes(product.brand);
-        const matchesPrice = product.price >= filters.priceRange[0] && 
-            product.price <= filters.priceRange[1];
-        const matchesRating = filters.ratings.length === 0 || 
-            filters.ratings.includes(Math.floor(product.rating));
-        const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-
-        return matchesCategory && matchesBrand && matchesPrice && matchesRating && matchesSearch;
-    });
-
-    const sortedProducts = [...filteredProducts].sort((a, b) => {
-        switch (filters.sortBy) {
-            case 'price-asc':
-                return a.price - b.price;
-            case 'price-desc':
-                return b.price - a.price;
-            case 'rating':
-                return b.rating - a.rating;
-            case 'newest':
-                return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
-            default:
-                return 0;
-        }
-    });
-
     // Función para cerrar filtros en móvil
     const closeMobileFilters = () => {
         setShowMobileFilters(false);
     };
+
+    // Filter products
+    const filteredProducts = products.filter(product => {
+        const matchesCategory = filters.categories.length === 0 || 
+            filters.categories.includes(String(product.id_categoria));
+        const matchesBrand = filters.brands.length === 0 ||
+            filters.brands.includes(String(product.id_marca));
+        const matchesPrice = product.precio >= filters.priceRange[0] && 
+            product.precio <= filters.priceRange[1];
+        const matchesSearch = product.nombre.toLowerCase().includes(searchQuery.toLowerCase());
+
+        return matchesCategory && matchesBrand && matchesPrice && matchesSearch;
+    });
+
+    // Sort products
+    const sortedProducts = [...filteredProducts].sort((a, b) => {
+        switch (filters.sortBy) {
+            case 'price-asc':
+                return a.precio - b.precio;
+            case 'price-desc':
+                return b.precio - a.precio;
+            default:
+                return b.id_producto - a.id_producto; // Newest first
+        }
+    });
+
+    // Remove the standalone mapping sections that are causing issues
+    // Delete or comment out the following sections:
+    // {brands.map((brand) => ( ... ))}
+    // {categories.map((category) => ( ... ))}
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -251,19 +213,19 @@ const ShopPage = () => {
                                     <h3 className="text-sm font-semibold text-gray-900 mb-3">Marcas</h3>
                                     <div className="space-y-2 max-h-48 overflow-auto pr-2">
                                         {brands.map((brand) => (
-                                            <label key={brand} className="flex items-center">
+                                            <label key={brand.id_marca} className="flex items-center">
                                                 <input
                                                     type="checkbox"
-                                                    checked={filters.brands.includes(brand)}
+                                                    checked={filters.brands.includes(String(brand.id_marca))}
                                                     onChange={(e) => {
                                                         const newBrands = e.target.checked
-                                                            ? [...filters.brands, brand]
-                                                            : filters.brands.filter(b => b !== brand);
+                                                            ? [...filters.brands, String(brand.id_marca)]
+                                                            : filters.brands.filter(b => b !== String(brand.id_marca));
                                                         handleFilterChange('brands', newBrands);
                                                     }}
                                                     className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
                                                 />
-                                                <span className="ml-2 text-sm text-gray-700">{brand}</span>
+                                                <span className="ml-2 text-sm text-gray-700">{brand.nombre}</span>
                                             </label>
                                         ))}
                                     </div>
@@ -274,19 +236,19 @@ const ShopPage = () => {
                                     <h3 className="text-sm font-semibold text-gray-900 mb-3">Categorías</h3>
                                     <div className="space-y-2 max-h-48 overflow-auto pr-2">
                                         {categories.map((category) => (
-                                            <label key={category} className="flex items-center">
+                                            <label key={category.id_categoria} className="flex items-center">
                                                 <input
                                                     type="checkbox"
-                                                    checked={filters.categories.includes(category)}
+                                                    checked={filters.categories.includes(String(category.id_categoria))}
                                                     onChange={(e) => {
                                                         const newCategories = e.target.checked
-                                                            ? [...filters.categories, category]
-                                                            : filters.categories.filter(c => c !== category);
+                                                            ? [...filters.categories, String(category.id_categoria)]
+                                                            : filters.categories.filter(c => c !== String(category.id_categoria));
                                                         handleFilterChange('categories', newCategories);
                                                     }}
                                                     className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
                                                 />
-                                                <span className="ml-2 text-sm text-gray-700">{category}</span>
+                                                <span className="ml-2 text-sm text-gray-700">{category.nombre}</span>
                                             </label>
                                         ))}
                                     </div>
@@ -319,36 +281,6 @@ const ShopPage = () => {
                                         >
                                             Limpiar
                                         </button>
-                                    </div>
-                                </div>
-
-                                {/* Calificación */}
-                                <div>
-                                    <h3 className="text-sm font-semibold text-gray-900 mb-3">Calificación</h3>
-                                    <div className="space-y-2">
-                                        {[5, 4, 3, 2, 1].map((rating) => (
-                                            <label key={rating} className="flex items-center">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={filters.ratings.includes(rating)}
-                                                    onChange={(e) => {
-                                                        const newRatings = e.target.checked
-                                                            ? [...filters.ratings, rating]
-                                                            : filters.ratings.filter(r => r !== rating);
-                                                        handleFilterChange('ratings', newRatings);
-                                                    }}
-                                                    className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
-                                                />
-                                                <div className="ml-2 flex items-center">
-                                                    {[...Array(rating)].map((_, i) => (
-                                                        <FaStar key={i} className="text-yellow-400 w-4 h-4" />
-                                                    ))}
-                                                    {[...Array(5 - rating)].map((_, i) => (
-                                                        <FaStar key={i} className="text-gray-300 w-4 h-4" />
-                                                    ))}
-                                                </div>
-                                            </label>
-                                        ))}
                                     </div>
                                 </div>
 
@@ -417,7 +349,7 @@ const ShopPage = () => {
                         }>
                             {sortedProducts.map((product) => (
                                 <motion.div
-                                    key={product.id}
+                                    key={product.id_producto}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     className={`bg-white rounded-lg shadow-sm overflow-hidden ${
@@ -430,55 +362,35 @@ const ShopPage = () => {
                                             : 'w-full h-48'
                                     }`}>
                                         <Image
-                                            src={product.image}
-                                            alt={product.name}
+                                            src={product.imagen_principal || '/placeholder.jpg'}
+                                            alt={product.nombre}
                                             fill
                                             className="object-cover"
                                         />
-                                        {product.isNew && (
-                                            <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                                Nuevo
-                                            </div>
-                                        )}
-                                        {product.discount && (
+                                        {product.precio_oferta > 0 && (
                                             <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                                -{product.discount}%
+                                                Oferta
                                             </div>
                                         )}
                                     </div>
                                     <div className={`p-4 ${viewMode === 'list' ? 'flex-1' : ''}`}>
-                                        <h3 className="font-medium text-gray-900 text-sm sm:text-base">{product.name}</h3>
-                                        <div className="mt-2 flex items-center">
-                                            <div className="flex items-center">
-                                                {[...Array(5)].map((_, i) => (
-                                                    <FaStar
-                                                        key={i}
-                                                        className={`w-3 h-3 sm:w-4 sm:h-4 ${
-                                                            i < Math.floor(product.rating)
-                                                                ? 'text-yellow-400'
-                                                                : 'text-gray-300'
-                                                        }`}
-                                                    />
-                                                ))}
-                                            </div>
-                                            <span className="ml-2 text-xs sm:text-sm text-gray-500">
-                                                ({product.reviews})
-                                            </span>
-                                        </div>
+                                        <h3 className="font-medium text-gray-900 text-sm sm:text-base">{product.nombre}</h3>
                                         <div className="mt-2 flex items-center justify-between">
                                             <div className="flex flex-col sm:flex-row sm:items-center gap-1">
                                                 <span className="text-base sm:text-lg font-bold text-gray-900">
-                                                    S/ {product.price.toFixed(2)}
+                                                    S/ {product.precio.toFixed(2)}
                                                 </span>
-                                                {product.originalPrice && (
+                                                {product.precio_oferta > 0 && (
                                                     <span className="text-xs sm:text-sm text-gray-500 line-through sm:ml-2">
-                                                        S/ {product.originalPrice.toFixed(2)}
+                                                        S/ {product.precio_oferta.toFixed(2)}
                                                     </span>
                                                 )}
                                             </div>
-                                            <button className="bg-orange-500 text-white p-2 rounded-lg hover:bg-orange-600 transition-colors">
-                                                <FaShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
-                                            </button>
+                                            {product.agregable_carrito === 1 && (
+                                                <button className="bg-orange-500 text-white p-2 rounded-lg hover:bg-orange-600 transition-colors">
+                                                    <FaShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 </motion.div>
@@ -488,19 +400,19 @@ const ShopPage = () => {
                         {/* Paginación */}
                         <div className="mt-8 flex justify-center">
                             <nav className="flex flex-wrap items-center justify-center gap-2">
-                                <button className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
+                                <button key="prev" className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
                                     Anterior
                                 </button>
-                                <button className="px-3 py-1 bg-orange-500 text-white rounded-lg text-sm">
+                                <button key="page1" className="px-3 py-1 bg-orange-500 text-white rounded-lg text-sm">
                                     1
                                 </button>
-                                <button className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
+                                <button key="page2" className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
                                     2
                                 </button>
-                                <button className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
+                                <button key="page3" className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
                                     3
                                 </button>
-                                <button className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
+                                <button key="next" className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
                                     Siguiente
                                 </button>
                             </nav>
@@ -512,4 +424,4 @@ const ShopPage = () => {
     );
 };
 
-export default ShopPage; 
+export default ShopPage;

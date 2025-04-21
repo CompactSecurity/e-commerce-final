@@ -108,6 +108,29 @@ if ($controller === 'marcas') {
             exit;  
     }
 }
+if ($controller === 'productos') {
+    require_once __DIR__. '/controllers/ProductController.php';
+    $controller_instance = new ProductController();
+    
+    switch ($action)
+    {
+        case 'create':
+            $controller_instance->create();
+            exit;
+        case 'get-all':
+            $controller_instance->getAll();
+            exit;
+        case 'delete':
+            $controller_instance->delete($id);
+            exit;
+        case 'update':
+            $controller_instance->update($id);
+            exit;
+        case 'get-by-id':
+            $controller_instance->getById($id);
+            exit;
+    }
+}
 // Load and execute controller
 $controller_name = ucfirst($controller) . 'Controller';
 $controller_file = __DIR__ . '/controllers/' . $controller_name . '.php';

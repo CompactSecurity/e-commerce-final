@@ -15,6 +15,9 @@ import EditCategory from './admin/EditCategory';
 import AddMarca from './admin/AddMarca';
 import DeleteMarca from './admin/DeleteMarca';
 import EditMarca from './admin/EditMarca';
+import AddProduct from './admin/AddProduct';
+import DeleteProduct from './admin/DeleteProduct';
+import EditProduct from './admin/EditProduct';
 
 interface AdminFormData {
     nombre: string;
@@ -95,6 +98,12 @@ const AdminPanel = () => {
                 return <DeleteMarca onBack={() => setCurrentView('main')} />;
             case 'edit-marca':
                 return <EditMarca onBack={() => setCurrentView('main')} />;
+            case 'add-product':
+                return <AddProduct onBack={() => setCurrentView('main')} />;
+            case 'delete-product':
+                return <DeleteProduct onBack={() => setCurrentView('main')} />;
+            case 'edit-product':
+                return <EditProduct onBack={() => setCurrentView('main')} />;
             default:
                 return (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -186,6 +195,27 @@ const AdminPanel = () => {
                             <AiOutlineEdit className="text-4xl text-gray-600" />
                             <span className="text-lg font-medium text-gray-800">Editar Marca</span>
                         </button>
+                        <button
+                            onClick={() => setCurrentView('add-product')}
+                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                        >
+                            <AiOutlineProduct className="text-4xl text-gray-600" />
+                            <span className="text-lg font-medium text-gray-800">Agregar Producto</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('delete-product')}
+                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                        >
+                            <AiOutlineDelete className="text-4xl text-gray-600" />
+                            <span className="text-lg font-medium text-gray-800">Eliminar Producto</span>
+                        </button>
+                        <button
+                            onClick={() => setCurrentView('edit-product')}
+                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                        >
+                            <AiOutlineEdit className="text-4xl text-gray-600" />
+                            <span className="text-lg font-medium text-gray-800">Editar Producto</span>
+                        </button>
                     </div>
                 );
         }
@@ -196,9 +226,9 @@ const AdminPanel = () => {
             {currentView !== 'main' && (
                 <button
                     onClick={() => setCurrentView('main')}
-                    className="mb-6 flex items-center text-gray-600 hover:text-gray-800"
+                    className="mb-6 flex items-center text-gray-600 hover:text-gray-800 cursor-pointer"
                 >
-                    <FaArrowLeft className="mr-2" /> Volver al Panel
+                    <FaArrowLeft className="mr-2 cursor-pointer" /> Volver al Panel
                 </button>
             )}
             {renderView()}
