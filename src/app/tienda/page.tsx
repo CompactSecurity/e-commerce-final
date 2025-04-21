@@ -417,7 +417,9 @@ const ShopPage = () => {
                                                         Marca
                                                     </label>
                                                     <p className="text-sm text-gray-700">
-                                                        {brands.find(brand => brand.id_marca === selectedProduct.id_marca)?.nombre || 'Desconocida'}
+                                                        {brands.find(brand => brand.id_marca === selectedProduct.id_marca)?.nombre || 
+                                                         brands.find(brand => brand.id === selectedProduct.id_marca)?.nombre || 
+                                                         'Sin marca especificada'}
                                                     </p>
                                                 </div>
 
@@ -465,7 +467,7 @@ const ShopPage = () => {
                                                         <button 
                                                             onClick={() => {
                                                                 // Lógica para cotización
-                                                                window.open(`https://wa.me/?text=Estoy interesado en cotizar el producto: ${selectedProduct.nombre}`);
+                                                                window.open(`https://wa.me/51976687566?text=Estoy interesado en cotizar el producto: ${selectedProduct.nombre}`);
                                                             }}
                                                             className="cursor-pointer w-full bg-green-500 text-white py-3 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium"
                                                         >
