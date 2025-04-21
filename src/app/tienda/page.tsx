@@ -431,7 +431,7 @@ const ShopPage = () => {
                                                 <div className="flex items-center gap-4">
                                                     <div>
                                                         <label className="block text-gray-500 text-xs font-semibold uppercase mb-1">
-                                                            Precio
+                                                            Precio de Oferta
                                                         </label>
                                                         <p className="text-lg font-bold text-orange-600">
                                                             S/ {selectedProduct.precio.toFixed(2)}
@@ -441,7 +441,7 @@ const ShopPage = () => {
                                                     {selectedProduct.precio_oferta > 0 && (
                                                         <div>
                                                             <label className="block text-gray-500 text-xs font-semibold uppercase mb-1">
-                                                                Precio oferta
+                                                                Precio Normal
                                                             </label>
                                                             <p className="text-lg  text-gray-500 line-through">
                                                                 S/ {selectedProduct.precio_oferta.toFixed(2)}
