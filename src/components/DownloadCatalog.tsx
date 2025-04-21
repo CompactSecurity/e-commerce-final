@@ -45,7 +45,7 @@ const DownloadCatalog = () => {
                         <div>
                             <h2 className="text-4xl font-bold mb-6 leading-tight">
                                 Descarga Nuestro
-                                <span className="block text-orange-500">Catálogo Digital 2025</span>
+                                <span className="block text-orange-500">Catálogo Digital {new Date().getFullYear()}</span>
                             </h2>
                             <p className="text-gray-300 text-lg">
                                 Accede a nuestra completa gama de productos de seguridad industrial 
