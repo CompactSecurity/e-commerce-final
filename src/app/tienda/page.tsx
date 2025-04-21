@@ -404,7 +404,7 @@ const ShopPage = () => {
                                                         Marca
                                                     </label>
                                                     <p className="text-sm text-gray-700">
-                                                        {brands.find(brand => brand.id_marca === selectedProduct.id_marca)?.nombre || 'N/A'}
+                                                        {brands.find(brand => brand.id_marca === selectedProduct.id_marca)?.nombre || 'Desconocida'}
                                                     </p>
                                                 </div>
 
