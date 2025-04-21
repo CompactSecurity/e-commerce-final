@@ -458,6 +458,7 @@ const ShopPage = () => {
                                                     </label>
                                                     <p className={`text-sm font-medium ${selectedProduct.stock > 0 ? 'text-gray-700' : 'text-red-500'}`}>
                                                         {selectedProduct.stock > 0 ? selectedProduct.stock : 'Agotado'}
+                                                        {selectedProduct.cotizable == 0? selectedProduct.cotizable : ' (Cotizable)'}
                                                     </p>
                                                 </div>
 
