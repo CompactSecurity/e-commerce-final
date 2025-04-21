@@ -129,12 +129,6 @@ const ShopPage = () => {
                 return b.id_producto - a.id_producto; // Newest first
         }
     });
-
-    // Remove the standalone mapping sections that are causing issues
-    // Delete or comment out the following sections:
-    // {brands.map((brand) => ( ... ))}
-    // {categories.map((category) => ( ... ))}
-
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Header de la tienda */}
