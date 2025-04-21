@@ -170,12 +170,7 @@ class ProductController {
 
     public function update($id) {
         try {
-            // Remove the session check temporarily or debug it
-            // if (!isset($_SESSION['admin_id'])) {
-            //     error_log("Session admin_id not set: " . print_r($_SESSION, true));
-            //     $this->response->sendError(401, "No autorizado");
-            //     return;
-            // }
+
 
             error_log("Update request received for product ID: " . $id);
             error_log("POST data: " . print_r($_POST, true));
@@ -265,6 +260,29 @@ class ProductController {
             $this->response->sendSuccess(200, $producto);
         } else {
             $this->response->sendError(404, "Producto no Encontrado");
+        }
+    }
+
+    public function getPaginated() {
+        try {
+            $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+            $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 9;
+            
+            $offset = ($page - 1) * $limit;
+            
+            $totalProducts = $this->model->countAll();
+            $totalPages = ceil($totalProducts / $limit);
+            
+            $products = $this->model->getPaginated($offset, $limit);
+            
+            $this->response->sendSuccess(200, [
+                'data' => $products,
+                'currentPage' => $page,
+                'totalPages' => $totalPages,
+                'totalProducts' => $totalProducts
+            ]);
+        } catch (Exception $e) {
+            $this->response->sendError(500, "Error al obtener productos: " . $e->getMessage());
         }
     }
 }

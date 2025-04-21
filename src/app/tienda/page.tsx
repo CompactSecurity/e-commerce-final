@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaSearch, FaStar, FaShoppingCart, FaFilter, FaTimes } from 'react-icons/fa';
+import { FaSearch, FaStar, FaShoppingCart, FaFilter, FaTimes, FaWhatsapp } from 'react-icons/fa';
 import { IoGrid, IoList } from 'react-icons/io5';
 import Image from 'next/image';
 import { StaticImageData } from 'next/image';
@@ -72,11 +72,15 @@ const ShopPage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const productsPerPage = 9;
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [productsRes, categoriesRes, brandsRes] = await Promise.all([
-                    fetch('http://localhost/e-commerce/api/productos/get-all'),
+                    fetch(`http://localhost/e-commerce/api/productos/get-paginated?page=${currentPage}&limit=${productsPerPage}`),
                     fetch('http://localhost/e-commerce/api/category/getAll'),
                     fetch('http://localhost/e-commerce/api/marca/getAll')
                 ]);
@@ -85,13 +89,19 @@ const ShopPage = () => {
                 const categoriesData = await categoriesRes.json();
                 const brandsData = await brandsRes.json();
 
-                // chequear si las respuestas son arrays antes de asignarles a los estados
-                setProducts(Array.isArray(productsData.data) ? productsData.data : []);
+                // Updated data handling
+                setProducts(Array.isArray(productsData.data?.data) ? 
+                    productsData.data.data.map(product => ({
+                        ...product,
+                        precio: Number(product.precio),
+                        precio_oferta: Number(product.precio_oferta || 0)
+                    })) : 
+                []);
+                setTotalPages(productsData.data?.totalPages || 1);
                 setCategories(Array.isArray(categoriesData.data) ? categoriesData.data : []);
-                setBrands(Array.isArray(brandsData.data) ? brandsData.data : []);
+                setBrands(Array.isArray(brandsData.data) ? brandsData.data.filter(brand => brand.id_marca || brand.id) : []);
             } catch (error) {
                 console.error('Error fetching data:', error);
-                // Inicializa los estados con arreglos vacíos
                 setProducts([]);
                 setCategories([]);
                 setBrands([]);
@@ -101,7 +111,7 @@ const ShopPage = () => {
         };
 
         fetchData();
-    }, []);
+    }, [currentPage]); // Add currentPage as dependency
 
     // Agregar esta función para manejar el cambio de filtros
     const handleFilterChange = (filterType: keyof typeof filters, value: any) => {
@@ -217,8 +227,11 @@ const ShopPage = () => {
                                 <div>
                                     <h3 className="text-sm font-semibold text-gray-900 mb-3">Marcas</h3>
                                     <div className="space-y-2 max-h-48 overflow-auto pr-2">
-                                        {brands.map((brand) => (
-                                            <label key={brand.id_marca} className="flex items-center">
+                                        {brands.map((brand, index) => (
+                                            <label 
+                                                key={`brand-${brand.id_marca || brand.id || `index-${index}`}`} 
+                                                className="flex items-center"
+                                            >
                                                 <input
                                                     type="checkbox"
                                                     checked={filters.brands.includes(String(brand.id_marca))}
@@ -241,7 +254,7 @@ const ShopPage = () => {
                                     <h3 className="text-sm font-semibold text-gray-900 mb-3">Categorías</h3>
                                     <div className="space-y-2 max-h-48 overflow-auto pr-2">
                                         {categories.map((category) => (
-                                            <label key={category.id_categoria} className="flex items-center">
+                                            <label key={`category-${category.id_categoria}`} className="flex items-center">
                                                 <input
                                                     type="checkbox"
                                                     checked={filters.categories.includes(String(category.id_categoria))}
@@ -448,25 +461,28 @@ const ShopPage = () => {
 
                                                 {/* Botones */}
                                                 <div className="pt-2 space-y-3">
-                                                    {selectedProduct.agregable_carrito === 1 && selectedProduct.stock > 0 && (
-                                                        <button className="w-full bg-orange-500 text-white py-3 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium">
-                                                            <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                className="h-5 w-5"
-                                                                viewBox="0 0 20 20"
-                                                                fill="currentColor"
-                                                            >
-                                                                <path d="M4 2h16l-3 9H5.83l-.27-1H5l-1.99 1L4 2zm1 13a1 1 0 100 2 1 1 0 000-2zm10 0a1 1 0 100 2 1 1 0 000-2z" />
-                                                            </svg>
+                                                    {Number(selectedProduct.cotizable) === 1 ? (
+                                                        <button 
+                                                            onClick={() => {
+                                                                // Lógica para cotización
+                                                                window.open(`https://wa.me/?text=Estoy interesado en cotizar el producto: ${selectedProduct.nombre}`);
+                                                            }}
+                                                            className="cursor-pointer w-full bg-green-500 text-white py-3 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium"
+                                                        >
+                                                            <FaWhatsapp className="w-5 h-5" />
+                                                            Cotizar por WhatsApp
+                                                        </button>
+                                                    ) : Number(selectedProduct.agregable_carrito) === 1 && selectedProduct.stock > 0 ? (
+                                                        <button 
+                                                            onClick={() => {
+                                                                // Lógica para agregar al carrito
+                                                            }}
+                                                            className="cursor-pointer w-full bg-orange-500 text-white py-3 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium"
+                                                        >
+                                                            <FaShoppingCart className="w-5 h-5" />
                                                             Agregar al carrito
                                                         </button>
-                                                    )}
-                                                    {selectedProduct.cotizable === 1 && (
-                                                        <button className="w-full bg-blue-500 text-white py-3 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out text-sm font-medium">
-                                                            Solicitar cotización
-                                                        </button>
-                                                    )}
-                                                    {(selectedProduct.agregable_carrito === 0 || selectedProduct.stock === 0) && selectedProduct.cotizable !== 1 && (
+                                                    ) : (
                                                         <div className="w-full bg-gray-100 text-gray-500 py-3 px-4 rounded-md text-sm font-medium text-center">
                                                             {selectedProduct.stock === 0 ? 'Producto agotado' : 'No disponible para agregar al carrito'}
                                                         </div>
@@ -480,78 +496,113 @@ const ShopPage = () => {
                         )}
 
                         {/* Grid de productos */}
-                        <div className={
-                            viewMode === 'grid' 
-                                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6' 
-                                : 'space-y-4 sm:space-y-6'
-                        }>
-                            {sortedProducts.map((product) => (
-                                <motion.div
-                                    key={product.id_producto}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    onClick={() => handleProductClick(product)}
-                                    className={`bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer hover:shadow-md transition-shadow ${
-                                        viewMode === 'list' ? 'flex flex-col sm:flex-row' : ''
-                                    }`}
-                                >
-                                    <div className={`relative ${
-                                        viewMode === 'list' 
-                                            ? 'w-full sm:w-48 h-48' 
-                                            : 'w-full h-48'
-                                    }`}>
-                                        <Image
-                                            src={product.imagen_principal || '/placeholder.jpg'}
-                                            alt={product.nombre}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                        {product.precio_oferta > 0 && (
-                                            <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                                                Oferta
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className={`p-4 ${viewMode === 'list' ? 'flex-1' : ''}`}>
-                                        <h3 className="font-medium text-gray-900 text-sm sm:text-base">{product.nombre}</h3>
-                                        <div className="mt-2 flex items-center justify-between">
-                                            <div className="flex flex-col sm:flex-row sm:items-center gap-1">
-                                                <span className="text-base sm:text-lg font-bold text-gray-900">
-                                                    S/ {product.precio.toFixed(2)}
-                                                </span>
-                                                {product.precio_oferta > 0 && (
-                                                    <span className="text-xs sm:text-sm text-gray-500 line-through sm:ml-2">
-                                                        S/ {product.precio_oferta.toFixed(2)}
-                                                    </span>
-                                                )}
-                                            </div>
-                                            {product.agregable_carrito === 1 && (
-                                                <button className="bg-orange-500 text-white p-2 rounded-lg hover:bg-orange-600 transition-colors">
-                                                    <FaShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
-                                                </button>
+                        <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-6'}>
+                            {sortedProducts.length > 0 ? (
+                                sortedProducts.map((product) => (
+                                    <motion.div
+                                        key={product.id_producto}
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        onClick={() => handleProductClick(product)}
+                                        className={`bg-gray-50 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer flex flex-col ${viewMode === 'list' ? 'sm:flex-row' : ''
+                                            }`}
+                                    >
+                                        <div className={`relative ${viewMode === 'list' ? 'w-full sm:w-48 h-48' : 'w-full h-60'}`}>
+                                            <Image
+                                                src={product.imagen_principal || '/placeholder.jpg'}
+                                                alt={product.nombre}
+                                                fill
+                                                className="object-contain bg-white p-2"
+                                            />
+                                            {product.precio_oferta > 0 && (
+                                                <div className="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded font-medium shadow">
+                                                    Oferta
+                                                </div>
                                             )}
                                         </div>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
 
+                                        <div className={`flex flex-col justify-between ${viewMode === 'list' ? 'flex-1' : ''}`}>
+                                            <div className="p-4 pb-2 flex flex-col gap-1">
+                                                <h3 className="text-gray-900 font-semibold text-sm sm:text-base">{product.nombre}</h3>
+
+                                                {Number(product.precio) === 0 ? (
+                                                    <span className="text-sm text-gray-600 italic">Este producto solo es cotizable</span>
+                                                ) : (
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-base font-bold text-gray-800">
+                                                            S/ {Number(product.precio).toFixed(2)}
+                                                        </span>
+                                                        {product.precio_oferta > 0 && (
+                                                            <span className="text-sm text-gray-500 line-through">
+                                                                S/ {Number(product.precio_oferta || 0).toFixed(2)}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Botones */}
+                                            <div className="px-4 pb-4 pt-2">
+                                                {Number(product.cotizable) === 1 ? (
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleProductClick(product);
+                                                        }}
+                                                        className="cursor-pointer flex items-center justify-center gap-2 w-full bg-green-500 text-white text-sm px-4 py-2 rounded hover:bg-green-600 transition"
+                                                    >
+                                                        <FaWhatsapp className="w-4 h-4" />
+                                                        Cotizar por WhatsApp
+                                                    </button>
+                                                ) : Number(product.agregable_carrito) === 1 ? (
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            // Aca va la logica para añadir al carrito
+                                                        }}
+                                                        className="cursor-pointer flex items-center justify-center gap-2 w-full bg-orange-500 text-white text-sm px-4 py-2 rounded hover:bg-orange-600 transition"
+                                                    >
+                                                        <FaShoppingCart className="w-4 h-4" />
+                                                        Añadir al carrito
+                                                    </button>
+                                                ) : null}
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))
+                            ) : (
+                                <div className="col-span-full text-center py-10">
+                                    <p className="text-gray-500">No se encontraron productos</p>
+                                </div>
+                            )}
+                        </div>
+                        
                         {/* Paginación */}
                         <div className="mt-8 flex justify-center">
                             <nav className="flex flex-wrap items-center justify-center gap-2">
-                                <button key="prev" className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
+                                <button 
+                                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                    disabled={currentPage === 1}
+                                    className="cursor-pointer px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm disabled:opacity-50"
+                                >
                                     Anterior
-                                </button>
-                                <button key="page1" className="px-3 py-1 bg-orange-500 text-white rounded-lg text-sm">
-                                    1
-                                </button>
-                                <button key="page2" className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
-                                    2
-                                </button>
-                                <button key="page3" className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
-                                    3
-                                </button>
-                                <button key="next" className="px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm">
+                                    </button>
+                                
+                                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                                    <button 
+                                        key={page}
+                                        onClick={() => setCurrentPage(page)}
+                                        className={`cursor-pointer px-3 py-1 ${currentPage === page ? 'bg-orange-500 text-white' : 'border border-gray-300 text-gray-700 hover:bg-gray-50'} rounded-lg text-sm`}
+                                    >
+                                        {page}
+                                    </button>
+                                ))}
+                                
+                                <button 
+                                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                    disabled={currentPage === totalPages}
+                                    className="cursor-pointer px-3 py-1 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 text-sm disabled:opacity-50"
+                                >
                                     Siguiente
                                 </button>
                             </nav>

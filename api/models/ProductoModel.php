@@ -205,5 +205,22 @@ class ProductoModel {
         }
         return null;
     }
+
+    public function getPaginated($offset, $limit) {
+        $query = "SELECT * FROM productos WHERE estado = 1 LIMIT :limit OFFSET :offset";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function countAll() {
+        $query = "SELECT COUNT(*) as total FROM productos WHERE estado = 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return (int)$result['total'];
+    }
 }
 

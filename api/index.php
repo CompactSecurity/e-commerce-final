@@ -120,6 +120,9 @@ if ($controller === 'productos') {
         case 'get-all':
             $controller_instance->getAll();
             exit;
+        case 'get-paginated':  // Add this new case
+            $controller_instance->getPaginated();
+            exit;
         case 'delete':
             $controller_instance->delete($id);
             exit;

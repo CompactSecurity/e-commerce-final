@@ -225,7 +225,7 @@ const AddProduct = ({ onBack }: AddProductProps) => {
                             <>
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Precio
+                                        Precio de Oferta
                                     </label>
                                     <input
                                         type="number"
@@ -239,7 +239,7 @@ const AddProduct = ({ onBack }: AddProductProps) => {
                     
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Precio de oferta
+                                        Precio Normal
                                     </label>
                                     <input
                                         type="number"
