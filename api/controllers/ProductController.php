@@ -135,10 +135,16 @@ class ProductController {
             'id_categoria' => intval($_POST['id_categoria'] ?? 0),
             'id_marca' => intval($_POST['id_marca'] ?? 0),
             'imagen_principal' => $imagen_principal,
-            'cotizable' => isset($_POST['cotizable']) ? 1 : 0,
-            'agregable_carrito' => isset($_POST['agregable_carrito']) ? 1 : 0,
+            // Modified checkbox handling:
+            'cotizable' => isset($_POST['cotizable']) && $_POST['cotizable'] === '1' ? 1 : 0,
+            'agregable_carrito' => isset($_POST['agregable_carrito']) && $_POST['agregable_carrito'] === '1' ? 1 : 0,
             'estado' => 1
         ];
+
+        // Enforce mutual exclusivity
+        if ($data['cotizable'] === 1) {
+            $data['agregable_carrito'] = 0;
+        }
 
         error_log("Data to insert: " . print_r($data, true));
 
@@ -194,7 +200,7 @@ class ProductController {
                 'id_categoria' => intval($_POST['id_categoria'] ?? 0),
                 'id_marca' => intval($_POST['id_marca'] ?? 0),
                 'cotizable' => isset($_POST['cotizable']) ? 1 : 0,
-                'agregable_carrito' => isset($_POST['agregable_carrito']) ? 1 : 0,
+                'agregable_carrito' => isset($_POST['cotizable']) ? 0 : (isset($_POST['agregable_carrito']) ? 1 : 0),
                 'estado' => isset($_POST['estado']) ? 1 : 0
             ];
 

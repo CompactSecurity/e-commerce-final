@@ -86,14 +86,39 @@ const AddProduct = ({ onBack }: AddProductProps) => {
         }
     };
 
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, checked } = e.target;
+        
+        setFormData(prev => ({
+            ...prev,
+            // cuando uno esta marcado el otro es forzado a tener 0
+            cotizable: name === 'cotizable' ? (checked ? 1 : 0) : (checked ? 0 : prev.cotizable),
+            agregable_carrito: name === 'agregable_carrito' ? (checked ? 1 : 0) : (checked ? 0 : prev.agregable_carrito),
+            // resetear los campos
+            precio: name === 'cotizable' && checked ? 0 : prev.precio,
+            precio_oferta: name === 'cotizable' && checked ? 0 : prev.precio_oferta,
+            stock: name === 'cotizable' && checked ? 0 : prev.stock
+        }));
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const formDataToSend = new FormData();
-            Object.entries(formData).forEach(([key, value]) => {
-                formDataToSend.append(key, value.toString());
-            });
-
+            
+            // Agregar todos los campos del formulario
+            formDataToSend.append('nombre', formData.nombre);
+            formDataToSend.append('descripcion', formData.descripcion);
+            formDataToSend.append('precio', formData.precio.toString());
+            formDataToSend.append('precio_oferta', formData.precio_oferta.toString());
+            formDataToSend.append('stock', formData.stock.toString());
+            formDataToSend.append('id_categoria', formData.id_categoria.toString());
+            formDataToSend.append('id_marca', formData.id_marca.toString());
+            
+            // Agregar los campos adicionales
+            formDataToSend.append('cotizable', formData.cotizable.toString());
+            formDataToSend.append('agregable_carrito', formData.agregable_carrito.toString());
+            
             if (selectedFile) {
                 formDataToSend.append('imagen_principal', selectedFile);
             }
@@ -195,69 +220,78 @@ const AddProduct = ({ onBack }: AddProductProps) => {
                         </select>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Precio
-                        </label>
-                        <input
-                            type="number"
-                            step="0.01"
-                            value={formData.precio}
-                            onChange={(e) => setFormData({...formData, precio: Number(e.target.value)})}
-                            className="w-full p-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Precio de oferta
-                        </label>
-                        <input
-                            type="number"
-                            step="0.01"
-                            value={formData.precio_oferta}
-                            onChange={(e) => setFormData({...formData, precio_oferta: Number(e.target.value)})}
-                            className="w-full p-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Stock
-                        </label>
-                        <input
-                            type="number"
-                            value={formData.stock}
-                            onChange={(e) => setFormData({...formData, stock: Number(e.target.value)})}
-                            className="w-full p-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
-                            required
-                        />
-                    </div>
-
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                            Opciones de Venta
-                        </label>
-                        <div className="space-y-2">
-                            <label className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    checked={formData.cotizable === 1}
-                                    onChange={(e) => setFormData({...formData, cotizable: e.target.checked ? 1 : 0})}
-                                    className="rounded text-orange-500 focus:ring-orange-500"
-                                />
-                                <span className="ml-2 text-sm text-gray-700">Producto cotizable</span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {formData.cotizable === 0 && (
+                            <>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Precio
+                                    </label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        value={formData.precio}
+                                        onChange={(e) => setFormData({...formData, precio: Number(e.target.value)})}
+                                        className="w-full p-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                                        required={!formData.cotizable}
+                                    />
+                                </div>
+                    
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Precio de oferta
+                                    </label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        value={formData.precio_oferta}
+                                        onChange={(e) => setFormData({...formData, precio_oferta: Number(e.target.value)})}
+                                        className="w-full p-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                                    />
+                                </div>
+                    
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Stock
+                                    </label>
+                                    <input
+                                        type="number"
+                                        value={formData.stock}
+                                        onChange={(e) => setFormData({...formData, stock: Number(e.target.value)})}
+                                        className="w-full p-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                                        required={!formData.cotizable}
+                                    />
+                                </div>
+                            </>
+                        )}
+                    
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Opciones de Venta
                             </label>
-                            <label className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    checked={formData.agregable_carrito === 1}
-                                    onChange={(e) => setFormData({...formData, agregable_carrito: e.target.checked ? 1 : 0})}
-                                    className="rounded text-orange-500 focus:ring-orange-500"
-                                />
-                                <span className="ml-2 text-sm text-gray-700">Se puede agregar al carrito</span>
-                            </label>
+                            <div className="space-y-2">
+                                <label className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        name="cotizable"
+                                        checked={formData.cotizable === 1}
+                                        onChange={handleCheckboxChange}
+                                        className="rounded text-orange-500 focus:ring-orange-500"
+                                    />
+                                    <span className="ml-2 text-sm text-gray-700">Producto cotizable</span>
+                                </label>
+                                <label className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        name="agregable_carrito"
+                                        checked={formData.agregable_carrito === 1 && formData.cotizable !== 1}
+                                        onChange={handleCheckboxChange}
+                                        className="rounded text-orange-500 focus:ring-orange-500"
+                                        disabled={formData.cotizable === 1}
+                                    />
+                                    <span className="ml-2 text-sm text-gray-700">Se puede agregar al carrito</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
