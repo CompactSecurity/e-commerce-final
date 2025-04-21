@@ -22,11 +22,17 @@ const AddBlog = ({ onBack }: AddBlogProps) => {
     const [previewUrl, setPreviewUrl] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    // Update the handleFileSelect function
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
             setSelectedFile(file);
-            setPreviewUrl(URL.createObjectURL(file));
+            const objectUrl = URL.createObjectURL(file);
+            setPreviewUrl(objectUrl);
+            setBlogData(prev => ({
+                ...prev,
+                imagen_portada: `/e-commerce/api/uploads/blog/${file.name}`
+            }));
         }
     };
 
@@ -34,17 +40,20 @@ const AddBlog = ({ onBack }: AddBlogProps) => {
         e.preventDefault();
         try {
             const formData = new FormData();
+            
             Object.entries(blogData).forEach(([key, value]) => {
-                formData.append(key, value.toString());
+                if (key !== 'imagen_portada') {
+                    formData.append(key, value.toString());
+                }
             });
 
             if (selectedFile) {
                 formData.append('imagen_portada', selectedFile);
+                formData.append('upload_path', 'api/uploads/blog'); // Ruta actualizada
             }
 
             const response = await fetch('http://localhost/e-commerce/api/blog/create', {
                 method: 'POST',
-                credentials: 'include',
                 body: formData,
             });
 
@@ -61,6 +70,19 @@ const AddBlog = ({ onBack }: AddBlogProps) => {
         }
     };
 
+    // En la parte del render, actualizar el componente Image
+    {previewUrl && (
+        <div className="relative w-24 h-24">
+            <Image
+                src={previewUrl}
+                alt="Preview"
+                fill
+                className="object-cover rounded"
+                unoptimized
+                loader={({ src }) => src.startsWith('blob') ? src : `http://localhost${src}`}
+            />
+        </div>
+    )}
     return (
         <div className="max-w-2xl mx-auto">
             <h2 className="text-2xl font-bold mb-6">Agregar Nuevo Blog</h2>

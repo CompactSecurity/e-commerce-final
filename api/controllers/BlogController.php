@@ -34,11 +34,16 @@ class BlogController {
                 mkdir($upload_dir, 0777, true);
             }
 
-            $filename = uniqid() . '_' . basename($file['name']);
+            // Sanitize filename and ensure uniqueness
+            $filename = uniqid() . '_' . preg_replace("/[^a-zA-Z0-9.]/", "_", $file['name']);
             $target_path = $upload_dir . $filename;
 
             if (move_uploaded_file($file['tmp_name'], $target_path)) {
-                $imagen_portada = '/e-commerce/api/uploads/blog/' . $filename;
+                // Store the relative path in the database
+                $imagen_portada = '/api/uploads/blog/' . $filename;
+            } else {
+                $this->response->sendError(500, "Error al subir la imagen");
+                return;
             }
         }
 
@@ -62,9 +67,32 @@ class BlogController {
     public function getAll() {
         $blogs = $this->blog->getAll();
         if ($blogs) {
+            // Add complete URL to image paths
+            foreach ($blogs as &$blog) {
+                if (!empty($blog['imagen_portada'])) {
+                    $blog['imagen_portada'] = 'http://localhost/e-commerce' . $blog['imagen_portada'];
+                }
+            }
             $this->response->sendSuccess(200, $blogs);
         } else {
             $this->response->sendError(404, "No se encontraron blogs");
+        }
+    }
+
+    public function getById($id) {
+        if (!$id) {
+            $this->response->sendError(400, "ID no proporcionado");
+            return;
+        }
+
+        $blog = $this->blog->getById($id);
+        if ($blog) {
+            if (!empty($blog['imagen_portada'])) {
+                $blog['imagen_portada'] = 'http://localhost/e-commerce' . $blog['imagen_portada'];
+            }
+            $this->response->sendSuccess(200, $blog);
+        } else {
+            $this->response->sendError(404, "Blog no encontrado");
         }
     }
 
@@ -122,24 +150,6 @@ class BlogController {
             $this->response->sendSuccess(200, ["mensaje" => "Blog actualizado exitosamente"]);
         } else {
             $this->response->sendError(500, "Error al actualizar el blog");
-        }
-    }
-
-    public function getById($id) {
-        if (!$id) {
-            $this->response->sendError(400, "ID no proporcionado");
-            return;
-        }
-
-        $blog = $this->blog->getById($id);
-        if ($blog) {
-            // Ensure the image path is complete
-            if ($blog['imagen_portada']) {
-                $blog['imagen_portada'] = 'http://localhost/e-commerce' . $blog['imagen_portada'];
-            }
-            $this->response->sendSuccess(200, $blog);
-        } else {
-            $this->response->sendError(404, "Blog no encontrado");
         }
     }
 
