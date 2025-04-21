@@ -352,7 +352,7 @@ const Navbar = () => {
                             <h2 className="text-xl font-bold text-gray-800">Ofertas del día</h2>
                             <button 
                                 onClick={() => setIsOffersOpen(false)}
-                                className="text-gray-500 hover:text-gray-700"
+                                className="text-gray-500 hover:text-gray-700 cursor-pointer"
                             >
                                 ✕
                             </button>
