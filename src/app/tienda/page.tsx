@@ -358,7 +358,7 @@ const ShopPage = () => {
         </h2>
         <button
           onClick={closeModal}
-          className="text-gray-500 hover:text-gray-700 transition-colors duration-200 ease-in-out cursor-po"
+          className="text-gray-500 hover:text-gray-700 transition-colors duration-200 ease-in-out cursor-pointer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
