@@ -223,6 +223,11 @@ class ProductoModel {
                 $producto['id_categoria'] = intval($producto['id_categoria']);
                 $producto['id_marca'] = intval($producto['id_marca']);
                 
+                // Fix the image path to avoid duplication
+                if ($producto['imagen_principal']) {
+                    $producto['imagen_principal'] = 'http://localhost/e-commerce/public/uploads/productos/' . basename($producto['imagen_principal']);
+                }
+                
                 // Structure category and brand data
                 $producto['categoria'] = [
                     'id' => $producto['id_categoria'],
@@ -236,12 +241,12 @@ class ProductoModel {
                     'descripcion' => $producto['marca_descripcion'],
                     'logo' => $producto['marca_logo']
                 ];
-                
             }
             
             return $producto;
         } catch (PDOException $e) {
             $this->lastError = $e->getMessage();
+            error_log("Database error in getBySlug: " . $e->getMessage());
             return null;
         }
     }

@@ -146,14 +146,17 @@ export default function ProductPage() {
                                 <div className="relative w-full max-w-[500px] aspect-square rounded-xl bg-white overflow-hidden group">
                                     {product.imagen_principal && (
                                         <Image
-                                            src={product.imagen_principal.startsWith('http')
-                                                ? product.imagen_principal
-                                                : `http://localhost/e-commerce${product.imagen_principal}`}
+                                            src={product.imagen_principal} // Remove the duplicate base URL
                                             alt={product.nombre}
                                             fill
                                             className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
                                             priority
                                             sizes="(max-width: 768px) 100vw, 50vw"
+                                            onError={(e) => {
+                                                console.error('Image failed to load:', product.imagen_principal);
+                                                const imgElement = e.target as HTMLImageElement;
+                                                imgElement.src = '/placeholder.jpg';
+                                            }}
                                         />
                                     )}
                                 </div>
@@ -255,7 +258,7 @@ export default function ProductPage() {
                                         )}
                                         {product.cotizable === 1 && (
                                             <button
-                                                onClick={() => window.open(`https://wa.me/+51999999999?text=Hola, estoy interesado en: ${product.nombre}`)}
+                                                onClick={() => window.open(`https://wa.me/+51976687566?text=Hola, estoy interesado en: ${product.nombre}`)}
                                                 className="w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-lg font-semibold shadow-lg hover:shadow-green-200 transition-all duration-300 flex items-center justify-center gap-2"
                                             >
                                                 <FaWhatsapp className="w-5 h-5" />
