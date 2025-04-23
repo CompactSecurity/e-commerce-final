@@ -296,7 +296,7 @@ class ProductoModel {
     }
     public function isConnected() {
         try {
-            // Simple query to check connection
+            // Query simple para verificar la conexión
             $this->conn->query('SELECT 1');
             return true;
         } catch (PDOException $e) {
