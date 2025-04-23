@@ -11,52 +11,35 @@ class ProductoModel {
 
     public function create($data) {
         try {
-            // Generate slug from nombre
+            // Generate slug from product name
             $slug = $this->generateSlug($data['nombre']);
             
-            $sql = "INSERT INTO productos (nombre, descripcion, precio, precio_oferta, stock, 
-                    id_categoria, id_marca, imagen_principal, cotizable, agregable_carrito, estado, slug) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO productos (
+                nombre, descripcion, precio, precio_oferta, stock, 
+                id_categoria, id_marca, imagen_principal, 
+                cotizable, agregable_carrito, destacado, slug
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
             $stmt = $this->conn->prepare($sql);
-            if (!$stmt) {
-                $this->lastError = $this->conn->errorInfo()[2];
-                error_log("Prepare failed: " . $this->lastError);
-                return false;
-            }
-
-            // Convert empty or zero values to NULL for foreign keys
-            $id_marca = (!empty($data['id_marca']) && $data['id_marca'] > 0) ? $data['id_marca'] : null;
-            $id_categoria = (!empty($data['id_categoria']) && $data['id_categoria'] > 0) ? $data['id_categoria'] : null;
-
             $result = $stmt->execute([
                 $data['nombre'],
                 $data['descripcion'],
                 $data['precio'],
                 $data['precio_oferta'],
                 $data['stock'],
-                $id_categoria,
-                $id_marca,
-                $data['imagen_principal'] ?: null,
+                $data['id_categoria'],
+                $data['id_marca'],
+                $data['imagen_principal'],
                 $data['cotizable'],
                 $data['agregable_carrito'],
-                1,
+                $data['destacado'],
                 $slug
             ]);
-
-            if (!$result) {
-                $this->lastError = $stmt->errorInfo()[2];
-                error_log("Execute failed: " . $this->lastError);
-                return false;
-            }
-
-            return true;
+            
+            return $result;
         } catch (PDOException $e) {
             $this->lastError = $e->getMessage();
-            error_log("Database error in create: " . $this->lastError);
-            error_log("SQL: " . $sql);
-            error_log("Data: " . print_r($data, true));
-            throw $e;
+            return false;
         }
     }
 
@@ -92,7 +75,7 @@ class ProductoModel {
         $sql = "UPDATE productos SET 
                 nombre = ?, descripcion = ?, precio = ?, precio_oferta = ?, 
                 stock = ?, id_categoria = ?, id_marca = ?, cotizable = ?, 
-                agregable_carrito = ?, estado = ?";
+                agregable_carrito = ?, estado = ?, destacado = ?";
         
         if (isset($data['imagen_principal']) && !empty($data['imagen_principal'])) {
             $sql .= ", imagen_principal = ?";

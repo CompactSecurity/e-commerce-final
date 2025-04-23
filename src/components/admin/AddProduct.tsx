@@ -17,6 +17,7 @@ interface ProductFormData {
     imagen_principal: string;
     cotizable: number;
     agregable_carrito: number;
+    destacado: number; // Nuevo campo
 }
 
 interface Category {
@@ -46,7 +47,8 @@ const AddProduct = ({ onBack }: AddProductProps) => {
         id_marca: 0,
         imagen_principal: '',
         cotizable: 0,
-        agregable_carrito: 1
+        agregable_carrito: 1,
+        destacado: 0 // Nuevo campo
     });
 
     useEffect(() => {
@@ -89,16 +91,24 @@ const AddProduct = ({ onBack }: AddProductProps) => {
     const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, checked } = e.target;
         
-        setFormData(prev => ({
-            ...prev,
-            // cuando uno esta marcado el otro es forzado a tener 0
-            cotizable: name === 'cotizable' ? (checked ? 1 : 0) : (checked ? 0 : prev.cotizable),
-            agregable_carrito: name === 'agregable_carrito' ? (checked ? 1 : 0) : (checked ? 0 : prev.agregable_carrito),
-            // resetear los campos
-            precio: name === 'cotizable' && checked ? 0 : prev.precio,
-            precio_oferta: name === 'cotizable' && checked ? 0 : prev.precio_oferta,
-            stock: name === 'cotizable' && checked ? 0 : prev.stock
-        }));
+        setFormData(prev => {
+            const newState = {
+                ...prev,
+                [name]: checked ? 1 : 0
+            };
+            
+            // Ensure mutual exclusivity
+            if (name === 'cotizable' && checked) {
+                newState.agregable_carrito = 0;
+                newState.precio = 0;
+                newState.precio_oferta = 0;
+                newState.stock = 0;
+            } else if (name === 'agregable_carrito' && checked) {
+                newState.cotizable = 0;
+            }
+            
+            return newState;
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -118,6 +128,7 @@ const AddProduct = ({ onBack }: AddProductProps) => {
             // Agregar los campos adicionales
             formDataToSend.append('cotizable', formData.cotizable.toString());
             formDataToSend.append('agregable_carrito', formData.agregable_carrito.toString());
+            formDataToSend.append('destacado', formData.destacado.toString()); // Moved inside the function
             
             if (selectedFile) {
                 formDataToSend.append('imagen_principal', selectedFile);
@@ -284,12 +295,21 @@ const AddProduct = ({ onBack }: AddProductProps) => {
                                     <input
                                         type="checkbox"
                                         name="agregable_carrito"
-                                        checked={formData.agregable_carrito === 1 && formData.cotizable !== 1}
+                                        checked={formData.agregable_carrito === 1}
                                         onChange={handleCheckboxChange}
                                         className="rounded text-orange-500 focus:ring-orange-500"
-                                        disabled={formData.cotizable === 1}
                                     />
                                     <span className="ml-2 text-sm text-gray-700">Se puede agregar al carrito</span>
+                                </label>
+                                <label className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        name="destacado"
+                                        checked={formData.destacado === 1}
+                                        onChange={(e) => setFormData({...formData, destacado: e.target.checked ? 1 : 0})}
+                                        className="rounded text-orange-500 focus:ring-orange-500"
+                                    />
+                                    <span className="ml-2 text-sm text-gray-700">Producto destacado</span>
                                 </label>
                             </div>
                         </div>

@@ -135,10 +135,9 @@ class ProductController {
             'id_categoria' => intval($_POST['id_categoria'] ?? 0),
             'id_marca' => intval($_POST['id_marca'] ?? 0),
             'imagen_principal' => $imagen_principal,
-            // Modified checkbox handling:
             'cotizable' => isset($_POST['cotizable']) && $_POST['cotizable'] === '1' ? 1 : 0,
             'agregable_carrito' => isset($_POST['agregable_carrito']) && $_POST['agregable_carrito'] === '1' ? 1 : 0,
-            'estado' => 1
+            'destacado' => isset($_POST['destacado']) && $_POST['destacado'] === '1' ? 1 : 0
         ];
 
         // si es cotizable, deshabilitar agregable_carrito
@@ -195,8 +194,7 @@ class ProductController {
                 'id_categoria' => intval($_POST['id_categoria'] ?? 0),
                 'id_marca' => intval($_POST['id_marca'] ?? 0),
                 'cotizable' => isset($_POST['cotizable']) ? 1 : 0,
-                'agregable_carrito' => isset($_POST['cotizable']) ? 0 : (isset($_POST['agregable_carrito']) ? 1 : 0),
-                'estado' => isset($_POST['estado']) ? 1 : 0
+                'agregable_carrito' => isset($_POST['cotizable']) ? 0 : (isset($_POST['agregable_carrito']) ? 1 : 0),'estado' => isset($_POST['estado']) ? 1 : 0
             ];
 
             if (isset($_FILES['imagen_principal']) && $_FILES['imagen_principal']['error'] === UPLOAD_ERR_OK) {
