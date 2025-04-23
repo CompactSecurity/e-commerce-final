@@ -29,7 +29,7 @@ const WhatsAppButton = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleClick}
-                className="bg-[#25D366] text-white p-4 rounded-full shadow-lg flex items-center justify-center group relative"
+                className="cursor-pointer bg-[#25D366] text-white p-4 rounded-full shadow-lg flex items-center justify-center group relative"
             >
                 <FaWhatsapp className="w-6 h-6" />
                 
