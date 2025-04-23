@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FiMessageSquare } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
 import { 
     FiStar, 
@@ -47,19 +48,18 @@ const FeaturedProducts = () => {
                 console.log("Fetching featured products...");
                 const response = await fetch('http://localhost/e-commerce/api/productos/get-destacados');
                 
-                console.log("Response status:", response.status);
+
                 const responseText = await response.text();
-                console.log("Raw response:", responseText);
+
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 const data = JSON.parse(responseText);
-                console.log("Parsed JSON data:", data);
+
                 
                 if (data.status === 'success') {
-                    console.log("Featured products data:", data.data);
                     setFeaturedProducts(data.data);
                 } else {
                     console.error('API Error:', data.mensaje || 'Unknown error');
@@ -91,6 +91,39 @@ const FeaturedProducts = () => {
         const handleToggleWishlist = (e: React.MouseEvent) => {
             e.stopPropagation();
             setIsWishlist(!isWishlist);
+        };
+
+        const renderActionButton = () => {
+            if (product.cotizable === 1) {
+                return (
+                    <motion.a
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        href={`https://wa.me/51987654321?text=Hola,%20estoy%20interesado%20en%20el%20producto%20${encodeURIComponent(product.nombre)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full bg-green-500 hover:bg-green-600 text-white py-2 md:py-3 px-4 md:px-6 rounded-xl
+                                font-medium flex items-center justify-center gap-1 md:gap-2 shadow-lg shadow-green-500/20 cursor-pointer text-sm md:text-base"
+                    >
+                        <FiMessageSquare className="w-4 h-4 md:w-5 md:h-5" />
+                        <span>Cotizar por WhatsApp</span>
+                    </motion.a>
+                );
+            } else if (product.agregable_carrito === 1) {
+                return (
+                    <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={handleAddToCart}
+                        className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 md:py-3 px-4 md:px-6 rounded-xl
+                                font-medium flex items-center justify-center gap-1 md:gap-2 shadow-lg shadow-orange-500/20 cursor-pointer text-sm md:text-base"
+                    >
+                        <FiShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
+                        <span>Agregar al Carrito</span>
+                    </motion.button>
+                );
+            }
+            return null;
         };
 
         return (
@@ -183,16 +216,7 @@ const FeaturedProducts = () => {
 
                     {/* Botón de acción */}
                     <div className="mt-auto pt-4">
-                        <motion.button
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={handleAddToCart}
-                            className="w-full bg-orange-500 hover:bg-orange-600 text-white py-2 md:py-3 px-4 md:px-6 rounded-xl
-                                    font-medium flex items-center justify-center gap-1 md:gap-2 shadow-lg shadow-orange-500/20 cursor-pointer text-sm md:text-base"
-                        >
-                            <FiShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
-                            <span>Agregar al Carrito</span>
-                        </motion.button>
+                        {renderActionButton()}
                     </div>
                 </div>
             </motion.div>
