@@ -11,9 +11,9 @@ import RegisterModal from './RegisterModal';
 import ForgotPasswordModal from './ForgotPasswordModal';
 import Cart from './Cart';
 
-// Add this interface if not already present
+// Definimos la interfaz User
 interface User {
-    id_usuario: number;  // Changed from id to id_usuario to match DB
+    id_usuario: number;  
     nombre: string;
     apellidos: string;
     email: string;
