@@ -98,32 +98,22 @@ class ProductController {
         }
 
         $imagen_principal = '';
+        // In the create method, modify the image handling part:
         if (isset($_FILES['imagen_principal'])) {
             $file = $_FILES['imagen_principal'];
-            $upload_dir = __DIR__ . '/../uploads/productos/';
-            
-            error_log("Upload directory: " . $upload_dir);
+            $upload_dir = __DIR__ . '/../../public/uploads/productos/'; // Changed path
             
             if (!file_exists($upload_dir)) {
-                if (!mkdir($upload_dir, 0777, true)) {
-                    error_log("Failed to create upload directory");
-                    $this->response->sendError(500, "Error al crear directorio de uploads");
-                    return;
-                }
+                mkdir($upload_dir, 0777, true);
             }
-
+        
             $filename = uniqid() . '_' . basename($file['name']);
             $target_path = $upload_dir . $filename;
             
-            error_log("Target path: " . $target_path);
-
-            if (!move_uploaded_file($file['tmp_name'], $target_path)) {
-                error_log("Failed to move uploaded file. Upload error: " . $file['error']);
-                $this->response->sendError(500, "Error al subir la imagen");
-                return;
+            if (move_uploaded_file($file['tmp_name'], $target_path)) {
+                // Store relative path from public folder
+                $imagen_principal = '/uploads/productos/' . $filename;
             }
-
-            $imagen_principal = '/e-commerce/api/uploads/productos/' . $filename;
         }
 
         $data = [

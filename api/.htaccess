@@ -28,3 +28,6 @@ RewriteRule ^(.*)$ index.php/$1 [L]
     Order Allow,Deny
     Allow from all
 </Files>
+
+RewriteEngine On
+RewriteRule ^uploads/(.*)$ /api/uploads/$1 [L]
