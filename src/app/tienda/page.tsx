@@ -111,7 +111,7 @@ const ShopPage = () => {
         };
 
         fetchData();
-    }, [currentPage]); // Add currentPage as dependency
+    }, [currentPage]); // Agregar currentPage como dependencia
 
     // Agregar esta función para manejar el cambio de filtros
     const handleFilterChange = (filterType: keyof typeof filters, value: any) => {
