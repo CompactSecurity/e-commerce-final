@@ -32,7 +32,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
             ...prev,
             [name]: value
         }));
-        // Clear error when user starts typing
+        // Limpiar el mensaje de error si el campo está válido
         if (errors[name as keyof typeof errors]) {
             setErrors(prev => ({
                 ...prev,
@@ -87,7 +87,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
                 });
 
                 const data = await response.json();
-                console.log('Login response:', data); // Debug line
+                console.log('Login response:', data); 
 
                 if (data.status === 'success') {
                     localStorage.setItem('user', JSON.stringify(data.data.usuario));
@@ -248,8 +248,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* Botones de redes sociales */}
 
                                 {/* Enlace de registro */}
                                 <div className="mt-6 text-center">

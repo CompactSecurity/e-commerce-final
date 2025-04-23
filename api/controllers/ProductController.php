@@ -48,7 +48,7 @@ class ProductController {
                 return;
             }
 
-            // Verify product exists before deletion
+            // Verificar si el producto existe antes de intentar eliminarlo
             $product = $this->model->getById($id);
             if (!$product) {
                 error_log("Product not found with ID: " . $id);
@@ -141,7 +141,7 @@ class ProductController {
             'estado' => 1
         ];
 
-        // Enforce mutual exclusivity
+        // si es cotizable, deshabilitar agregable_carrito
         if ($data['cotizable'] === 1) {
             $data['agregable_carrito'] = 0;
         }
@@ -177,7 +177,7 @@ class ProductController {
             error_log("FILES data: " . print_r($_FILES, true));
             error_log("Session data: " . print_r($_SESSION, true));
 
-            // Get the raw input
+            // Obtener datos de entrada
             $input = file_get_contents("php://input");
             error_log("Raw input: " . $input);
 
@@ -199,7 +199,6 @@ class ProductController {
                 'estado' => isset($_POST['estado']) ? 1 : 0
             ];
 
-            // Handle image upload if present
             if (isset($_FILES['imagen_principal']) && $_FILES['imagen_principal']['error'] === UPLOAD_ERR_OK) {
                 $file = $_FILES['imagen_principal'];
                 $upload_dir = __DIR__ . '/../uploads/productos/';

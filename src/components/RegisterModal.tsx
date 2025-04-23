@@ -42,7 +42,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose, onOpenLo
             ...prev,
             [name]: type === 'checkbox' ? checked : value
         }));
-        // Clear error when user starts typing
+        // Limpiar errores si el campo cambia
         if (errors[name as keyof typeof errors]) {
             setErrors(prev => ({
                 ...prev,

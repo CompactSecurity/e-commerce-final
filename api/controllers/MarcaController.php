@@ -39,7 +39,7 @@ class MarcaController {
 
             $this->marca->nombre = $_POST['nombre'];
             $this->marca->descripcion = $_POST['descripcion'] ?? '';
-            $this->marca->logo = $logo; // Changed from imagen_logo to logo
+            $this->marca->logo = $logo; 
 
             if ($this->marca->create()) {
                 echo json_encode([
@@ -90,7 +90,6 @@ class MarcaController {
                 throw new Exception('ID no proporcionado');
             }
 
-            // Get marca info to delete the logo file
             $marca = $this->marca->getById($id);
             if ($marca && $marca['logo']) {
                 $logo_path = __DIR__ . '/../../public' . $marca['logo'];
@@ -119,7 +118,6 @@ class MarcaController {
     public function update($id) {
         header('Content-Type: application/json');
         try {
-            // Parse JSON body if Content-Type is application/json
             $input = [];
             if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
                 $raw = file_get_contents('php://input');
@@ -137,7 +135,6 @@ class MarcaController {
                 throw new Exception('Marca no encontrada');
             }
 
-            // If updating logo via URL (from JSON), just use the provided value
             $logo = isset($input['logo']) ? $input['logo'] : $marca['logo'];
 
             $this->marca->id = $id;
