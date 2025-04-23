@@ -290,14 +290,12 @@ class ProductController {
             error_log("Raw productos data: " . print_r($productos, true));
             
             if ($productos) {
-                foreach ($productos as &$producto) {
-                    if ($producto['imagen_principal']) {
-                        $producto['imagen_principal'] = 'http://localhost/e-commerce' . $producto['imagen_principal'];
-                    }
+                // In getDestacados method, remove the URL prefixing:
+                if ($productos) {
+                    $this->response->sendSuccess(200, $productos);
+                } else {
+                    $this->response->sendSuccess(200, []);
                 }
-                // Debug: Log final response data
-                error_log("Final response data: " . print_r($productos, true));
-                $this->response->sendSuccess(200, $productos);
             } else {
                 error_log("No featured products found in database");
                 $this->response->sendSuccess(200, []);
