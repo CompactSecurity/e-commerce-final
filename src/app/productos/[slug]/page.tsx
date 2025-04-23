@@ -190,7 +190,7 @@ export default function ProductPage() {
                             
                                 {/* Right Column - Updated Product Details */}
                                 <div className="flex flex-col justify-between">
-                                    {/* Category and Brand */}
+                                    {/* Categorias y marcas */}
                                     <div className="flex items-center gap-2 mb-4">
                                         <span className="text-sm text-gray-500">
                                             Categoría: <span className="text-blue-600">{product.categoria_nombre}</span>
@@ -216,7 +216,7 @@ export default function ProductPage() {
                                 </div>
 
 
-                                    {/* Product Title */}
+                                    {/* Titulo del producto */}
                                     <h1 className="text-3xl font-bold text-gray-900 mb-4">
                                         {product.nombre}
                                     </h1>
@@ -250,7 +250,7 @@ export default function ProductPage() {
                                         </div>
                                     </div>
 
-                                    {/* Stock Info with more detail */}
+                                    {/* Informacion de Stock y detalles */}
                                 <div className="mb-6">
                                     <div className="flex items-center gap-2">
                                         <div className={`w-3 h-3 rounded-full ${
@@ -272,7 +272,7 @@ export default function ProductPage() {
 
 
 
-                                    {/* Description with better formatting */}
+                                    {/* Descripcion con mejor formato */}
                                     <div className="prose prose-sm text-gray-600 mb-8">
                                         <h2 className="text-lg font-semibold text-gray-900 mb-2">Descripción del producto</h2>
                                         <p className="whitespace-pre-line">{product.descripcion || "Sin descripción disponible."}</p>
@@ -308,7 +308,7 @@ export default function ProductPage() {
                                     </div>
 
 
-                                    {/* Additional Info */}
+                                    {/* Informacion Adicional */}
                                     <div className="mt-8 pt-6 border-t border-gray-200">
                                         <div className="flex items-center gap-4 text-sm text-gray-500">
                                             <div className="flex items-center gap-2">
@@ -322,6 +322,12 @@ export default function ProductPage() {
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                 </svg>
                                                 <span>Garantía de calidad</span>
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3l8 4v5c0 5.25-3.375 9.75-8 11-4.625-1.25-8-5.75-8-11V7l8-4z" />
+                                            </svg>
+                                                <span>Maxima seguridad</span>
                                             </div>
                                         </div>
                                     </div>

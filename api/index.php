@@ -137,7 +137,7 @@ if ($controller === 'productos') {
             exit;
         case 'related':
             // For related products, we need both category ID and product ID
-            $categoria_id = $id; // from uri[2]
+            $categoria_id = $id;
             $producto_id = isset($uri[3]) ? $uri[3] : null;
             $controller_instance->getRelatedProducts($categoria_id, $producto_id);
             exit;
