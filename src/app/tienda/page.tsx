@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { FaSearch, FaStar, FaShoppingCart, FaFilter, FaTimes, FaWhatsapp } from 'react-icons/fa';
 import { IoGrid, IoList } from 'react-icons/io5';
 import Image from 'next/image';
+import Link from 'next/link';
+
 import { StaticImageData } from 'next/image';
 import casco from '../../assets/Categorias/facial.jpg';
 import guantes from '../../assets/Categorias/cabeza.jpg';
@@ -502,76 +504,76 @@ const ShopPage = () => {
                         <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-6'}>
                             {sortedProducts.length > 0 ? (
                                 sortedProducts.map((product) => (
-                                    <motion.div
-                                        key={product.id_producto}
-                                        initial={{ opacity: 0, y: 15 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        onClick={() => handleProductClick(product)}
-                                        className={`bg-gray-50 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer flex flex-col ${viewMode === 'list' ? 'sm:flex-row' : ''
-                                            }`}
-                                    >
-                                        <div className={`relative ${viewMode === 'list' ? 'w-full sm:w-48 h-48' : 'w-full h-60'}`}>
-                                            <Image
-                                                src={product.imagen_principal || '/placeholder.jpg'}
-                                                alt={product.nombre}
-                                                fill
-                                                className="object-contain bg-white p-2"
-                                            />
-                                            {product.precio_oferta > 0 && (
-                                                <div className="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded font-medium shadow">
-                                                    Oferta
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        <div className={`flex flex-col justify-between ${viewMode === 'list' ? 'flex-1' : ''}`}>
-                                            <div className="p-4 pb-2 flex flex-col gap-1">
-                                                <h3 className="text-gray-900 font-semibold text-sm sm:text-base">{product.nombre}</h3>
-
-                                                {Number(product.precio) === 0 ? (
-                                                    <span className="text-sm text-gray-600 italic">Este producto solo es cotizable</span>
-                                                ) : (
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="text-base font-bold text-gray-800">
-                                                            S/ {Number(product.precio).toFixed(2)}
-                                                        </span>
-                                                        {product.precio_oferta > 0 && (
-                                                            <span className="text-sm text-gray-500 line-through">
-                                                                S/ {Number(product.precio_oferta || 0).toFixed(2)}
-                                                            </span>
-                                                        )}
+                                    // Replace the motion.div wrapper with Link component
+                                    <Link href={`/productos/${product.slug}`} passHref key={product.id_producto}>
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 15 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            className={`bg-gray-50 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer flex flex-col ${viewMode === 'list' ? 'sm:flex-row' : ''}`}
+                                        >
+                                            <div className={`relative ${viewMode === 'list' ? 'w-full sm:w-48 h-48' : 'w-full h-60'}`}>
+                                                <Image
+                                                    src={product.imagen_principal || '/placeholder.jpg'}
+                                                    alt={product.nombre}
+                                                    fill
+                                                    className="object-contain bg-white p-2"
+                                                />
+                                                {product.precio_oferta > 0 && (
+                                                    <div className="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded font-medium shadow">
+                                                        Oferta
                                                     </div>
                                                 )}
                                             </div>
-
-                                            {/* Botones */}
-                                            <div className="px-4 pb-4 pt-2">
-                                                {Number(product.cotizable) === 1 ? (
-                                                    <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            handleProductClick(product);
-                                                        }}
-                                                        className="cursor-pointer flex items-center justify-center gap-2 w-full bg-green-500 text-white text-sm px-4 py-2 rounded hover:bg-green-600 transition"
-                                                    >
-                                                        <FaWhatsapp className="w-4 h-4" />
-                                                        Cotizar por WhatsApp
-                                                    </button>
-                                                ) : Number(product.agregable_carrito) === 1 ? (
-                                                    <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            // Aca va la logica para añadir al carrito
-                                                        }}
-                                                        className="cursor-pointer flex items-center justify-center gap-2 w-full bg-orange-500 text-white text-sm px-4 py-2 rounded hover:bg-orange-600 transition"
-                                                    >
-                                                        <FaShoppingCart className="w-4 h-4" />
-                                                        Añadir al carrito
-                                                    </button>
-                                                ) : null}
+                                            
+                                            <div className={`flex flex-col justify-between ${viewMode === 'list' ? 'flex-1' : ''}`}>
+                                                <div className="p-4 pb-2 flex flex-col gap-1">
+                                                    <h3 className="text-gray-900 font-semibold text-sm sm:text-base">{product.nombre}</h3>
+                                                    
+                                                    {Number(product.precio) === 0 ? (
+                                                        <span className="text-sm text-gray-600 italic">Este producto solo es cotizable</span>
+                                                    ) : (
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-base font-bold text-gray-800">
+                                                                S/ {Number(product.precio).toFixed(2)}
+                                                            </span>
+                                                            {product.precio_oferta > 0 && (
+                                                                <span className="text-sm text-gray-500 line-through">
+                                                                    S/ {Number(product.precio_oferta || 0).toFixed(2)}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                
+                                                {/* Botones */}
+                                                <div className="px-4 pb-4 pt-2">
+                                                    {Number(product.cotizable) === 1 ? (
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleProductClick(product);
+                                                            }}
+                                                            className="cursor-pointer flex items-center justify-center gap-2 w-full bg-green-500 text-white text-sm px-4 py-2 rounded hover:bg-green-600 transition"
+                                                        >
+                                                            <FaWhatsapp className="w-4 h-4" />
+                                                            Cotizar por WhatsApp
+                                                        </button>
+                                                    ) : Number(product.agregable_carrito) === 1 ? (
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                // Aca va la logica para añadir al carrito
+                                                            }}
+                                                            className="cursor-pointer flex items-center justify-center gap-2 w-full bg-orange-500 text-white text-sm px-4 py-2 rounded hover:bg-orange-600 transition"
+                                                        >
+                                                            <FaShoppingCart className="w-4 h-4" />
+                                                            Añadir al carrito
+                                                        </button>
+                                                    ) : null}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </motion.div>
+                                        </motion.div>
+                                    </Link>
                                 ))
                             ) : (
                                 <div className="col-span-full text-center py-10">

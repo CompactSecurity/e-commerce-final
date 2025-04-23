@@ -250,6 +250,75 @@ class ProductController {
         }
     }
 
+    public function getBySlug($slug) {
+        // Start output buffering to catch any stray output
+        ob_start(); 
+    
+        // Ensure Content-Type is set early
+        header('Content-Type: application/json');
+        error_log("getBySlug endpoint hit. Requested slug: " . $slug);
+    
+        if (!$slug) {
+            http_response_code(400);
+            error_log("Error in getBySlug: Slug parameter is missing or empty.");
+            ob_end_clean(); // Clear buffer before outputting JSON
+            echo json_encode([
+                'status' => 'error',
+                'mensaje' => 'Slug no proporcionado'
+            ]);
+            exit; // Terminate script
+        }
+        
+        try {
+            error_log("Calling model->getBySlug for slug: " . $slug);
+            $producto = $this->model->getBySlug($slug);
+            
+            // Log what the model returned
+            error_log("Model->getBySlug returned: " . ($producto ? 'Product data found' : 'null/false'));
+    
+            if ($producto) {
+                // Ensure the image path is absolute for the frontend
+                if (isset($producto['imagen_principal']) && $producto['imagen_principal'] && !str_starts_with($producto['imagen_principal'], 'http')) {
+                    $producto['imagen_principal'] = 'http://localhost/e-commerce' . $producto['imagen_principal'];
+                }
+                
+                error_log("Product found for slug: " . $slug . ". Preparing success response.");
+                ob_end_clean(); // Clear buffer before outputting JSON
+                echo json_encode([
+                    'status' => 'success',
+                    'data' => $producto
+                ]);
+            } else {
+                http_response_code(404);
+                error_log("Product not found for slug: " . $slug);
+                ob_end_clean(); // Clear buffer before outputting JSON
+                echo json_encode([
+                    'status' => 'error',
+                    'mensaje' => 'Producto no encontrado'
+                ]);
+            }
+        } catch (PDOException $pdo_e) { // Catch database errors specifically
+            http_response_code(500);
+            error_log("PDOException in getBySlug for slug '" . $slug . "': " . $pdo_e->getMessage());
+            ob_end_clean(); // Clear buffer before outputting JSON
+            echo json_encode([
+                'status' => 'error',
+                'mensaje' => 'Error de base de datos al buscar producto por slug.'
+                // Optionally include $pdo_e->getMessage() in development for debugging
+            ]);
+        } catch (Exception $e) { // Catch any other errors
+            http_response_code(500);
+            error_log("Exception in getBySlug for slug '" . $slug . "': " . $e->getMessage());
+            ob_end_clean(); // Clear buffer before outputting JSON
+            echo json_encode([
+                'status' => 'error',
+                'mensaje' => 'Error interno del servidor al buscar producto por slug.'
+                // Optionally include $e->getMessage() in development for debugging
+            ]);
+        }
+        exit; // Ensure script terminates after sending response
+    }
+
     public function getPaginated() {
         try {
             $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;

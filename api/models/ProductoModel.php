@@ -198,6 +198,54 @@ class ProductoModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getBySlug($slug) {
+        $sql = "SELECT p.*,
+                c.nombre as categoria_nombre,
+                c.descripcion as categoria_descripcion,
+                m.nombre as marca_nombre,
+                m.descripcion as marca_descripcion,
+                m.logo as marca_logo
+                FROM productos p
+                LEFT JOIN categorias c ON p.id_categoria = c.id_categoria
+                LEFT JOIN marcas m ON p.id_marca = m.id
+                WHERE p.slug = ? AND p.estado = 1";
+                
+        try {
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([$slug]);
+            $producto = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($producto) {
+                // Cast numerical values
+                $producto['precio'] = floatval($producto['precio']);
+                $producto['precio_oferta'] = floatval($producto['precio_oferta']);
+                $producto['stock'] = intval($producto['stock']);
+                $producto['id_categoria'] = intval($producto['id_categoria']);
+                $producto['id_marca'] = intval($producto['id_marca']);
+                
+                // Structure category and brand data
+                $producto['categoria'] = [
+                    'id' => $producto['id_categoria'],
+                    'nombre' => $producto['categoria_nombre'],
+                    'descripcion' => $producto['categoria_descripcion']
+                ];
+                
+                $producto['marca'] = [
+                    'id' => $producto['id_marca'],
+                    'nombre' => $producto['marca_nombre'],
+                    'descripcion' => $producto['marca_descripcion'],
+                    'logo' => $producto['marca_logo']
+                ];
+                
+            }
+            
+            return $producto;
+        } catch (PDOException $e) {
+            $this->lastError = $e->getMessage();
+            return null;
+        }
+    }
+
     public function countAll() {
         $query = "SELECT COUNT(*) as total FROM productos WHERE estado = 1";
         $stmt = $this->conn->prepare($query);

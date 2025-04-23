@@ -132,6 +132,9 @@ if ($controller === 'productos') {
         case 'get-by-id':
             $controller_instance->getById($id);
             exit;
+        case 'get-by-slug':
+            $controller_instance->getBySlug($id);
+            exit;
     }
 }
 // cargar y ejecutar los controladores segun la peticion del cliente

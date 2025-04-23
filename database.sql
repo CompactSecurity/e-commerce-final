@@ -1,21 +1,11 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 16-04-2025 a las 21:29:51
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+
 
 --
 -- Base de datos: `ecommerce`
@@ -47,8 +37,9 @@ CREATE TABLE `blog` (
 --
 
 INSERT INTO `blog` (`id_blog`, `titulo`, `slug`, `contenido`, `excerpt`, `author`, `category`, `read_time`, `imagen_portada`, `fecha_publicacion`, `estado`, `is_featured`) VALUES
-(5, 'La importancia del uso correcto de los EPP en el entorno laboral', 'hola', 'En el ámbito de la seguridad industrial, los Equipos de Protección Personal (EPP) son elementos fundamentales para preservar la integridad física de los trabajadores. Su correcta selección, uso y mantenimiento son claves para reducir al mínimo los riesgos asociados a tareas de alto impacto.\n\n¿Qué son los EPP?\nLos EPP son dispositivos, accesorios o vestimenta que protegen al trabajador contra riesgos específicos, como cortes, caídas, quemaduras, exposición a químicos, ruidos extremos, entre otros. Algunos ejemplos comunes incluyen cascos, guantes, gafas de seguridad, protectores auditivos, arneses y mascarillas.\n\nErrores comunes en su uso:\nA pesar de su importancia, uno de los problemas más comunes es el uso inadecuado o el desconocimiento del equipo requerido para cada tipo de tarea. Algunos trabajadores no ajustan correctamente los cascos, usan guantes que no están certificados o simplemente omiten su uso por incomodidad o falta de supervisión.\n\nBuenas prácticas para fomentar el uso del EPP:\n\nCapacitación continua sobre los riesgos del entorno y cómo prevenirlos.\n\nSupervisión activa por parte de los responsables de seguridad.\n\nInspección periódica del estado de los equipos.\n\nInvolucrar a los trabajadores en la elección del EPP para mejorar la comodidad y aceptación.\n\nConclusión:\nEl EPP es la última línea de defensa entre el trabajador y un accidente. Invertir en una cultura de seguridad y promover el uso adecuado del EPP no solo evita sanciones legales, sino que salva vidas.\n\n', 'El uso de Equipos de Protección Personal (EPP) no solo es obligatorio en muchos sectores industriales, sino que representa una barrera esencial entre los trabajadores y los riesgos potenciales del entorno. En este artículo analizamos por qué su uso adecuado puede marcar la diferencia entre un accidente y una jornada segura.', 'Jose Edgardo', 'EPP', '', '', '2025-04-14 15:32:11', 1, 0),
-(11, '5 prácticas esenciales para prevenir accidentes laborales en la industria', '5-pr-cticas-esenciales-para-prevenir-accidentes-laborales-en-la-industria', 'En cualquier entorno industrial, la seguridad de los trabajadores debe ser la prioridad número uno. Aunque los riesgos no se pueden eliminar por completo, sí pueden reducirse drásticamente con la implementación de protocolos adecuados y el compromiso de todos los niveles de la organización.\r\n\r\nA continuación, te presentamos 5 prácticas esenciales que toda empresa industrial debe aplicar para evitar accidentes y crear un entorno de trabajo más seguro:', 'La prevención de accidentes en entornos industriales no depende solo del equipo utilizado, sino de la implementación de buenas prácticas y una cultura de seguridad sólida. Estas 5 acciones clave pueden marcar la diferencia entre un entorno riesgoso y uno verdaderamente seguro.', 'Jose Edgardo', 'Consejos Laborales', '5 min de lectura', '', '2025-04-14 17:01:40', 1, 1);
+(28, 'Importancia del Equipo de Protección Personal en el Trabajo Industrial', 'importancia-del-equipo-de-protecci-n-personal-en-el-trabajo-industrial', 'En los entornos industriales, los trabajadores están expuestos a una serie de riesgos físicos, químicos y biológicos que pueden afectar su salud y seguridad. El uso de Equipos de Protección Personal (EPP) no solo es una medida recomendada, sino una obligación legal en la mayoría de los países.\r\n\r\nLos EPP incluyen elementos como cascos, guantes, gafas de seguridad, mascarillas, protección auditiva y calzado especial. Elegir el equipo adecuado y capacitar al personal en su uso correcto es esencial para minimizar los riesgos laborales.\r\n\r\nAdemás, las empresas deben realizar inspecciones periódicas para asegurarse de que el equipo esté en buenas condiciones y cumpla con las normativas vigentes. La cultura de la prevención es clave para reducir accidentes y enfermedades profesionales.', 'El uso correcto del Equipo de Protección Personal (EPP) puede significar la diferencia entre una jornada laboral segura y un accidente. Aquí te explicamos por qué su implementación debe ser una prioridad en cualquier entorno industrial.', 'Pedro Torres', 'EPP', '4 min de Lectura', '/api/uploads/blog/680673651373b_Captura_de_pantalla_2025_04_07_111227.png', '2025-04-21 11:33:41', 1, 0),
+(30, '5 prácticas esenciales para prevenir accidentes laborales en la industria', '5-pr-cticas-esenciales-para-prevenir-accidentes-laborales-en-la-industria', 'En cualquier entorno industrial, la seguridad de los trabajadores debe ser la prioridad número uno. Aunque los riesgos no se pueden eliminar por completo, sí pueden reducirse drásticamente con la implementación de protocolos adecuados y el compromiso de todos los niveles de la organización.\r\n\r\nA continuación, te presentamos 5 prácticas esenciales que toda empresa industrial debe aplicar para evitar accidentes y crear un entorno de trabajo más seguro:', '\r\n\r\nLa prevención de accidentes en entornos industriales no depende solo del equipo utilizado, sino de la implementación de buenas prácticas y una cultura de seguridad sólida. Estas 5 acciones clave pueden marcar la diferencia entre un entorno riesgoso y uno verdaderamente seguro.', 'Jose Edgardo', 'Consejos Laborales', '6 min de Lectura', '/api/uploads/blog/6806c33ec7804_ChatGPT_Image_21_abr_2025__05_14_09_p.m..png', '2025-04-21 17:14:22', 1, 0),
+(31, 'La importancia del uso correcto de los EPP en el entorno laboral', 'la-importancia-del-uso-correcto-de-los-epp-en-el-entorno-laboral', 'En el ámbito de la seguridad industrial, los Equipos de Protección Personal (EPP) son elementos fundamentales para preservar la integridad física de los trabajadores. Su correcta selección, uso y mantenimiento son claves para reducir al mínimo los riesgos asociados a tareas de alto impacto.\r\n\r\n¿Qué son los EPP?\r\nLos EPP son dispositivos, accesorios o vestimenta que protegen al trabajador contra riesgos específicos, como cortes, caídas, quemaduras, exposición a químicos, ruidos extremos, entre otros. Algunos ejemplos comunes incluyen cascos, guantes, gafas de seguridad, protectores auditivos, arneses y mascarillas.\r\n\r\nErrores comunes en su uso:\r\nA pesar de su importancia, uno de los problemas más comunes es el uso inadecuado o el desconocimiento del equipo requerido para cada tipo de tarea. Algunos trabajadores no ajustan correctamente los cascos, usan guantes que no están certificados o simplemente omiten su uso por incomodidad o falta de supervisión.\r\n\r\nBuenas prácticas para fomentar el uso del EPP:\r\n\r\nCapacitación continua sobre los riesgos del entorno y cómo prevenirlos.\r\n\r\nSupervisión activa por parte de los responsables de seguridad.\r\n\r\nInspección periódica del estado de los equipos.\r\n\r\nInvolucrar a los trabajadores en la elección del EPP para mejorar la comodidad y aceptación.\r\n\r\nConclusión:\r\nEl EPP es la última línea de defensa entre el trabajador y un accidente. Invertir en una cultura de seguridad y promover el uso adecuado del EPP no solo evita sanciones legales, sino que salva vidas.', '\r\nEl uso de Equipos de Protección Personal (EPP) no solo es obligatorio en muchos sectores industriales, sino que representa una barrera esencial entre los trabajadores y los riesgos potenciales del entorno. En este artículo analizamos por qué su uso adecuado puede marcar la diferencia entre un accidente y una jornada segura.', 'Jose Edgardo', 'EPP', '3 min de Lectura', '/api/uploads/blog/6806cd80ef240_1.png', '2025-04-21 17:58:08', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -149,6 +140,16 @@ CREATE TABLE `marcas` (
   `estado` tinyint(1) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `marcas`
+--
+
+INSERT INTO `marcas` (`id`, `nombre`, `slug`, `descripcion`, `logo`, `estado`) VALUES
+(11, '3M', NULL, '3M', 'a', 1),
+(12, 'Stanley', NULL, 'Stanley', '', 1),
+(13, 'Truper', NULL, 'Truper', '', 1),
+(14, 'Kamasa', NULL, 'Kamasa', '', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -184,9 +185,21 @@ CREATE TABLE `productos` (
   `estado` tinyint(1) DEFAULT 1,
   `destacado` tinyint(1) DEFAULT 0,
   `fecha_creacion` datetime DEFAULT current_timestamp(),
-  `cotizable` tinyint(1) DEFAULT 0,
-  `agregable_carrito` tinyint(1) DEFAULT 1
+  `cotizable` tinyint(4) DEFAULT 0,
+  `agregable_carrito` tinyint(4) DEFAULT 0,
+  `id_marca` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`id_producto`, `id_categoria`, `nombre`, `slug`, `descripcion`, `precio`, `precio_oferta`, `stock`, `imagen_principal`, `estado`, `destacado`, `fecha_creacion`, `cotizable`, `agregable_carrito`, `id_marca`) VALUES
+(81, 5, 'Mascara Reutilizable de silicona', 'mascara-reutilizable-de-silicona', 'La mejor mascara/respirador para tu cuidado personal y de tus trabajadores, hecha en Peru.', 120.00, 150.00, 20, '/uploads/productos/68093c66758d3_mascara.jpg', 1, 1, '2025-04-23 14:15:50', 0, 1, 11),
+(82, 7, 'Botas Industriales SteelToe Pro', 'botas-industriales-steeltoe-pro', 'Botas con puntera de acero y suela antideslizante, perfectas para obras y fábricas.', 165.90, 175.00, 30, '/uploads/productos/68093d7bb6b12_zapar.jpg', 1, 1, '2025-04-23 14:20:27', 0, 1, 14),
+(83, 3, 'Casco Industrial SafeCap Pro', 'casco-industrial-safecap-pro', 'Casco con suspensión interna y ranuras para accesorios de protección facial o auditiva.', 0.00, 0.00, 0, '/uploads/productos/68094045b1f93_casco.jpg', 1, 1, '2025-04-23 14:32:21', 1, 0, 12),
+(84, 6, 'Guantes Anticorte GripFlex N5', 'guantes-anticorte-gripflex-n5', 'Guantes con recubrimiento de nitrilo y resistencia nivel 5 al corte.', 80.00, 75.00, 12, '/uploads/productos/6809414b9115f_guante.jpg', 1, 1, '2025-04-23 14:36:43', 0, 1, 13),
+(85, 10, 'Camisa BlizFlame V1', 'camisa-blizflame-v1', 'Diseñada para entornos de alto riesgo, la Camisa BlizFlame V1 ofrece una combinación ideal de seguridad, confort y durabilidad. Fabricada con materiales ignífugos certificados, esta prenda brinda una excelente resistencia al fuego y al calor, protegiendo al usuario en tareas industriales exigentes. Su diseño ergonómico permite libertad de movimiento, mientras que sus costuras reforzadas y bolsillos funcionales la convierten en una prenda confiable para el trabajo diario.', 200.00, 300.00, 90, '/uploads/productos/680953445bf8d_Camisa-Bizflame-88-12-300x300.jpg', 1, 1, '2025-04-23 15:53:24', 0, 1, 14);
 
 -- --------------------------------------------------------
 
@@ -215,8 +228,9 @@ INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `email`, `password`
 (8, 'Admin Jose', 'Edgardo', 'administradorCompact@gmail.com', '$2y$10$NfK9WsBtaklNipYdxeRQU.haTBtx76C4PtadxTCW2S9PIylt20Ofy', NULL, NULL, 'admin', '2025-04-14 12:19:17', 1),
 (32, 'Pedro', 'Torres', 'petusotwo@gmail.com', '$2y$10$hD6kQZ/1zvwIGBtUoMz/h.TL6oYObb8deIf9woxdPZ/Z7lS8nv5yC', NULL, NULL, 'cliente', '2025-04-14 18:05:47', 1),
 (36, 'Pedro', 'Torres', 'pepapig@gmail.com', '$2y$10$aovXSxV22m9mCELHaGDdKOTlAlMJA3.ktOCECUmALholQA0G.I7D6', NULL, NULL, 'cliente', '2025-04-16 10:55:14', 1),
-(37, 'Fabian', 'Garcia', 'fabia@gmail.com', '$2y$10$30E4gKr7r4aFbhUwljcamu4w70VNUw.mkLWPOlnUHc804nu50AZ1S', NULL, NULL, 'admin', '2025-04-16 14:13:50', 1),
-(38, 'Pedro', 'Torres', 'pepapig2@gmail.com', '$2y$10$DWrjIByM/BiGQTIQkFh7bOV8BDZqAFJM7bfxFkbajDPPMz/RDPely', NULL, NULL, 'cliente', '2025-04-16 14:15:13', 1);
+(38, 'Pedro', 'Torres', 'pepapig2@gmail.com', '$2y$10$DWrjIByM/BiGQTIQkFh7bOV8BDZqAFJM7bfxFkbajDPPMz/RDPely', NULL, NULL, 'cliente', '2025-04-16 14:15:13', 1),
+(39, 'Pedro', 'Torres', 'pedrocespedes21@gmail.com', '$2y$10$EutKpYrlMyku/KMeNC2dKuIDsDAdELCNl8XMPsnfDrZ3UxASqh6iy', NULL, NULL, 'cliente', '2025-04-16 18:30:08', 1),
+(40, 'Juan', 'Garcia', 'perez90@gmail.com', '$2y$10$L5raa9KtDWPQodjqnJtSh.Y/j3G2fhW89HRZ/Qd.oPNM5c8kc.sSG', NULL, NULL, 'admin', '2025-04-16 18:31:25', 1);
 
 --
 -- Índices para tablas volcadas
@@ -285,7 +299,8 @@ ALTER TABLE `pedidos`
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id_producto`),
   ADD UNIQUE KEY `slug` (`slug`),
-  ADD KEY `id_categoria` (`id_categoria`);
+  ADD KEY `id_categoria` (`id_categoria`),
+  ADD KEY `id_marca` (`id_marca`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -302,7 +317,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `blog`
 --
 ALTER TABLE `blog`
-  MODIFY `id_blog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_blog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `carritos`
@@ -314,7 +329,7 @@ ALTER TABLE `carritos`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `imagenes_productos`
@@ -338,7 +353,7 @@ ALTER TABLE `items_pedido`
 -- AUTO_INCREMENT de la tabla `marcas`
 --
 ALTER TABLE `marcas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `pedidos`
@@ -350,13 +365,13 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Restricciones para tablas volcadas
@@ -398,7 +413,8 @@ ALTER TABLE `pedidos`
 -- Filtros para la tabla `productos`
 --
 ALTER TABLE `productos`
-  ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`);
+  ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`),
+  ADD CONSTRAINT `productos_ibfk_2` FOREIGN KEY (`id_marca`) REFERENCES `marcas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
