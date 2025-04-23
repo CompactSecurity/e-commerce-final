@@ -337,12 +337,12 @@ const ShopPage = () => {
                                     >
                                         <IoGrid className="w-5 h-5 mx-auto" />
                                     </button>
-                                    <button
+                                    {/*<button
                                         onClick={() => setViewMode('list')}
                                         className={`p-2 rounded-lg flex-1 sm:flex-none ${viewMode === 'list' ? 'bg-orange-100 text-orange-500' : 'text-gray-500'}`}
                                     >
                                         <IoList className="w-5 h-5 mx-auto" />
-                                    </button>
+                                    </button> */}
                                 </div>
                                 <div className="flex items-center gap-2 w-full sm:w-auto">
                                     <label className="text-sm text-gray-600 whitespace-nowrap">Ordenar por:</label>
