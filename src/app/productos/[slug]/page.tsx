@@ -226,16 +226,26 @@ export default function ProductPage() {
                                     </div>
 
                                     {/* Stock Info with more detail */}
-                                    <div className="mb-6">
-                                        <div className="flex items-center gap-2">
-                                            <div className={`w-3 h-3 rounded-full ${product.stock > 0 ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                                            <span className="text-sm font-medium text-gray-700">
-                                                {product.stock > 0 
-                                                    ? `${product.stock} unidades disponibles` 
+                                <div className="mb-6">
+                                    <div className="flex items-center gap-2">
+                                        <div className={`w-3 h-3 rounded-full ${
+                                            Number(product.cotizable) === 1 
+                                                ? 'bg-yellow-500' 
+                                                : product.stock > 0 
+                                                    ? 'bg-green-500' 
+                                                    : 'bg-red-500'
+                                        }`}></div>
+                                        <span className="text-sm font-medium text-gray-700">
+                                            {Number(product.cotizable) === 1
+                                                ? 'Stock cotizable'
+                                                : product.stock > 0
+                                                    ? `${product.stock} unidades disponibles`
                                                     : 'Sin stock disponible'}
-                                            </span>
-                                        </div>
+                                        </span>
                                     </div>
+                                </div>
+
+
 
                                     {/* Description with better formatting */}
                                     <div className="prose prose-sm text-gray-600 mb-8">
@@ -245,32 +255,33 @@ export default function ProductPage() {
 
                                     {/* Action Buttons */}
                                     <div className="space-y-3">
-                                        {product.agregable_carrito === 1 && product.estado === 1 && product.stock > 0 && (
-                                            <>
-                                                <button className="w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-lg font-semibold shadow-lg hover:shadow-orange-200 transition-all duration-300 flex items-center justify-center gap-2">
-                                                    <FaShoppingCart className="w-5 h-5" />
-                                                    Comprar ahora
-                                                </button>
-                                                <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2">
-                                                    Agregar al carrito
-                                                </button>
-                                            </>
-                                        )}
-                                        {product.cotizable === 1 && (
+                                        {Number(product.cotizable) === 1 ? (
                                             <button
-                                                onClick={() => window.open(`https://wa.me/+51976687566?text=Hola, estoy interesado en: ${product.nombre}`)}
-                                                className="w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-lg font-semibold shadow-lg hover:shadow-green-200 transition-all duration-300 flex items-center justify-center gap-2"
+                                                onClick={() =>
+                                                    window.open(`https://wa.me/+51976687566?text=Hola, estoy interesado en: ${product.nombre}`)
+                                                }
+                                                className="cursor-pointer w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-lg font-semibold shadow-lg hover:shadow-green-200 transition-all duration-300 flex items-center justify-center gap-2"
                                             >
                                                 <FaWhatsapp className="w-5 h-5" />
                                                 Cotizar por WhatsApp
                                             </button>
-                                        )}
-                                        {(product.agregable_carrito !== 1 || product.estado !== 1 || product.stock <= 0) && product.cotizable !== 1 && (
+                                        ) : Number(product.agregable_carrito) === 1 && Number(product.estado) === 1 && Number(product.stock) > 0 ? (
+                                            <>
+                                                <button className="cursor-pointer w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-lg font-semibold shadow-lg hover:shadow-orange-200 transition-all duration-300 flex items-center justify-center gap-2">
+                                                    <FaShoppingCart className="w-5 h-5" />
+                                                    Comprar ahora
+                                                </button>
+                                                <button className="cursor-pointer w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2">
+                                                    Agregar al carrito
+                                                </button>
+                                            </>
+                                        ) : (
                                             <div className="w-full bg-gray-100 text-gray-500 py-4 rounded-lg text-center font-medium">
-                                                Producto no disponible
+                                                {Number(product.stock) === 0 ? 'Producto agotado' : 'Producto no disponible'}
                                             </div>
                                         )}
                                     </div>
+
 
                                     {/* Additional Info */}
                                     <div className="mt-8 pt-6 border-t border-gray-200">
