@@ -234,11 +234,12 @@ const ShopPage = () => {
                                             >
                                                 <input
                                                     type="checkbox"
-                                                    checked={filters.brands.includes(String(brand.id_marca))}
+                                                    checked={filters.brands.includes(String(brand.id_marca || brand.id))}
                                                     onChange={(e) => {
+                                                        const brandId = String(brand.id_marca || brand.id);
                                                         const newBrands = e.target.checked
-                                                            ? [...filters.brands, String(brand.id_marca)]
-                                                            : filters.brands.filter(b => b !== String(brand.id_marca));
+                                                            ? [...filters.brands, brandId]
+                                                            : filters.brands.filter(b => b !== brandId);
                                                         handleFilterChange('brands', newBrands);
                                                     }}
                                                     className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"

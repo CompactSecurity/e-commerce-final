@@ -277,7 +277,7 @@ const FeaturedProducts = () => {
                   <div className="flex items-center gap-4">
                     <div>
                       <label className="block text-gray-500 text-xs font-semibold uppercase mb-1">
-                        Precio
+                        Precio de Oferta
                       </label>
                       <p className="text-lg font-bold text-orange-600">
                         S/ {selectedProduct.precio.toFixed(2)}
