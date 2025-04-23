@@ -354,7 +354,6 @@ const ShopPage = () => {
                                         <option value="newest">Más recientes</option>
                                         <option value="price-asc">Precio: menor a mayor</option>
                                         <option value="price-desc">Precio: mayor a menor</option>
-                                        <option value="rating">Mejor calificados</option>
                                     </select>
                                 </div>
                             </div>
