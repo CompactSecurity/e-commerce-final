@@ -282,4 +282,42 @@ class ProductController {
             $this->response->sendError(500, "Error al obtener productos: " . $e->getMessage());
         }
     }
+
+    public function getDestacados() {
+        try {
+            // Debug: Log the start of the function
+            error_log("getDestacados function called");
+            
+            $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 8;
+            
+            // Debug database connection - use a public method instead of direct property access
+            error_log("Database connection status: " . 
+                ($this->model->isConnected() ? "Connected" : "Not connected"));
+                
+            $productos = $this->model->getDestacados($limit);
+            
+            // Debug: Log raw query results
+            error_log("Raw productos data: " . print_r($productos, true));
+            
+            if ($productos) {
+                foreach ($productos as &$producto) {
+                    if ($producto['imagen_principal']) {
+                        $producto['imagen_principal'] = 'http://localhost/e-commerce' . $producto['imagen_principal'];
+                    }
+                }
+                // Debug: Log final response data
+                error_log("Final response data: " . print_r($productos, true));
+                $this->response->sendSuccess(200, $productos);
+            } else {
+                error_log("No featured products found in database");
+                $this->response->sendSuccess(200, []);
+            }
+        } catch (Exception $e) {
+            // Ensure we're sending JSON even for errors
+            if (!headers_sent()) {
+                header('Content-Type: application/json');
+            }
+            $this->response->sendError(500, "Error al obtener productos destacados: " . $e->getMessage());
+        }
+    }
 }

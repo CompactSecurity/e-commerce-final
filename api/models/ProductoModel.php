@@ -205,5 +205,50 @@ class ProductoModel {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return (int)$result['total'];
     }
+
+    public function getDestacados($limit = 8) {
+        try {
+            error_log("Executing getDestacados query with limit: $limit");
+
+            $sql = "SELECT p.*, c.nombre as categoria 
+                    FROM productos p
+                    LEFT JOIN categorias c ON p.id_categoria = c.id_categoria
+                    WHERE p.estado = 1 AND p.destacado = 1
+                    ORDER BY p.id_producto DESC
+                    LIMIT $limit";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            
+            $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            // Convert numeric fields to proper types
+            foreach ($productos as &$producto) {
+                $producto['precio'] = floatval($producto['precio']);
+                $producto['precio_oferta'] = floatval($producto['precio_oferta']);
+                $producto['stock'] = intval($producto['stock']);
+                $producto['id_categoria'] = intval($producto['id_categoria']);
+                $producto['id_marca'] = intval($producto['id_marca']);
+            }
+            
+            error_log("SQL Query: $sql");
+            error_log("Query Parameters: " . print_r([$limit], true));
+            error_log("Number of rows returned: " . count($productos));
+            
+            return $productos;
+        } catch (PDOException $e) {
+            error_log("PDO Error in getDestacados: " . $e->getMessage());
+            return [];
+        }
+    }
+    public function isConnected() {
+        try {
+            // Simple query to check connection
+            $this->conn->query('SELECT 1');
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
 
