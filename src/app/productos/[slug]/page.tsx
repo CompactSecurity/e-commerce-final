@@ -28,6 +28,18 @@ interface ProductDetail {
     marca_nombre: string;     // Add this
 }
 
+// Add this interface near the top with other interfaces
+interface RelatedProduct {
+    id_producto: number;
+    nombre: string;
+    precio: number;
+    precio_oferta: number;
+    imagen_principal: string;
+    slug: string;
+    stock: number;
+    estado: number;
+}
+
 export default function ProductPage() {
     const params = useParams();
     const slug = params.slug as string;
@@ -35,6 +47,10 @@ export default function ProductPage() {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
+    // Inside the ProductPage component, add this state
+    const [relatedProducts, setRelatedProducts] = useState<RelatedProduct[]>([]);
+
+    // Modify the useEffect to fetch related products
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -59,6 +75,15 @@ export default function ProductPage() {
                 const data = await response.json();
                 if (data.status === 'success' && data.data) {
                     setProduct(data.data);
+                    
+                    // Fetch related products
+                    const relatedResponse = await fetch(
+                        `http://localhost/e-commerce/api/productos/related/${data.data.id_categoria}/${data.data.id_producto}`
+                    );
+                    const relatedData = await relatedResponse.json();
+                    if (relatedData.status === 'success') {
+                        setRelatedProducts(relatedData.data || []);
+                    }
                 } else {
                     throw new Error(data.mensaje || 'Error al cargar el producto');
                 }
@@ -305,7 +330,47 @@ export default function ProductPage() {
                         </div>
                     </div>
                 </main>
+                {relatedProducts.length > 0 && (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">Productos relacionados</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {relatedProducts.map((relatedProduct) => (
+                <Link 
+                    href={`/productos/${relatedProduct.slug}`} 
+                    key={relatedProduct.id_producto}
+                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                >
+                    <div className="relative aspect-square">
+                        <Image
+                            src={relatedProduct.imagen_principal}
+                            alt={relatedProduct.nombre}
+                            fill
+                            className="object-contain p-4"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                    </div>
+                    <div className="p-4">
+                        <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
+                            {relatedProduct.nombre}
+                        </h3>
+                        <div className="mt-2 flex items-center gap-2">
+                            <span className="text-lg font-bold text-orange-600">
+                                S/ {Number(relatedProduct.precio).toFixed(2)}
+                            </span>
+                            {relatedProduct.precio_oferta > 0 && (
+                                <span className="text-sm text-gray-500 line-through">
+                                    S/ {Number(relatedProduct.precio_oferta).toFixed(2)}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                </Link>
+            ))}
+        </div>
+    </div>
+)}
             <Footer />
         </>
     );
 }
+

@@ -303,5 +303,26 @@ class ProductoModel {
             return false;
         }
     }
+    public function getRelatedProducts($categoria_id, $producto_id) {
+        try {
+            $sql = "SELECT id_producto, nombre, precio, precio_oferta, imagen_principal, slug, stock, estado 
+                    FROM productos 
+                    WHERE id_categoria = :categoria_id 
+                    AND id_producto != :producto_id 
+                    AND estado = 1 
+                    ORDER BY RAND() 
+                    LIMIT 4";
+    
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':categoria_id', $categoria_id, PDO::PARAM_INT);
+            $stmt->bindParam(':producto_id', $producto_id, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Database error in getRelatedProducts: " . $e->getMessage());
+            throw $e;
+        }
+    }
 }
 
