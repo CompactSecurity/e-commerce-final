@@ -18,6 +18,7 @@ import EditMarca from './admin/EditMarca';
 import AddProduct from './admin/AddProduct';
 import DeleteProduct from './admin/DeleteProduct';
 import EditProduct from './admin/EditProduct';
+import ViewPedidos from './admin/ViewPedidos';
 
 interface AdminFormData {
     nombre: string;
@@ -104,6 +105,8 @@ const AdminPanel = () => {
                 return <DeleteProduct onBack={() => setCurrentView('main')} />;
             case 'edit-product':
                 return <EditProduct onBack={() => setCurrentView('main')} />;
+            case 'view-pedidos':
+                return <ViewPedidos onBack={() => setCurrentView('main')} />;
             default:
                 return (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -215,6 +218,12 @@ const AdminPanel = () => {
                         >
                             <AiOutlineEdit className="text-4xl text-gray-600" />
                             <span className="text-lg font-medium text-gray-800">Editar Producto</span>
+                        </button>
+                        <button 
+                            onClick={() => setCurrentView('view-pedidos')}
+                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer">
+                            <FaUserEdit className="text-4xl text-gray-600" />
+                            <span className="text-lg font-medium text-gray-800">Ver pedidos</span>
                         </button>
                     </div>
                 );
