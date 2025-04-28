@@ -43,7 +43,7 @@ const Footer = () => {
         { id: 12, name: 'Ropa industrial' },
     ];
 
-    const router = useRouter(); // Add this import at the top: import { useRouter } from 'next/navigation'
+    const router = useRouter(); 
 
     const handleCategoryClick = (categoryName: string) => {
         router.push('/tienda');
