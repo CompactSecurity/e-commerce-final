@@ -228,7 +228,7 @@ const ShopPage = () => {
                                 {/* Marcas */}
                                 <div>
                                     <h3 className="text-sm font-semibold text-gray-900 mb-3">Marcas</h3>
-                                    <div className="space-y-2 max-h-48 overflow-auto pr-2">
+                                    <div className="space-y-2 max-h-60 overflow-auto pr-2">
                                         {brands.map((brand, index) => (
                                             <label 
                                                 key={`brand-${brand.id_marca || brand.id || `index-${index}`}`} 
@@ -255,7 +255,7 @@ const ShopPage = () => {
                                 {/* Categorías */}
                                 <div>
                                     <h3 className="text-sm font-semibold text-gray-900 mb-3">Categorías</h3>
-                                    <div className="space-y-2 max-h-48 overflow-auto pr-2">
+                                    <div className="space-y-2 max-h-80 overflow-auto pr-2">
                                         {categories.map((category) => (
                                             <label key={`category-${category.id_categoria}`} className="flex items-center">
                                                 <input
@@ -298,7 +298,7 @@ const ShopPage = () => {
                                         </div>
                                         <button 
                                             onClick={() => handleFilterChange('priceRange', [0, 1000])}
-                                            className="text-sm text-orange-500 hover:text-orange-600"
+                                            className=" cursor-pointer text-sm text-orange-500 hover:text-orange-600"
                                         >
                                             Limpiar
                                         </button>
@@ -318,7 +318,7 @@ const ShopPage = () => {
                                             });
                                             setSearchQuery('');
                                         }}
-                                        className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors"
+                                        className="cursor-pointer w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors"
                                     >
                                         Limpiar todos los filtros
                                     </button>
