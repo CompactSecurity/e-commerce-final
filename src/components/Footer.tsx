@@ -81,7 +81,7 @@ const Footer = () => {
                 </div>
             ),
             {
-                duration: 10000,
+                duration: 7000,
                 position: 'bottom-right',
             }
         );
