@@ -384,24 +384,22 @@ class ProductController {
                 $this->response->sendError(400, "Categoría ID y Producto ID son requeridos");
                 return;
             }
-
+    
             $productos = $this->model->getRelatedProducts($categoria_id, $producto_id);
-
+    
+            // Debug: Verificar qué datos llegan
+            error_log("Productos relacionados obtenidos: " . print_r($productos, true));
+    
             if ($productos) {
-                foreach ($productos as &$producto) {
-                    if ($producto['imagen_principal']) {
-                        $producto['imagen_principal'] = 'http://localhost/e-commerce' . $producto['imagen_principal'];
-                    }
-                }
                 $this->response->sendSuccess(200, $productos);
             } else {
                 $this->response->sendSuccess(200, []);
             }
         } catch (Exception $e) {
-            error_log("Error in getRelatedProducts: " . $e->getMessage());
-            error_log("Error in getRelatedProducts: " . $e->getMessage());
+            error_log("Error en getRelatedProducts: " . $e->getMessage());
             $this->response->sendError(500, "Error al obtener productos relacionados");
         }
     }
+    
 
 } // End of class
