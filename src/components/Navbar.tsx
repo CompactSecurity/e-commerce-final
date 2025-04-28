@@ -5,7 +5,8 @@ import Link from 'next/link';
 import logo from '../assets/logo.png';
 import logo2 from '../assets/logo2.jpg';
 import Image from 'next/image';
-import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes } from 'react-icons/fa';
+// Add FaShoppingCart to your imports
+import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes, FaShoppingCart } from 'react-icons/fa';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import ForgotPasswordModal from './ForgotPasswordModal';
@@ -202,12 +203,17 @@ const Navbar = () => {
                                         <FaUser className="text-xl cursor-pointer" />
                                     </button>
                                 )}
-                                <button
-                                    onClick={() => setIsOffersOpen(!isOffersOpen)}
-                                    className="text-white hover:text-orange-500 transition-colors cursor-pointer"
+                                
+                                {/* Add Cart Link */}
+                                <Link 
+                                    href="/cart" 
+                                    className="relative text-white hover:text-orange-500 transition-colors"
                                 >
-                                </button>
-                                <Cart />
+                                    <FaShoppingCart className="text-xl" />
+                                    <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                        0
+                                    </span>
+                                </Link>
                             </div>
                         </div>
                     </div>
