@@ -21,6 +21,16 @@ interface User {
     rol: string;
 }
 
+// Add this interface near the top with other interfaces
+interface OfferProduct {
+    id_producto: number;
+    nombre: string;
+    precio: number;
+    precio_oferta: number;
+    imagen_principal: string;
+    slug: string;
+}
+
 const Navbar = () => {
     const { itemsCount } = useCart();
     const [isOffersOpen, setIsOffersOpen] = useState(false);
@@ -30,6 +40,7 @@ const Navbar = () => {
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
     const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] = useState(false);
     const [user, setUser] = useState<User | null>(null);
+    const [offerProducts, setOfferProducts] = useState<OfferProduct[]>([]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -47,7 +58,24 @@ const Navbar = () => {
         }
     }, []);
 
-
+    useEffect(() => {
+        const fetchOfferProducts = async () => {
+            try {
+                const response = await fetch('http://localhost/e-commerce/api/productos/ofertas/random');
+                const data = await response.json();
+                if (data.status === 'success') {
+                    setOfferProducts(data.data || []);
+                }
+            } catch (error) {
+                console.error('Error fetching offer products:', error);
+            }
+        };
+    
+        if (isOffersOpen) {
+            fetchOfferProducts();
+        }
+    }, [isOffersOpen]);
+    
 
     const handleOpenRegister = () => {
         setIsLoginModalOpen(false);
@@ -283,9 +311,9 @@ const Navbar = () => {
                             {/* Ofertas móvil */}
                             <button
                                 onClick={() => setIsOffersOpen(!isOffersOpen)}
-                                className="w-full flex items-center justify-between text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors"
+                                className="cursor-pointer w-full flex items-center justify-between text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors"
                             >
-                                <span>¡Top Ofertas!</span>
+                                <span className='cursor-pointer' >¡Top Ofertas!</span>
                                 <FaTag className="w-4 h-4 cursor-pointer" />
                             </button>
 
@@ -326,83 +354,125 @@ const Navbar = () => {
                 {/* Barra de navegación naranja - Solo visible en desktop */}
                 <nav className="bg-orange-500 hidden md:block">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex items-center justify-between h-12">
+                        <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-8">
-                                <Link href="/" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                <Link href="/" className="text-white hover:text-white/80 py-3 transition-colors">
                                     Inicio
                                 </Link>
-                                <Link href="/nosotros" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                <Link href="/nosotros" className="text-white hover:text-white/80 py-3 transition-colors">
                                     Nosotros
                                 </Link>
-                                <Link href="/tienda" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                <Link href="/tienda" className="text-white hover:text-white/80 py-3 transition-colors">
                                     Tienda
                                 </Link>
-                                <Link href="/contacto" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                <Link href="/contacto" className="text-white hover:text-white/80 py-3 transition-colors">
                                     Contacto
                                 </Link>
-                                <Link href="/faq" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                <Link href="/faq" className="text-white hover:text-white/80 py-3 transition-colors">
                                     FAQ
                                 </Link>
-                                <Link href="/blog" className="text-white hover:text-gray-200 font-medium px-3 py-2">
+                                <Link href="/blog" className="text-white hover:text-white/80 py-3 transition-colors">
                                     Blog
                                 </Link>
                             </div>
                             <button
-                                onClick={() => setIsOffersOpen(!isOffersOpen)}
-                                className="text-white hover:text-gray-200 font-medium px-3 py-2 flex items-center space-x-2"
+                                onClick={() => setIsOffersOpen(true)}
+                                className="cursor-pointer flex items-center space-x-2 text-white hover:text-white/80 py-3 transition-colors"
                             >
-                                <FaTag className="text-sm cursor-pointer" />
-                                <span className='cursor-pointer'>¡Top Ofertas!</span>
+                                <FaTag className="w-4 h-4 cursor-pointer" />
+                                <span>¡Top Ofertas!</span>
                             </button>
                         </div>
                     </div>
                 </nav>
 
                 {/* Panel de ofertas */}
-                <div className={`fixed top-0 right-0 w-full md:w-80 h-screen bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${isOffersOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-                    <div className="p-4">
-                        <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-xl font-bold text-gray-800">Ofertas del día</h2>
+                <div
+                    className={`fixed top-0 right-0 w-full md:w-96 h-screen bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 ${isOffersOpen ? 'translate-x-0' : 'translate-x-full'
+                        }`}
+                >
+                    <div className="h-full flex flex-col overflow-y-auto">
+                        {/* Header */}
+                        <div className="sticky top-0 bg-white border-b border-gray-200 z-10 p-4 flex items-center justify-between shadow-sm">
+                            <h2 className="text-lg font-semibold text-gray-800 tracking-tight">
+                                ¡Mira nuestras ofertas!
+                            </h2>
                             <button
                                 onClick={() => setIsOffersOpen(false)}
-                                className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                                className="text-gray-500 hover:text-gray-700 focus:outline-none transition-colors duration-200"
                             >
-                                ✕
+                                <FaTimes className="w-5 h-5" />
                             </button>
                         </div>
-                        <div className="space-y-4">
-                            <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                                <div className="relative w-full h-48">
-                                    <Image
-                                        src={logo2}
-                                        alt="Producto en oferta"
-                                        fill
-                                        className="object-cover rounded-lg"
-                                    />
+
+                        {/* Offer List */}
+                        <div className="p-4 flex-grow overflow-y-auto">
+                            {offerProducts.length > 0 ? (
+                                <ul className="space-y-2">
+                                    {offerProducts.map((product) => (
+                                        <li
+                                            key={product.id_producto}
+                                            className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+                                        >
+                                            <Link
+                                                href={`/productos/${product.slug}`}
+                                                className="block p-4 flex items-center gap-4"
+                                                onClick={() => setIsOffersOpen(false)}
+                                            >
+                                                <div className="relative w-16 h-16 flex-shrink-0 overflow-hidden rounded-md">
+                                                    <Image
+                                                        src={product.imagen_principal}
+                                                        alt={product.nombre}
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <h3 className="text-sm font-medium text-gray-800 truncate">
+                                                        {product.nombre}
+                                                    </h3>
+                                                    <div className="flex items-center gap-2 mt-1">
+                                                        <span className="text-lg font-semibold text-orange-500">
+                                                            S/ {product.precio_oferta.toFixed(2)}
+                                                        </span>
+
+                                                        <span className="text-sm text-gray-500 line-through">
+                                                            S/ {product.precio.toFixed(2)}
+                                                        </span>
+
+                                                    </div>
+                                                    {product.precio_oferta > 0 && (
+                                                        <span className="inline-block bg-green-100 text-green-700 text-xs font-semibold rounded-full px-2 py-1 mt-1">
+                                                            ¡Ahorras S/ {(product.precio_oferta - product.precio).toFixed(2)}!
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <div className="flex flex-col items-center justify-center py-8">
+                                    <p className="text-gray-500 text-sm">
+                                        ¡Lo sentimos! No hay ofertas especiales por ahora.
+                                    </p>
                                 </div>
-                                <div className="space-y-2">
-                                    <h3 className="text-lg font-semibold text-gray-800">Casco de seguridad</h3>
-                                    <div className="flex items-center text-yellow-500">
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStar />
-                                        <FaStarHalfAlt />
-                                        <span className="ml-2 text-sm text-gray-600">(4.5)</span>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-2xl font-bold text-orange-500">S/ 89.90</span>
-                                            <span className="text-sm text-gray-500 line-through">S/ 129.90</span>
-                                        </div>
-                                        <span className="text-sm font-semibold text-green-600">-30%</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <p className="text-gray-600 text-sm text-center">Próximamente: Más productos en oferta</p>
+                            )}
                         </div>
-                    </div>
-                </div>
+
+    {/* Bottom Button */}
+    <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4 shadow-sm">
+      <Link
+        href="/tienda"
+        className="block w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-md text-center transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-1"
+        onClick={() => setIsOffersOpen(false)}
+      >
+        Ir a la Tienda
+      </Link>
+    </div>
+  </div>
+</div>
+                
             </header>
 
             {/* Login Modal */}

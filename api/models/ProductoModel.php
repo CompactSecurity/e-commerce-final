@@ -324,5 +324,35 @@ class ProductoModel {
             throw $e;
         }
     }
+    public function getRandomOffers() {
+        try {
+            $query = "SELECT id_producto, nombre, precio, precio_oferta, imagen_principal, slug 
+                     FROM productos 
+                     WHERE estado = 1 
+                     AND precio_oferta > 0 
+                     ORDER BY RAND() 
+                     LIMIT 7";
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Cast numeric values and fix image paths
+            foreach ($productos as &$producto) {
+                $producto['precio'] = floatval($producto['precio']);
+                $producto['precio_oferta'] = floatval($producto['precio_oferta']);
+                
+                // Fix image path
+                if ($producto['imagen_principal']) {
+                    $producto['imagen_principal'] = '/public/uploads/productos/' . basename($producto['imagen_principal']);
+                }
+            }
+
+            return $productos;
+        } catch (Exception $e) {
+            error_log("Error in getRandomOffers model: " . $e->getMessage());
+            return []; 
+        }
+    }
 }
 

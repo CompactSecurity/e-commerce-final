@@ -401,5 +401,26 @@ class ProductController {
         }
     }
     
-
+    public function getRandomOffers() {
+        try {
+            $productos = $this->model->getRandomOffers();
+            
+            if ($productos) {
+                // Add absolute URLs to images
+                foreach ($productos as &$producto) {
+                    if ($producto['imagen_principal']) {
+                        $producto['imagen_principal'] = 'http://localhost/e-commerce' . $producto['imagen_principal'];
+                    }
+                }
+                $this->response->sendSuccess(200, $productos);
+            } else {
+                $this->response->sendSuccess(200, []);
+            }
+        } catch (Exception $e) {
+            error_log("Error in getRandomOffers: " . $e->getMessage());
+            $this->response->sendError(500, "Error al obtener ofertas: " . $e->getMessage());
+        }
+    }
+    
 } // End of class
+

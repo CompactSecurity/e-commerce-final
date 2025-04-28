@@ -105,12 +105,12 @@ if ($controller === 'marcas') {
             exit;  
     }
 }
+// In the productos controller section, add this new case:
 if ($controller === 'productos') {
     require_once __DIR__. '/controllers/ProductController.php';
     $controller_instance = new ProductController();
     
-    switch ($action)
-    {
+    switch ($action) {
         case 'create':
             $controller_instance->create();
             exit;
@@ -141,6 +141,12 @@ if ($controller === 'productos') {
             $producto_id = isset($uri[3]) ? $uri[3] : null;
             $controller_instance->getRelatedProducts($categoria_id, $producto_id);
             exit;
+        case 'ofertas':
+            if ($id === 'random') {
+                $controller_instance->getRandomOffers();
+                exit;
+            }
+            break;
     }
 }
 // cargar y ejecutar los controladores segun la peticion del cliente
