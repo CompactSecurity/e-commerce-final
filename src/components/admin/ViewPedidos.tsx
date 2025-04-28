@@ -33,7 +33,7 @@ const ViewPedidos = ({ onBack }: { onBack: () => void }) => {
     }, []);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div>Cargando...</div>;
     }
 
     return (
