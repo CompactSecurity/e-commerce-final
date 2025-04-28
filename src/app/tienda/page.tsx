@@ -518,11 +518,27 @@ const ShopPage = () => {
                                                     fill
                                                     className="object-contain bg-white p-2"
                                                 />
-                                                {product.precio_oferta > 0 && (
-                                                    <div className="absolute top-2 right-2 bg-red-600 text-white text-xs px-2 py-0.5 rounded font-medium shadow">
-                                                        Oferta
-                                                    </div>
-                                                )}
+                                                {/* Show different badges based on product status */}
+                                                <div className="absolute top-2 right-2 flex flex-col gap-1">
+                                                    {product.stock === 0 && (
+                                                        <div className="bg-red-600 text-white text-xs px-2 py-0.5 rounded font-medium shadow">
+                                                            Agotado
+                                                        </div>
+                                                    )}
+                                                    {product.precio_oferta > 0 && (
+                                                        <div className="bg-red-600 text-white text-xs px-2 py-0.5 rounded font-medium shadow">
+                                                            Oferta
+                                                        </div>
+                                                    )}
+                                                    {product.cotizable == 1 && (
+                                                        <div className="bg-green-600 text-white text-xs px-2 py-0.5 rounded font-medium shadow">
+                                                            Cotizable
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                
+
+                                                
                                             </div>
                                             
                                             <div className={`flex flex-col justify-between ${viewMode === 'list' ? 'flex-1' : ''}`}>
