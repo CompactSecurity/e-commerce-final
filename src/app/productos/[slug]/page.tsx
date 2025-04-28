@@ -222,23 +222,30 @@ export default function ProductPage() {
                                     </h1>
 
                                     {/* Price Section with better offer price display */}
-                                    <div className="bg-gray-50 rounded-lg p-4 mb-6">
+                                    <div className="bg-gray-50 rounded-lg  mb-6">
                                         <div className="flex flex-col">
                                             <div className="flex items-baseline gap-3">
-                                                <span className="text-4xl font-bold text-orange-600">
-                                                    S/ {Number(product.precio).toFixed(2)}
-                                                </span>
-                                                {product.precio_oferta > 0 && (
+                                                {Number(product.cotizable) === 1 ? (
+                                                    <span className="text-2xl font-bold text-orange-600">
+                                                        Precio cotizable
+                                                    </span>
+                                                ) : (
                                                     <>
-                                                        <span className="text-xl text-gray-500 line-through">
-                                                            S/ {Number(product.precio_oferta).toFixed(2)}
+                                                        <span className="text-4xl font-bold text-orange-600">
+                                                            S/ {Number(product.precio).toFixed(2)}
                                                         </span>
-                                                        {product.precio_oferta > 0 && product.precio_oferta < product.precio && (
-                                                        <span className="text-sm font-semibold bg-green-100 text-green-800 px-2 py-1 rounded">
-                                                            {Math.round((product.precio - product.precio_oferta) / product.precio * 100)}% Descuento
-                                                        </span>
-                                                )}
-
+                                                        {product.precio_oferta > 0 && (
+                                                            <>
+                                                                <span className="text-xl text-gray-500 line-through">
+                                                                    S/ {Number(product.precio_oferta).toFixed(2)}
+                                                                </span>
+                                                                {product.precio_oferta > 0 && product.precio_oferta < product.precio && (
+                                                                    <span className="text-sm font-semibold bg-green-100 text-green-800 px-2 py-1 rounded">
+                                                                        {Math.round((product.precio - product.precio_oferta) / product.precio * 100)}% Descuento
+                                                                    </span>
+                                                                )}
+                                                            </>
+                                                        )}
                                                     </>
                                                 )}
                                             </div>
