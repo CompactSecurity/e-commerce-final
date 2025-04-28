@@ -316,7 +316,7 @@ const FeaturedProducts = () => {
                         onClick={() => {
                           window.open(`https://wa.me/51987654321?text=Estoy interesado en cotizar el producto: ${selectedProduct.nombre}`);
                         }}
-                        className="w-full bg-green-500 text-white py-3 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium"
+                        className="cursor-pointer w-full bg-green-500 text-white py-3 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium"
                       >
                         <FaWhatsapp className="w-5 h-5" />
                         Cotizar por WhatsApp
@@ -327,7 +327,7 @@ const FeaturedProducts = () => {
                           addItem(selectedProduct, 1);
                           closeModal();
                         }}
-                        className="w-full bg-orange-500 text-white py-3 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium"
+                        className="cursor-pointer w-full bg-orange-500 text-white py-3 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium"
                       >
                         <FaShoppingCart className="w-5 h-5" />
                         Agregar al carrito
