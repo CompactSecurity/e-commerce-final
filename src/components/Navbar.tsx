@@ -316,18 +316,20 @@ const Navbar = () => {
                                 <span className='cursor-pointer' >¡Top Ofertas!</span>
                                 <FaTag className="w-4 h-4 cursor-pointer" />
                             </button>
-
-                            {/* Redes sociales móvil meter dentro del div de abajo*/}
-                            {/*<Link href="https://www.instagram.com/compactepp/" target="_blank" className="text-white hover:text-orange-500 transition-colors">
-                                    <FaInstagram className="w-6 h-6" />
-                                </Link>
-                                <Link href="https://www.facebook.com/compactseguridad" target="_blank" className="text-white hover:text-orange-500 transition-colors">
-                                    <FaFacebook className="w-6 h-6" />
-                                </Link>
-                                <Link href="https://www.youtube.com/@Compactepp" target="_blank" className="text-white hover:text-orange-500 transition-colors">
-                                    <FaYoutube className="w-6 h-6" />
-                                </Link> */}
                             <div className="flex items-center justify-center space-x-6 pt-4">
+                                {/* Carrito de compras dentro del menu de movil */}
+                                <Link 
+                                    href="/cart" 
+                                    className="relative text-white hover:text-orange-500 transition-colors"
+                                >
+                                    <FaShoppingCart className="w-5 h-5" />
+                                    {itemsCount > 0 && (
+                                        <span className="absolute -top-1 -right-2 bg-orange-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                                            {itemsCount}
+                                        </span>
+                                    )}
+                                </Link>
+                                
                                 {user ? (
                                     <div className="text-white">
                                         <div className="text-center mb-2">{`${user.nombre} ${user.apellidos}`}</div>
@@ -459,7 +461,7 @@ const Navbar = () => {
                             )}
                         </div>
 
-    {/* Bottom Button */}
+    {/* Button */}
     <div className="sticky bottom-0 bg-white border-t border-gray-200 p-4 shadow-sm">
       <Link
         href="/tienda"
