@@ -15,6 +15,7 @@ import {
 } from 'react-icons/fi';
 import { DM_Sans } from 'next/font/google';
 import { toast } from 'react-hot-toast'; // para la notificacion 
+import { useRouter } from 'next/navigation'
 
 const DMSans = DM_Sans({
     weight: ['400', '500', '700'],
@@ -25,22 +26,29 @@ const Footer = () => {
     const currentYear = new Date().getFullYear();
 
     const articleLinks = [
-        { name: 'Cascos de seguridad', href: '/tienda' },
-        { name: 'Guantes de seguridad', href: '/tienda' },
-        { name: 'Lentes de seguridad', href: '/tienda' },
-        { name: 'Protección respiratoria', href: '/tienda' },
-        { name: 'Zapatos de seguridad', href: '/tienda' },
-        { name: 'Protectores auditivos', href: '/tienda' },
+        { id: 1, name: 'Cascos de seguridad' },
+        { id: 2, name: 'Guantes de seguridad' },
+        { id: 3, name: 'Lentes de seguridad' },
+        { id: 4, name: 'Protección respiratoria' },
+        { id: 5, name: 'Zapatos de seguridad' },
+        { id: 6, name: 'Protectores auditivos' },
     ];
 
     const productLinks = [
-        { name: 'Absorbentes', href: '/tienda' },
-        { name: 'Arnés y líneas de vida', href: '/tienda' },
-        { name: 'Candados de bloqueo', href: '/tienda' },
-        { name: 'Cintas antideslizantes', href: '/tienda' },
-        { name: 'Seguridad vial', href: '/tienda' },
-        { name: 'Ropa industrial', href: '/tienda' },
+        { id: 7, name: 'Absorbentes' },
+        { id: 8, name: 'Arnés y líneas de vida' },
+        { id: 9, name: 'Candados de bloqueo' },
+        { id: 10, name: 'Cintas antideslizantes' },
+        { id: 11, name: 'Seguridad vial' },
+        { id: 12, name: 'Ropa industrial' },
     ];
+
+    const router = useRouter(); // Add this import at the top: import { useRouter } from 'next/navigation'
+
+    const handleCategoryClick = (categoryName: string) => {
+        router.push('/tienda');
+    };
+
 // Funcion para mostrar la notificacion de desarrollo de PetuCode
     const showToast = () => {
         toast.custom(
@@ -115,13 +123,13 @@ const Footer = () => {
                         <h3 className="text-lg font-bold mb-6">Artículos EPP</h3>
                         <ul className="space-y-3">
                             {articleLinks.map((link) => (
-                                <li key={link.href}>
-                                    <Link 
-                                        href={link.href}
-                                        className="text-gray-400 hover:text-white transition-colors text-sm"
+                                <li key={link.id}>
+                                    <button
+                                        onClick={() => handleCategoryClick(link.name)}
+                                        className="cursor-pointer text-gray-400 hover:text-white transition-colors text-sm text-left w-full"
                                     >
                                         {link.name}
-                                    </Link>
+                                    </button>
                                 </li>
                             ))}
                         </ul>
@@ -132,13 +140,13 @@ const Footer = () => {
                         <h3 className="text-lg font-bold mb-6">Productos EPP</h3>
                         <ul className="space-y-3">
                             {productLinks.map((link) => (
-                                <li key={link.href}>
-                                    <Link 
-                                        href={link.href}
-                                        className="text-gray-400 hover:text-white transition-colors text-sm"
+                                <li key={link.id}>
+                                    <button
+                                        onClick={() => handleCategoryClick(link.name)}
+                                        className="cursor-pointer text-gray-400 hover:text-white transition-colors text-sm text-left w-full"
                                     >
                                         {link.name}
-                                    </Link>
+                                    </button>
                                 </li>
                             ))}
                         </ul>
