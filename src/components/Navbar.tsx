@@ -10,7 +10,6 @@ import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSear
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import ForgotPasswordModal from './ForgotPasswordModal';
-import Cart from './Cart';
 
 // Definimos la interfaz User
 interface User {
