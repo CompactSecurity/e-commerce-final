@@ -263,7 +263,7 @@ export default function ProductPage() {
                                         </div>
                                     </div>
 
-                                    {/* Informacion de Stock y detalles */}
+                                {/* Informacion de Stock y detalles */}
                                 <div className="mb-6">
                                     <div className="flex items-center gap-2">
                                         <div className={`w-3 h-3 rounded-full ${
