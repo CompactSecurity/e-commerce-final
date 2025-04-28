@@ -136,11 +136,12 @@ const FeaturedProducts = () => {
               priority
             />
           </motion.div>
-          {product.precio_oferta > 0 && (
-            <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-              -{Math.round((1 - product.precio / product.precio_oferta) * 100)}%
+          {product.precio_oferta > 0 &&(
+            <div className="absolute top-2 left-2 bg-green-600 text-white px-3 py-1 rounded-sm text-xs font-bold shadow-lg">
+              ¡Ahorras S/ {(product.precio_oferta - product.precio).toFixed(2)}!
             </div>
           )}
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
