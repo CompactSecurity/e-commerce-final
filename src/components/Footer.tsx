@@ -41,7 +41,7 @@ const Footer = () => {
         { name: 'Seguridad vial', href: '/tienda' },
         { name: 'Ropa industrial', href: '/tienda' },
     ];
-
+// Funcion para mostrar la notificacion de desarrollo de PetuCode
     const showToast = () => {
         toast.custom(
             (t) => (
