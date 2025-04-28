@@ -5,7 +5,7 @@ import Link from 'next/link';
 import logo from '../assets/logo.png';
 import logo2 from '../assets/logo2.jpg';
 import Image from 'next/image';
-import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes } from 'react-icons/fa';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import ForgotPasswordModal from './ForgotPasswordModal';
@@ -202,7 +202,6 @@ const Navbar = () => {
         <FaUser className="text-xl cursor-pointer" />
     </button>
 )}
-
                                     <button
                                         onClick={() => setIsOffersOpen(!isOffersOpen)}
                                         className="text-white hover:text-orange-500 transition-colors cursor-pointer"
