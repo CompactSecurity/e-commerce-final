@@ -433,11 +433,11 @@ const Navbar = () => {
                                                     </h3>
                                                     <div className="flex items-center gap-2 mt-1">
                                                         <span className="text-lg font-semibold text-orange-500">
-                                                            S/ {product.precio_oferta.toFixed(2)}
+                                                            S/ {product.precio.toFixed(2)}
                                                         </span>
 
                                                         <span className="text-sm text-gray-500 line-through">
-                                                            S/ {product.precio.toFixed(2)}
+                                                            S/ {product.precio_oferta.toFixed(2)}
                                                         </span>
 
                                                     </div>
