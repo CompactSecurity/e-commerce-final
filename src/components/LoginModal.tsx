@@ -212,15 +212,15 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
                                                 id="remember-me"
                                                 name="remember-me"
                                                 type="checkbox"
-                                                className="h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
+                                                className="cursor-pointer h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                                             />
-                                            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                                            <label htmlFor="remember-me" className="cursor-pointer ml-2 block text-sm text-gray-700">
                                                 Recordarme
                                             </label>
                                         </div>
                                         <button
                                             onClick={onOpenForgotPassword}
-                                            className="text-sm font-medium text-orange-500 hover:text-orange-600"
+                                            className="cursor-pointer text-sm font-medium text-orange-500 hover:text-orange-600"
                                         >
                                             ¿Olvidaste tu contraseña?
                                         </button>

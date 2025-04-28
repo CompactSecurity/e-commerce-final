@@ -96,7 +96,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen, onClo
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
-                                                placeholder="Escribe algo..."
+                                                placeholder="Escribe tu correo electrónico"
                                             />
                                             {error && (
                                                 <p className="mt-1 text-sm text-red-500">{error}</p>
@@ -123,7 +123,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen, onClo
                                         </div>
                                         <button
                                             onClick={handleBackToLogin}
-                                            className="text-orange-500 hover:text-orange-600 font-medium flex items-center justify-center space-x-2"
+                                            className="cursor-pointer text-orange-500 hover:text-orange-600 font-medium flex items-center justify-center space-x-2"
                                         >
                                             <FaArrowLeft />
                                             <span>Volver al inicio de sesión</span>

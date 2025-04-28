@@ -343,11 +343,11 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose, onOpenLo
                                                 type="checkbox"
                                                 checked={formData.aceptaTerminos}
                                                 onChange={handleChange}
-                                                className="h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
+                                                className="cursor-pointer h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                                             />
                                         </div>
                                         <div className="ml-3 text-sm">
-                                            <label htmlFor="aceptaTerminos" className="text-gray-700">
+                                            <label htmlFor="aceptaTerminos" className="text-gray-700 cursor-pointer">
                                                 Acepto los{' '}
                                                 <Link href="/terminos" className="text-orange-500 hover:text-orange-600">
                                                     términos y condiciones
