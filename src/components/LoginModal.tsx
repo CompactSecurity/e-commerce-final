@@ -6,6 +6,7 @@ import { FaTimes, FaEye, FaEyeSlash  } from 'react-icons/fa';
 import logo from '../assets/logo.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 
 interface LoginModalProps {
@@ -17,6 +18,7 @@ interface LoginModalProps {
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister, onOpenForgotPassword }) => {
     const [showPassword, setShowPassword] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false); // Add remember me state
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -25,6 +27,19 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
         email: '',
         password: '',
     });
+
+    // Load saved credentials on component mount
+    useEffect(() => {
+        const savedEmail = localStorage.getItem('rememberedEmail');
+        const savedPassword = localStorage.getItem('rememberedPassword');
+        if (savedEmail && savedPassword) {
+            setFormData({
+                email: savedEmail,
+                password: savedPassword
+            });
+            setRememberMe(true);
+        }
+    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -87,10 +102,20 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
                 });
 
                 const data = await response.json();
-                console.log('Login response:', data); 
+                console.log('Login response:', data);
 
                 if (data.status === 'success') {
                     localStorage.setItem('user', JSON.stringify(data.data.usuario));
+                    
+                    // Handle remember me functionality
+                    if (rememberMe) {
+                        localStorage.setItem('rememberedEmail', formData.email);
+                        localStorage.setItem('rememberedPassword', formData.password);
+                    } else {
+                        localStorage.removeItem('rememberedEmail');
+                        localStorage.removeItem('rememberedPassword');
+                    }
+                    
                     onClose();
                     window.location.reload();
                 } else {
@@ -206,12 +231,15 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
                                         )}
                                     </div>
 
+                                    
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center">
                                             <input
                                                 id="remember-me"
                                                 name="remember-me"
                                                 type="checkbox"
+                                                checked={rememberMe}
+                                                onChange={(e) => setRememberMe(e.target.checked)}
                                                 className="cursor-pointer h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500"
                                             />
                                             <label htmlFor="remember-me" className="cursor-pointer ml-2 block text-sm text-gray-700">
