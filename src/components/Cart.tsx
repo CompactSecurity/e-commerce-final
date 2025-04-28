@@ -61,7 +61,7 @@ const Cart = () => {
     };
 
     const calculateSubtotal = (item: CartItem) => {
-        const price = item.precio_oferta || item.precio;
+        const price = item.precio || item.precio_oferta;
         return price * item.cantidad;
     };
 
@@ -127,10 +127,10 @@ const Cart = () => {
                                     {item.precio_oferta ? (
                                         <>
                                             <span className="text-xl font-bold text-orange-600">
-                                                S/ {item.precio_oferta.toFixed(2)}
+                                                S/ {item.precio.toFixed(2)}
                                             </span>
                                             <span className="text-sm text-gray-500 line-through">
-                                                S/ {item.precio.toFixed(2)}
+                                                S/ {item.precio_oferta.toFixed(2)}
                                             </span>
                                             <span className="bg-red-100 text-red-500 text-xs font-semibold py-1 px-2 rounded-full">
                                                 Oferta
@@ -164,7 +164,7 @@ const Cart = () => {
                                 </div>
                                 <button
                                     onClick={() => removeItem(item.id_producto)}
-                                    className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 transition-all duration-200"
+                                    className="cursor-pointer flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 transition-all duration-200"
                                 >
                                     <FaTrash size={16} className="cursor-pointer" />
                                     <span className="cursor-pointer text-sm font-medium">Eliminar</span>
