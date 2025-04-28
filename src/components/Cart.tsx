@@ -30,6 +30,8 @@ const Cart = () => {
     useEffect(() => {
         if (cartItems.length > 0) {
             localStorage.setItem('cart', JSON.stringify(cartItems));
+        } else {
+            localStorage.removeItem('cart');
         }
     }, [cartItems]);
     

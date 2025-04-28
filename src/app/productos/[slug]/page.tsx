@@ -366,7 +366,6 @@ export default function ProductPage() {
                         <h2 className="text-3xl font-bold text-gray-900 mb-2">Productos relacionados</h2>
                         <div className="w-16 h-1 bg-orange-500 mx-auto rounded"></div>
                     </div>
-
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             {relatedProducts.map((relatedProduct) => (
                                 <Link 
