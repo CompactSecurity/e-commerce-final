@@ -13,7 +13,7 @@ import Cart from './Cart';
 
 // Definimos la interfaz User
 interface User {
-    id_usuario: number;  
+    id_usuario: number;
     nombre: string;
     apellidos: string;
     email: string;
@@ -92,7 +92,7 @@ const Navbar = () => {
                             <div className="flex items-center">
                                 <FaPhone className="text-orange-500 mr-2" />
                                 <span
-                                className='text-white hover:text-orange-500 transition-colors cursor-pointer'
+                                    className='text-white hover:text-orange-500 transition-colors cursor-pointer'
                                 >976 687 566</span>
                             </div>
                             <div className="flex items-center">
@@ -127,18 +127,18 @@ const Navbar = () => {
                             {/* Logo y menú hamburguesa */}
                             <div className="flex items-center">
                                 <Link href="/" className="flex-shrink-0">
-                                    <Image 
-                                        src={logo} 
-                                        alt="Logo" 
-                                        width={isScrolled ? 180 : 200} 
-                                        height={isScrolled ? 60 : 80} 
+                                    <Image
+                                        src={logo}
+                                        alt="Logo"
+                                        width={isScrolled ? 180 : 200}
+                                        height={isScrolled ? 60 : 80}
                                         className='object-contain transition-all duration-300'
                                     />
                                 </Link>
                             </div>
 
                             {/* Menú hamburguesa */}
-                            <button 
+                            <button
                                 className="md:hidden text-white p-2 rounded-full hover:bg-white/10 transition-colors"
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                 aria-label="Toggle menu"
@@ -162,53 +162,53 @@ const Navbar = () => {
 
                             {/* Carrito y Usuario */}
                             <div className="hidden md:flex items-center space-x-4">
-                            {user ? (
-    <div className="relative group">
-        <button className="flex items-center space-x-2 text-white hover:text-orange-500 transition-colors cursor-pointer">
-            <FaUser className="text-xl" />
-            <span className="font-medium">{user.nombre}</span>
-        </button>
-        <div className="absolute right-0 w-64 mt-2 bg-white rounded-lg shadow-xl hidden group-hover:block">
-            <div className="p-4 border-b">
-                <p className="text-gray-900 font-medium">{`${user.nombre} ${user.apellidos}`}</p>
-                <p className="text-gray-600 text-sm">{user.email}</p>
-                <p className="text-gray-500 text-xs mt-1 capitalize">{user.rol}</p>
-            </div>
-            <div className="p-2">
-                <button 
-                    onClick={handleLogout}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
-                >
-                    Cerrar Sesión
-                </button>
-            </div>
-            {user && user.rol === 'admin' && (
-    <div className="p-2">
-        <Link 
-            href="/admin"
-            className="w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100 rounded-md transition-colors block"
-        >
-            Panel de Administración
-        </Link>
-    </div>
-)}
-        </div>
-    </div>
-) : ( 
-    <button
-        onClick={() => setIsLoginModalOpen(true)}
-        className="text-white hover:text-orange-500 transition-colors"
-    >
-        <FaUser className="text-xl cursor-pointer" />
-    </button>
-)}
+                                {user ? (
+                                    <div className="relative group">
+                                        <button className="flex items-center space-x-2 text-white hover:text-orange-500 transition-colors cursor-pointer">
+                                            <FaUser className="text-xl" />
+                                            <span className="font-medium">{user.nombre}</span>
+                                        </button>
+                                        <div className="absolute right-0 w-64 mt-2 bg-white rounded-lg shadow-xl hidden group-hover:block">
+                                            <div className="p-4 border-b">
+                                                <p className="text-gray-900 font-medium">{`${user.nombre} ${user.apellidos}`}</p>
+                                                <p className="text-gray-600 text-sm">{user.email}</p>
+                                                <p className="text-gray-500 text-xs mt-1 capitalize">{user.rol}</p>
+                                            </div>
+                                            <div className="p-2">
+                                                <button
+                                                    onClick={handleLogout}
+                                                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
+                                                >
+                                                    Cerrar Sesión
+                                                </button>
+                                            </div>
+                                            {user && user.rol === 'admin' && (
+                                                <div className="p-2">
+                                                    <Link
+                                                        href="/admin"
+                                                        className="w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100 rounded-md transition-colors block"
+                                                    >
+                                                        Panel de Administración
+                                                    </Link>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                ) : (
                                     <button
-                                        onClick={() => setIsOffersOpen(!isOffersOpen)}
-                                        className="text-white hover:text-orange-500 transition-colors cursor-pointer"
+                                        onClick={() => setIsLoginModalOpen(true)}
+                                        className="text-white hover:text-orange-500 transition-colors"
                                     >
+                                        <FaUser className="text-xl cursor-pointer" />
                                     </button>
-                                    <Cart />
-                                </div>
+                                )}
+                                <button
+                                    onClick={() => setIsOffersOpen(!isOffersOpen)}
+                                    className="text-white hover:text-orange-500 transition-colors cursor-pointer"
+                                >
+                                </button>
+                                <Cart />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -219,15 +219,15 @@ const Navbar = () => {
                         {/* Encabezado del menú móvil */}
                         <div className="sticky top-0 bg-[#255270] z-10 p-4 flex items-center justify-between border-b border-white/10">
                             <div className="flex items-center">
-                                <Image 
-                                    src={logo} 
-                                    alt="Logo" 
-                                    width={120} 
-                                    height={40} 
+                                <Image
+                                    src={logo}
+                                    alt="Logo"
+                                    width={120}
+                                    height={40}
                                     className='object-contain'
                                 />
                             </div>
-                            <button 
+                            <button
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 className="text-white p-2 rounded-full hover:bg-white/10 transition-colors"
                                 aria-label="Cerrar menú"
@@ -272,7 +272,7 @@ const Navbar = () => {
                             </div>
 
                             {/* Ofertas móvil */}
-                            <button 
+                            <button
                                 onClick={() => setIsOffersOpen(!isOffersOpen)}
                                 className="w-full flex items-center justify-between text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors"
                             >
@@ -294,7 +294,7 @@ const Navbar = () => {
                                 {user ? (
                                     <div className="text-white">
                                         <div className="text-center mb-2">{`${user.nombre} ${user.apellidos}`}</div>
-                                        <button 
+                                        <button
                                             onClick={handleLogout}
                                             className="text-red-500 hover:text-red-600 transition-colors"
                                         >
@@ -302,7 +302,7 @@ const Navbar = () => {
                                         </button>
                                     </div>
                                 ) : (
-                                    <button 
+                                    <button
                                         onClick={() => setIsLoginModalOpen(true)}
                                         className='text-white hover:text-orange-500 transition-colors'
                                     >
@@ -338,7 +338,7 @@ const Navbar = () => {
                                     Blog
                                 </Link>
                             </div>
-                            <button 
+                            <button
                                 onClick={() => setIsOffersOpen(!isOffersOpen)}
                                 className="text-white hover:text-gray-200 font-medium px-3 py-2 flex items-center space-x-2"
                             >
@@ -354,7 +354,7 @@ const Navbar = () => {
                     <div className="p-4">
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-xl font-bold text-gray-800">Ofertas del día</h2>
-                            <button 
+                            <button
                                 onClick={() => setIsOffersOpen(false)}
                                 className="text-gray-500 hover:text-gray-700 cursor-pointer"
                             >
@@ -364,9 +364,9 @@ const Navbar = () => {
                         <div className="space-y-4">
                             <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-sm hover:shadow-md transition-shadow">
                                 <div className="relative w-full h-48">
-                                    <Image 
-                                        src={logo2} 
-                                        alt="Producto en oferta" 
+                                    <Image
+                                        src={logo2}
+                                        alt="Producto en oferta"
                                         fill
                                         className="object-cover rounded-lg"
                                     />
@@ -397,16 +397,16 @@ const Navbar = () => {
             </header>
 
             {/* Login Modal */}
-            <LoginModal 
-                isOpen={isLoginModalOpen} 
+            <LoginModal
+                isOpen={isLoginModalOpen}
                 onClose={() => setIsLoginModalOpen(false)}
                 onOpenRegister={handleOpenRegister}
                 onOpenForgotPassword={handleOpenForgotPassword}
             />
 
             {/* Register Modal */}
-            <RegisterModal 
-                isOpen={isRegisterModalOpen} 
+            <RegisterModal
+                isOpen={isRegisterModalOpen}
                 onClose={() => setIsRegisterModalOpen(false)}
                 onOpenLogin={handleOpenLogin}
             />
