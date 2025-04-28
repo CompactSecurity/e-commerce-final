@@ -6,13 +6,13 @@ import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 
 interface CartItem {
-    id: number;
-    name: string;
-    price: number;
-    salePrice?: number;
-    quantity: number;
+    id_producto: number;
+    nombre: string;
+    precio: number;
+    precio_oferta: number | null;
+    cantidad: number;
     stock: number;
-    image: string;
+    imagen_principal: string;
 }
 
 const Cart = () => {
@@ -28,13 +28,16 @@ const Cart = () => {
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cartItems));
+        if (cartItems.length > 0) {
+            localStorage.setItem('cart', JSON.stringify(cartItems));
+        }
     }, [cartItems]);
+    
 
     const updateQuantity = (itemId: number, newQuantity: number) => {
         setCartItems(prevItems =>
             prevItems.map(item => {
-                if (item.id === itemId) {
+                if (item.id_producto === itemId) {
                     if (newQuantity > item.stock) {
                         toast.error(`Solo hay ${item.stock} unidades disponibles`);
                         return item;
@@ -42,7 +45,7 @@ const Cart = () => {
                     if (newQuantity < 1) {
                         return item;
                     }
-                    return { ...item, quantity: newQuantity };
+                    return { ...item, cantidad: newQuantity };
                 }
                 return item;
             })
@@ -50,13 +53,13 @@ const Cart = () => {
     };
 
     const removeItem = (itemId: number) => {
-        setCartItems(prevItems => prevItems.filter(item => item.id !== itemId));
+        setCartItems(prevItems => prevItems.filter(item => item.id_producto !== itemId));
         toast.success('Producto eliminado del carrito');
     };
 
     const calculateSubtotal = (item: CartItem) => {
-        const price = item.salePrice || item.price;
-        return price * item.quantity;
+        const price = item.precio_oferta || item.precio;
+        return price * item.cantidad;
     };
 
     const calculateTotal = () => {
@@ -87,82 +90,116 @@ const Cart = () => {
     }
 
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6 min-h-screen">
+            <div className="lg:col-span-2 space-y-6">
                 {cartItems.map((item) => (
-                    <div key={item.id} className="flex flex-col sm:flex-row gap-4 p-4 border rounded-lg shadow-sm">
-                        <div className="relative w-full sm:w-32 h-32">
+                    <div
+                        key={item.id_producto}
+                        className="flex flex-col sm:flex-row gap-6 p-6 bg-white border border-gray-200 rounded-xl shadow-md transition-shadow duration-300 ease-in-out hover:shadow-lg"
+                    >
+                        <div className="relative w-full sm:w-40 h-40 rounded-lg overflow-hidden">
                             <Image
-                                src={item.image}
-                                alt={item.name}
+                                src={item.imagen_principal}
+                                alt={item.nombre}
                                 fill
-                                className="object-cover rounded-lg"
+                                className="object-cover transition-transform duration-300 ease-in-out transform hover:scale-105"
                             />
                         </div>
-                        <div className="flex-1 space-y-2">
-                            <Link href={`/producto/${item.id}`} className="text-lg font-semibold text-gray-800 hover:text-orange-500">
-                                {item.name}
-                            </Link>
-                            <div className="flex items-center gap-2">
-                                {item.salePrice ? (
-                                    <>
-                                        <span className="text-xl font-bold text-orange-500">S/ {item.salePrice.toFixed(2)}</span>
-                                        <span className="text-sm text-gray-500 line-through">S/ {item.price.toFixed(2)}</span>
-                                    </>
-                                ) : (
-                                    <span className="text-xl font-bold text-gray-800">S/ {item.price.toFixed(2)}</span>
-                                )}
+                        <div className="flex-1 flex flex-col justify-between">
+                            <div className="space-y-2">
+                                <Link
+                                    href={`/producto/${item.id_producto}`}
+                                    className="text-xl font-semibold text-gray-900 hover:text-orange-600 transition-colors duration-200"
+                                >
+                                    {item.nombre}
+                                </Link>
+                                <div className="flex items-center gap-3">
+                                    {item.precio_oferta ? (
+                                        <>
+                                            <span className="text-xl font-bold text-orange-600">
+                                                S/ {item.precio_oferta.toFixed(2)}
+                                            </span>
+                                            <span className="text-sm text-gray-500 line-through">
+                                                S/ {item.precio.toFixed(2)}
+                                            </span>
+                                            <span className="bg-red-100 text-red-500 text-xs font-semibold py-1 px-2 rounded-full">
+                                                Oferta
+                                            </span>
+                                        </>
+                                    ) : (
+                                        <span className="text-xl font-bold text-gray-900">
+                                            S/ {item.precio.toFixed(2)}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
-                            <div className="flex items-center gap-4">
-                                <div className="flex items-center border rounded-lg">
+                            <div className="flex items-center justify-between mt-4 sm:mt-0">
+                                <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                                     <button
-                                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                        className="p-2 text-gray-600 hover:text-orange-500"
+                                        onClick={() => updateQuantity(item.id_producto, item.cantidad - 1)}
+                                        className="p-2 text-gray-600 hover:text-orange-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                                        disabled={item.cantidad <= 1}
                                     >
-                                        <FaMinus size={14} />
+                                        <FaMinus size={16} />
                                     </button>
-                                    <span className="w-12 text-center">{item.quantity}</span>
+                                    <span className="w-12 text-center text-gray-700 font-medium">
+                                        {item.cantidad}
+                                    </span>
                                     <button
-                                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                        className="p-2 text-gray-600 hover:text-orange-500"
+                                        onClick={() => updateQuantity(item.id_producto, item.cantidad + 1)}
+                                        className="p-2 text-gray-600 hover:text-orange-500 focus:outline-none"
                                     >
-                                        <FaPlus size={14} />
+                                        <FaPlus size={16} />
                                     </button>
                                 </div>
                                 <button
-                                    onClick={() => removeItem(item.id)}
-                                    className="text-red-500 hover:text-red-600"
+                                    onClick={() => removeItem(item.id_producto)}
+                                    className="text-red-500 hover:text-red-600 focus:outline-none transition-colors duration-200"
                                 >
-                                    <FaTrash size={16} />
+                                    <FaTrash size={20} className="cursor-pointer" />
                                 </button>
                             </div>
-                            <p className="text-sm text-gray-500">Subtotal: S/ {calculateSubtotal(item).toFixed(2)}</p>
+                            <p className="text-sm text-gray-600 mt-2">
+                                Subtotal: <span className="font-semibold">S/ {calculateSubtotal(item).toFixed(2)}</span>
+                            </p>
                         </div>
                     </div>
                 ))}
             </div>
-
             <div className="lg:col-span-1">
-                <div className="bg-white p-6 rounded-lg shadow-md sticky top-24">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">Resumen de la compra</h2>
-                    <div className="space-y-3 mb-6">
-                        <div className="flex justify-between text-gray-600">
+                <div className="bg-white p-8 rounded-xl shadow-lg sticky top-28 border border-gray-200">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-6">Resumen de la compra</h2>
+                    <div className="space-y-4 mb-8">
+                        <div className="flex justify-between text-gray-700">
                             <span>Productos ({cartItems.length})</span>
-                            <span>S/ {calculateTotal().toFixed(2)}</span>
+                            <span className="font-medium">S/ {calculateTotal().toFixed(2)}</span>
                         </div>
-                        <div className="border-t pt-3">
-                            <div className="flex justify-between font-semibold text-lg">
+                        
+                        <div className="border-t pt-4">
+                            <div className="flex justify-between font-semibold text-lg text-gray-900">
                                 <span>Total</span>
-                                <span className="text-orange-500">S/ {calculateTotal().toFixed(2)}</span>
+                                <span className="text-orange-600">S/ {calculateTotal().toFixed(2)}</span>
                             </div>
                         </div>
                     </div>
-                    <button 
-                        className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 transition-colors"
-                        onClick={() => {/* Implementar checkout */}}
+                    <button
+                        className="cursor-pointer w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white py-3 rounded-full hover:scale-102 hover:shadow-md transition-all duration-200 font-semibold"
                     >
                         Proceder al pago
                     </button>
+                    {cartItems.length > 0 && (
+                        <div className="mt-4 text-center text-sm text-gray-600">
+                            <div className="flex items-center justify-center gap-2">
+                                <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                                <span className="text-green-600 font-medium">Compra 100% Segura</span>
+                            </div>
+                            <p className="mt-2 text-gray-600">
+                                Garantizamos la seguridad de tu pago y la protección de tus datos.
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

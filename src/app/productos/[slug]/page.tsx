@@ -40,7 +40,13 @@ interface RelatedProduct {
     estado: number;
 }
 
+// Add this import at the top with other imports
+import { useCart } from '@/context/CartContext';
+
 export default function ProductPage() {
+    // Add this with other state declarations
+    const { addItem } = useCart();
+
     const params = useParams();
     const slug = params.slug as string;
     const [product, setProduct] = useState<ProductDetail | null>(null);
@@ -286,6 +292,7 @@ export default function ProductPage() {
                                     </div>
 
                                     {/* Action Buttons */}
+                                    
                                     <div className="space-y-3">
                                         {Number(product.cotizable) === 1 ? (
                                             <button
@@ -299,11 +306,21 @@ export default function ProductPage() {
                                             </button>
                                         ) : Number(product.agregable_carrito) === 1 && Number(product.estado) === 1 && Number(product.stock) > 0 ? (
                                             <>
-                                                <button className="cursor-pointer w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-lg font-semibold shadow-lg hover:shadow-orange-200 transition-all duration-300 flex items-center justify-center gap-2">
+                                                <button 
+                                                    onClick={() => {
+                                                        addItem(product, 1);
+                                                    }}
+                                                    className="cursor-pointer w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-lg font-semibold shadow-lg hover:shadow-orange-200 transition-all duration-300 flex items-center justify-center gap-2"
+                                                >
                                                     <FaShoppingCart className="w-5 h-5" />
                                                     Comprar ahora
                                                 </button>
-                                                <button className="cursor-pointer w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2">
+                                                <button 
+                                                    onClick={() => {
+                                                        addItem(product, 1);
+                                                    }}
+                                                    className="cursor-pointer w-full bg-gray-100 hover:bg-gray-200 text-gray-800 py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2"
+                                                >
                                                     Agregar al carrito
                                                 </button>
                                             </>

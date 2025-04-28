@@ -10,6 +10,7 @@ import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSear
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import ForgotPasswordModal from './ForgotPasswordModal';
+import { useCart } from '@/context/CartContext';
 
 // Definimos la interfaz User
 interface User {
@@ -21,6 +22,7 @@ interface User {
 }
 
 const Navbar = () => {
+    const { itemsCount } = useCart();
     const [isOffersOpen, setIsOffersOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -209,9 +211,11 @@ const Navbar = () => {
                                     className="relative text-white hover:text-orange-500 transition-colors"
                                 >
                                     <FaShoppingCart className="text-xl" />
-                                    <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                                        0
-                                    </span>
+                                    {itemsCount > 0 && (
+                                        <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                            {itemsCount}
+                                        </span>
+                                    )}
                                 </Link>
                             </div>
                         </div>

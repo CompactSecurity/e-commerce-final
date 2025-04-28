@@ -7,6 +7,7 @@ import { FaWhatsapp, FaShoppingCart } from 'react-icons/fa';
 import { FiHeart, FiEye, FiShoppingCart as FiCart } from 'react-icons/fi';
 import { DM_Sans } from 'next/font/google';
 import logo2 from '../assets/logo2.jpg';
+import { useCart } from '@/context/CartContext';
 
 const DMSans = DM_Sans({ weight: ['400', '500', '700'], subsets: ['latin'] });
 
@@ -30,6 +31,7 @@ const FeaturedProducts = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const { addItem } = useCart(); // Move this to the main component level
 
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
@@ -58,6 +60,7 @@ const FeaturedProducts = () => {
   const closeModal = () => setSelectedProduct(null);
 
   const ProductCard = ({ product }: { product: Product }) => {
+    const { addItem } = useCart();
     const [isHovered, setIsHovered] = useState(false);
     const router = useRouter();
     const [isWishlist, setIsWishlist] = useState(false);
@@ -68,7 +71,7 @@ const FeaturedProducts = () => {
 
     const handleAddToCart = (e: React.MouseEvent) => {
       e.stopPropagation();
-      console.log('Agregado al carrito:', product.nombre);
+      addItem(product, 1);
     };
 
     const handleToggleWishlist = (e: React.MouseEvent) => {
@@ -320,7 +323,10 @@ const FeaturedProducts = () => {
                       </button>
                     ) : Number(selectedProduct.agregable_carrito) === 1 && selectedProduct.stock > 0 ? (
                       <button 
-                        onClick={() => console.log('Agregar al carrito:', selectedProduct.nombre)}
+                        onClick={() => {
+                          addItem(selectedProduct, 1);
+                          closeModal();
+                        }}
                         className="w-full bg-orange-500 text-white py-3 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium"
                       >
                         <FaShoppingCart className="w-5 h-5" />

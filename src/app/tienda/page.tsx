@@ -6,6 +6,7 @@ import { FaSearch, FaStar, FaShoppingCart, FaFilter, FaTimes, FaWhatsapp } from 
 import { IoGrid, IoList } from 'react-icons/io5';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCart } from '@/context/CartContext';
 
 import { StaticImageData } from 'next/image';
 import casco from '../../assets/Categorias/facial.jpg';
@@ -48,17 +49,10 @@ interface FilterOptions {
 }
 
 const ShopPage = () => {
-    //Para la seleccion de productos
+    const { addItem } = useCart();
+    
+    // State declarations
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-
-    const handleProductClick = (product: Product) => {
-        setSelectedProduct(product);
-    };
-
-    const closeModal = () => {
-        setSelectedProduct(null);
-    };
-
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [brands, setBrands] = useState<Brand[]>([]);
@@ -73,9 +67,17 @@ const ShopPage = () => {
     });
     const [searchQuery, setSearchQuery] = useState('');
     const [loading, setLoading] = useState(true);
-
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    
+    const handleProductClick = (product: Product) => {
+        setSelectedProduct(product);
+    };
+
+    const closeModal = () => {
+        setSelectedProduct(null);
+    };
+
     const productsPerPage = 9;
 
     useEffect(() => {
