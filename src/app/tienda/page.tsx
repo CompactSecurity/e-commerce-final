@@ -535,10 +535,7 @@ const ShopPage = () => {
                                                             Cotizable
                                                         </div>
                                                     )}
-                                                </div>
-                                                
-
-                                                
+                                                </div> 
                                             </div>
                                             
                                             <div className={`flex flex-col justify-between ${viewMode === 'list' ? 'flex-1' : ''}`}>
