@@ -395,7 +395,7 @@ const Navbar = () => {
                         {/* Header */}
                         <div className="sticky top-0 bg-white border-b border-gray-200 z-10 p-4 flex items-center justify-between shadow-sm">
                             <h2 className="text-lg font-semibold text-gray-800 tracking-tight">
-                                ¡Mira nuestras ofertas!
+                                ¡Nuestras ofertas de Hoy!
                             </h2>
                             <button
                                 onClick={() => setIsOffersOpen(false)}
@@ -405,7 +405,7 @@ const Navbar = () => {
                             </button>
                         </div>
 
-                        {/* Offer List */}
+                        {/* Lista de productos en oferta */}
                         <div className="p-4 flex-grow overflow-y-auto">
                             {offerProducts.length > 0 ? (
                                 <ul className="space-y-2">
@@ -439,7 +439,6 @@ const Navbar = () => {
                                                         <span className="text-sm text-gray-500 line-through">
                                                             S/ {product.precio_oferta.toFixed(2)}
                                                         </span>
-
                                                     </div>
                                                     {product.precio_oferta > 0 && (
                                                         <span className="inline-block bg-green-100 text-green-700 text-xs font-semibold rounded-full px-2 py-1 mt-1">
