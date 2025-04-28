@@ -159,20 +159,18 @@ class ProductController {
 
     public function update($id) {
         try {
+            // Check if request is multipart/form-data
+            if (empty($_POST) && !empty($_FILES)) {
+                parse_str(file_get_contents("php://input"), $_POST);
+            }
 
-
-            error_log("Update request received for product ID: " . $id);
-            error_log("POST data: " . print_r($_POST, true));
-            error_log("FILES data: " . print_r($_FILES, true));
-            error_log("Session data: " . print_r($_SESSION, true));
-
-            // Obtener datos de entrada
-            $input = file_get_contents("php://input");
-            error_log("Raw input: " . $input);
-
-            if (empty($_POST['nombre']) || !isset($_POST['precio'])) {
-                $this->response->sendError(400, "Datos incompletos");
-                return;
+            // Validate required fields
+            $required = ['nombre', 'precio', 'stock', 'id_categoria', 'id_marca'];
+            foreach ($required as $field) {
+                if (!isset($_POST[$field]) || empty($_POST[$field])) {
+                    $this->response->sendError(400, "Campo requerido faltante: $field");
+                    return;
+                }
             }
 
             $updateData = [
@@ -180,26 +178,27 @@ class ProductController {
                 'descripcion' => $_POST['descripcion'] ?? '',
                 'precio' => floatval($_POST['precio']),
                 'precio_oferta' => floatval($_POST['precio_oferta'] ?? 0),
-                'stock' => intval($_POST['stock'] ?? 0),
-                'id_categoria' => intval($_POST['id_categoria'] ?? 0),
-                'id_marca' => intval($_POST['id_marca'] ?? 0),
+                'stock' => intval($_POST['stock']),
+                'id_categoria' => intval($_POST['id_categoria']),
+                'id_marca' => intval($_POST['id_marca']),
                 'cotizable' => isset($_POST['cotizable']) ? 1 : 0,
-                'agregable_carrito' => isset($_POST['cotizable']) ? 0 : (isset($_POST['agregable_carrito']) ? 1 : 0),'estado' => isset($_POST['estado']) ? 1 : 0
+                'agregable_carrito' => isset($_POST['agregable_carrito']) ? 1 : 0,
+                'estado' => isset($_POST['estado']) ? 1 : 0
             ];
 
-            if (isset($_FILES['imagen_principal']) && $_FILES['imagen_principal']['error'] === UPLOAD_ERR_OK) {
-                $file = $_FILES['imagen_principal'];
-                $upload_dir = __DIR__ . '/../uploads/productos/';
+            // Handle file upload
+            if (!empty($_FILES['imagen_principal']['name'])) {
+                $upload_dir = __DIR__ . '/../../public/uploads/productos/';
                 
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
                 }
 
-                $filename = uniqid() . '_' . basename($file['name']);
+                $filename = uniqid() . '_' . basename($_FILES['imagen_principal']['name']);
                 $target_path = $upload_dir . $filename;
                 
-                if (move_uploaded_file($file['tmp_name'], $target_path)) {
-                    $updateData['imagen_principal'] = '/e-commerce/api/uploads/productos/' . $filename;
+                if (move_uploaded_file($_FILES['imagen_principal']['tmp_name'], $target_path)) {
+                    $updateData['imagen_principal'] = '/uploads/productos/' . $filename;
                 }
             }
 
@@ -210,7 +209,6 @@ class ProductController {
                 ]);
             } else {
                 $error = $this->model->getLastError();
-                error_log("Update error: " . $error);
                 $this->response->sendError(500, "Error al actualizar el producto: " . $error);
             }
         } catch (Exception $e) {

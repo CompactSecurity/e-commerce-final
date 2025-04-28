@@ -124,40 +124,44 @@ const EditProduct = ({ onBack }: EditProductProps) => {
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!selectedProduct) return;
-
+    
         try {
             const formData = new FormData();
             
-            // Handle each field properly
-            Object.entries(selectedProduct).forEach(([key, value]) => {
+            // Create a copy of selectedProduct without modifying the original state
+            const productToUpdate = {...selectedProduct};
+            
+            // Only include cotizable if explicitly checked
+            if (!productToUpdate.cotizable) {
+                productToUpdate.cotizable = 0;
+            }
+            
+            // Add all product fields to formData
+            Object.entries(productToUpdate).forEach(([key, value]) => {
                 if (value !== null && value !== undefined) {
-                    // Convert booleans to 0/1 for checkboxes
-                    if (typeof value === 'boolean') {
-                        formData.append(key, value ? '1' : '0');
-                    } else {
-                        formData.append(key, value.toString());
-                    }
-                } else {
-                    // Handle null/undefined values
-                    formData.append(key, '');
+                    formData.append(key, value.toString());
                 }
             });
-
+    
             if (selectedFile) {
                 formData.append('imagen_principal', selectedFile);
             }
-
+    
             const response = await fetch(`http://localhost/e-commerce/api/productos/update/${selectedProduct.id_producto}`, {
                 method: 'POST',
                 credentials: 'include',
                 body: formData,
             });
-
+    
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorData = await response.json().catch(() => null);
+                console.error('Server error response:', errorData);
+                throw new Error(errorData?.mensaje || `HTTP error! status: ${response.status}`);
             }
-
+    
             const data = await response.json();
+            console.log('Update response:', data);
+            
             if (data.status === 'success') {
                 alert('Producto actualizado exitosamente');
                 setSelectedProduct(null);
@@ -166,8 +170,8 @@ const EditProduct = ({ onBack }: EditProductProps) => {
                 throw new Error(data.mensaje || 'Error al actualizar el producto');
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('Error al actualizar el producto: ' + (error instanceof Error ? error.message : 'Error desconocido'));
+            console.error('Detailed error:', error);
+            alert(`Error al actualizar el producto: ${error instanceof Error ? error.message : 'Error desconocido'}\nVer consola para más detalles.`);
         }
     };
 

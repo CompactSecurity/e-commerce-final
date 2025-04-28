@@ -72,18 +72,18 @@ class ProductoModel {
         return $this->lastError;
     }
     public function update($id, $data) {
-        $sql = "UPDATE productos SET 
-                nombre = ?, descripcion = ?, precio = ?, precio_oferta = ?, 
-                stock = ?, id_categoria = ?, id_marca = ?, cotizable = ?, 
-                agregable_carrito = ?, estado = ?, destacado = ?";
-        
-        if (isset($data['imagen_principal']) && !empty($data['imagen_principal'])) {
-            $sql .= ", imagen_principal = ?";
-        }
-        
-        $sql .= " WHERE id_producto = ?";
-
         try {
+            $sql = "UPDATE productos SET 
+                    nombre = ?, descripcion = ?, precio = ?, precio_oferta = ?, 
+                    stock = ?, id_categoria = ?, id_marca = ?, cotizable = ?, 
+                    agregable_carrito = ?, estado = ?";
+            
+            if (isset($data['imagen_principal']) && !empty($data['imagen_principal'])) {
+                $sql .= ", imagen_principal = ?";
+            }
+            
+            $sql .= " WHERE id_producto = ?";
+
             $stmt = $this->conn->prepare($sql);
             $params = [
                 $data['nombre'],
@@ -104,9 +104,16 @@ class ProductoModel {
             
             $params[] = $id;
             
-            $stmt->execute($params);
-            return true;
+            if ($stmt->execute($params)) {
+                return true;
+            } else {
+                $this->lastError = $stmt->errorInfo()[2];
+                error_log("Update error: " . $this->lastError);
+                return false;
+            }
         } catch (PDOException $e) {
+            $this->lastError = $e->getMessage();
+            error_log("PDO Exception in update: " . $e->getMessage());
             return false;
         }
     }
