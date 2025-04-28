@@ -5,7 +5,10 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `ecommerce`
@@ -82,7 +85,8 @@ INSERT INTO `categorias` (`id_categoria`, `nombre`, `slug`, `descripcion`, `imag
 (8, 'Protección Facial', 'protección-facial', 'Caretas y gafas de protección', '', 1),
 (9, 'Protección para Caídas', 'protección-para-caídas', 'Arneses y equipos anti-caídas', '', 1),
 (10, 'Ropa de trabajo y protección', 'ropa-de-trabajo-y-protección', 'Ropa Industrial', '', 1),
-(11, 'Protección Visual', 'protección-visual', 'Protección visual para la seguridad', '', 1);
+(11, 'Protección Visual', 'protección-visual', 'Protección visual para la seguridad', '', 1),
+(13, 'Otro', 'otro', 'Otro', '', 1);
 
 -- --------------------------------------------------------
 
@@ -199,7 +203,13 @@ INSERT INTO `productos` (`id_producto`, `id_categoria`, `nombre`, `slug`, `descr
 (82, 7, 'Botas Industriales SteelToe Pro', 'botas-industriales-steeltoe-pro', 'Botas con puntera de acero y suela antideslizante, perfectas para obras y fábricas.', 165.90, 175.00, 30, '/uploads/productos/68093d7bb6b12_zapar.jpg', 1, 1, '2025-04-23 14:20:27', 0, 1, 14),
 (83, 3, 'Casco Industrial SafeCap Pro', 'casco-industrial-safecap-pro', 'Casco con suspensión interna y ranuras para accesorios de protección facial o auditiva.', 0.00, 0.00, 0, '/uploads/productos/68094045b1f93_casco.jpg', 1, 1, '2025-04-23 14:32:21', 1, 0, 12),
 (84, 6, 'Guantes Anticorte GripFlex N5', 'guantes-anticorte-gripflex-n5', 'Guantes con recubrimiento de nitrilo y resistencia nivel 5 al corte.', 80.00, 75.00, 12, '/uploads/productos/6809414b9115f_guante.jpg', 1, 1, '2025-04-23 14:36:43', 0, 1, 13),
-(85, 10, 'Camisa BlizFlame V1', 'camisa-blizflame-v1', 'Diseñada para entornos de alto riesgo, la Camisa BlizFlame V1 ofrece una combinación ideal de seguridad, confort y durabilidad. Fabricada con materiales ignífugos certificados, esta prenda brinda una excelente resistencia al fuego y al calor, protegiendo al usuario en tareas industriales exigentes. Su diseño ergonómico permite libertad de movimiento, mientras que sus costuras reforzadas y bolsillos funcionales la convierten en una prenda confiable para el trabajo diario.', 200.00, 300.00, 90, '/uploads/productos/680953445bf8d_Camisa-Bizflame-88-12-300x300.jpg', 1, 1, '2025-04-23 15:53:24', 0, 1, 14);
+(85, 10, 'Camisa BlizFlame V1', 'camisa-blizflame-v1', 'Diseñada para entornos de alto riesgo, la Camisa BlizFlame V1 ofrece una combinación ideal de seguridad, confort y durabilidad. Fabricada con materiales ignífugos certificados, esta prenda brinda una excelente resistencia al fuego y al calor, protegiendo al usuario en tareas industriales exigentes. Su diseño ergonómico permite libertad de movimiento, mientras que sus costuras reforzadas y bolsillos funcionales la convierten en una prenda confiable para el trabajo diario.', 200.00, 300.00, 90, '/uploads/productos/680953445bf8d_Camisa-Bizflame-88-12-300x300.jpg', 1, 1, '2025-04-23 15:53:24', 0, 1, 14),
+(86, 6, 'Guantes de Electricista ', 'guantes-de-electricista', 'Los Guantes de Electricista están diseñados para brindar una barrera eficaz contra riesgos eléctricos en tareas de baja y media tensión. Fabricados con materiales dieléctricos de alta calidad, estos guantes ofrecen excelente aislamiento, resistencia al desgaste y comodidad durante largas jornadas de trabajo.\r\nIdeales para electricistas, técnicos de mantenimiento, y profesionales que trabajan con equipos energizados.', 0.00, 0.00, 0, '/uploads/productos/68095b5baad40_Guante-Velsur-Modelo-Ultraflex-PU-300x300.jpg', 1, 0, '2025-04-23 16:27:55', 1, 0, 14),
+(90, 10, 'Malla Liviana', 'malla-liviana', 'Ligera, versátil y resistente.\r\nLa Malla Liviana es una solución práctica para delimitaciones temporales, señalización de áreas de trabajo o protección en obras de construcción. Fabricada en polietileno de alta densidad, ofrece buena resistencia al desgarro y a la intemperie, sin comprometer la facilidad de transporte e instalación.\r\nIdeal para usos en obras viales, eventos, cerramientos provisorios y más.\r\n\r\n', 0.00, 0.00, 0, '/uploads/productos/680960fcb7644_Malla-Liviana-300x300.jpg', 1, 0, '2025-04-23 16:51:56', 1, 0, 11),
+(91, 4, 'Orejeras V29', 'orejeras-v29', 'Diseñadas para ofrecer una protección auditiva confiable en entornos ruidosos. Las V29 cuentan con almohadillas suaves y confortables que aseguran un ajuste ergonómico durante largas jornadas de trabajo. Su diseño liviano y ajustable proporciona una excelente atenuación del ruido sin comprometer la comodidad. Ideales para uso en industrias, talleres, construcción y actividades al aire libre donde el control del ruido es esencial.', 95.00, 100.00, 20, '/uploads/productos/680964f0570e3_orejeras.jpg', 1, 1, '2025-04-23 17:08:48', 0, 1, 11),
+(94, 5, 'Respirador Reutilizable', 'respirador-reutilizable', 'Diseñado para brindar protección efectiva contra partículas, vapores y gases según el tipo de filtro utilizado. Este respirador reutilizable se ajusta cómodamente al rostro gracias a su diseño ergonómico y material flexible. Ideal para entornos industriales, trabajos con químicos, pintura, construcción o agricultura. Compatible con filtros intercambiables, es una opción económica y ecológica para el uso prolongado, sin sacrificar la seguridad respiratoria.', 75.00, 90.00, 50, '/uploads/productos/68096c157632b_respirador.jpg', 1, 1, '2025-04-23 17:39:17', 0, 1, 13),
+(95, 8, 'Mascara de Soldar', 'mascara-de-soldar', 'Protege tu rostro y visión con esta máscara para soldar de alta resistencia, diseñada para trabajos de soldadura eléctrica, MIG, TIG o por arco. Cuenta con visor abatible o filtro automático (según el modelo), que se oscurece al detectar el arco eléctrico, ofreciendo comodidad y protección instantánea. Su estructura liviana y ajustable permite largas jornadas de uso sin fatiga. Ideal para talleres, industrias metalúrgicas y trabajos de mantenimiento.', 0.00, 0.00, 0, '/uploads/productos/68096cee743d7_mascara de soldas.jpeg', 1, 0, '2025-04-23 17:42:54', 1, 0, 11),
+(96, 11, 'Lentes Resistentes B6', 'lentes-resistentes-b6', 'Diseñados para ofrecer una protección ocular superior, los Lentes B6 combinan resistencia y comodidad en un diseño moderno y liviano. Fabricados con policarbonato de alta durabilidad, protegen contra impactos, polvo y partículas volátiles. Su estructura ergonómica se ajusta cómodamente al rostro, mientras que sus patillas antideslizantes aseguran un calce firme durante largas jornadas de trabajo. Ideales para labores en construcción, industria, talleres y más.', 55.00, 65.00, 10, '/uploads/productos/68096d38426e5_lentes.jpg', 1, 0, '2025-04-23 17:44:08', 0, 1, 14);
 
 -- --------------------------------------------------------
 
@@ -329,7 +339,7 @@ ALTER TABLE `carritos`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `imagenes_productos`
@@ -365,7 +375,7 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
