@@ -351,30 +351,56 @@ export default function ProductPage() {
                                 <Link 
                                     href={`/productos/${relatedProduct.slug}`} 
                                     key={relatedProduct.id_producto}
-                                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                                    className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
                                 >
-                                    <div className="relative aspect-square">
+                                    <div className="relative aspect-square bg-gray-50">
                                         <Image
                                             src={relatedProduct.imagen_principal}
                                             alt={relatedProduct.nombre}
                                             fill
-                                            className="object-contain p-4"
+                                            className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
+                                        { relatedProduct.stock == 0 && (
+                                            <div className="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded">
+                                                Cotizable
+                                            </div>
+                                        )}
+                                    
                                     </div>
                                     <div className="p-4">
-                                        <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
-                                            {relatedProduct.nombre}
-                                        </h3>
-                                        <div className="mt-2 flex items-center gap-2">
-                                            <span className="text-lg font-bold text-orange-600">
-                                                S/ {Number(relatedProduct.precio).toFixed(2)}
-                                            </span>
-                                            {relatedProduct.precio_oferta > 0 && (
-                                                <span className="text-sm text-gray-500 line-through">
-                                                    S/ {Number(relatedProduct.precio_oferta).toFixed(2)}
+                                        <div className="mb-2">
+                                            <p className="text-xs text-gray-500 mb-1">
+                                                SKU: {relatedProduct.id_producto.toString().padStart(6, '0')}
+                                            </p>
+                                            <h3 className="text-sm font-medium text-gray-900 line-clamp-2 group-hover:text-orange-600 transition-colors">
+                                                {relatedProduct.nombre}
+                                            </h3>
+                                        </div>
+                                        <div className="flex flex-col gap-1">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-lg font-bold text-orange-600">
+                                                    S/ {Number(relatedProduct.precio).toFixed(2)}
                                                 </span>
-                                            )}
+                                                {relatedProduct.precio_oferta > 0 && (
+                                                    <span className="text-sm text-gray-500 line-through">
+                                                        S/ {Number(relatedProduct.precio_oferta).toFixed(2)}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <span className={`inline-block w-2 h-2 rounded-full ${
+                                                    relatedProduct.estado === 1 ? 'bg-green-500' : 'bg-green-500'
+                                                }`}></span>
+                                                <span className="text-xs text-gray-600">
+                                                    {relatedProduct.estado === 1 ? 'Disponible' : 'Disponible'}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="mt-3 pt-3 border-t border-gray-100">
+                                            <button className="cursor-pointer w-full bg-gray-100 hover:bg-orange-100 text-gray-700 hover:text-orange-600 py-2 rounded text-sm font-medium transition-colors duration-300">
+                                                Ver detalles
+                                            </button>
                                         </div>
                                     </div>
                                 </Link>
