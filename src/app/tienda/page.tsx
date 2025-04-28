@@ -232,7 +232,7 @@ const ShopPage = () => {
                                         {brands.map((brand, index) => (
                                             <label 
                                                 key={`brand-${brand.id_marca || brand.id || `index-${index}`}`} 
-                                                className="flex items-center"
+                                                className="flex items-center cursor-pointer"
                                             >
                                                 <input
                                                     type="checkbox"
@@ -244,7 +244,7 @@ const ShopPage = () => {
                                                             : filters.brands.filter(b => b !== brandId);
                                                         handleFilterChange('brands', newBrands);
                                                     }}
-                                                    className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+                                                    className="cursor-pointer h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
                                                 />
                                                 <span className="ml-2 text-sm text-gray-700">{brand.nombre}</span>
                                             </label>
@@ -257,7 +257,7 @@ const ShopPage = () => {
                                     <h3 className="text-sm font-semibold text-gray-900 mb-3">Categorías</h3>
                                     <div className="space-y-2 max-h-80 overflow-auto pr-2">
                                         {categories.map((category) => (
-                                            <label key={`category-${category.id_categoria}`} className="flex items-center">
+                                            <label key={`category-${category.id_categoria}`} className="cursor-pointer flex items-center">
                                                 <input
                                                     type="checkbox"
                                                     checked={filters.categories.includes(String(category.id_categoria))}
@@ -267,7 +267,7 @@ const ShopPage = () => {
                                                             : filters.categories.filter(c => c !== String(category.id_categoria));
                                                         handleFilterChange('categories', newCategories);
                                                     }}
-                                                    className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
+                                                    className="cursor-pointer h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded"
                                                 />
                                                 <span className="ml-2 text-sm text-gray-700">{category.nombre}</span>
                                             </label>
@@ -351,7 +351,7 @@ const ShopPage = () => {
                                     <select
                                         value={filters.sortBy}
                                         onChange={(e) => handleFilterChange('sortBy', e.target.value)}
-                                        className="w-full sm:w-auto border border-gray-300 rounded-lg px-3 py-2 focus:ring-orange-500 focus:border-orange-500"
+                                        className="cursor-pointer w-full sm:w-auto border border-gray-300 rounded-lg px-3 py-2 focus:ring-orange-500 focus:border-orange-500"
                                     >
                                         <option value="newest">Más recientes</option>
                                         <option value="price-asc">Precio: menor a mayor</option>

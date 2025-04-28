@@ -68,8 +68,8 @@ const ContactPage = () => {
         {
             icon: <FiMail className="w-6 h-6" />,
             title: 'Email',
-            content: 'ventas@compactseguridadindustrial.com',
-            link: 'mailto:ventas@compactseguridadindustrial.com'
+            content: 'compact.estudios@gmail.com',
+            link: 'mailto:compact.estudios@gmail.com'
         },
         {
             icon: <FiClock className="w-6 h-6" />,

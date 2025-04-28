@@ -91,11 +91,16 @@ const Navbar = () => {
                         <div className="flex items-center space-x-6">
                             <div className="flex items-center">
                                 <FaPhone className="text-orange-500 mr-2" />
-                                <span>976 687 566</span>
+                                <span
+                                className='text-white hover:text-orange-500 transition-colors cursor-pointer'
+                                >976 687 566</span>
                             </div>
                             <div className="flex items-center">
                                 <FaEnvelope className="text-orange-500 mr-2" />
-                                <span>compact.estudios@gmail.com</span>
+                                <span
+                                    onClick={() => window.location.href = 'mailto:compact.estudios@gmail.com'}
+                                    className="text-white hover:text-orange-500 transition-colors cursor-pointer"
+                                >compact.estudios@gmail.com</span>
                             </div>
                         </div>
                         <div className="flex items-center space-x-4">

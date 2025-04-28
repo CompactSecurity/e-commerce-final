@@ -45,7 +45,7 @@ const FAQ: React.FC = () => {
         const message = '¡Hola! Tengo una pregunta sobre su empresa.';
         const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
         return (
-            <button className="bg-[#22C55E] text-white px-8 py-3 rounded-lg hover:bg-[#16A34A] transition-colors font-semibold hover:cursor-pointer" onClick={() => window.open(url,'_blank')}>
+            <button className="bg-orange-500 text-white px-8 py-3 rounded-lg hover:bg-orange-600 transition-colors font-semibold hover:cursor-pointer" onClick={() => window.open(url,'_blank')}>
                 Contactar Soporte                    
             </button>
         );
@@ -80,7 +80,7 @@ const FAQ: React.FC = () => {
                         >
                             <button
                                 onClick={() => toggleFAQ(index)}
-                                className="w-full bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-between text-left"
+                                className="cursor-pointer w-full bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center justify-between text-left"
                             >
                                 <span className="text-lg font-semibold text-gray-900">{faq.question}</span>
                                 <IoIosArrowDown 
