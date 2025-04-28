@@ -13,6 +13,7 @@ interface CartItem {
     cantidad: number;
     stock: number;
     imagen_principal: string;
+    categoria: string; // Add category
 }
 
 const Cart = () => {
@@ -92,14 +93,21 @@ const Cart = () => {
     }
 
     return (
+        
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 p-6 min-h-screen">
             <div className="lg:col-span-2 space-y-6">
+                <div>
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-1">Carrito de Compras</h2> {/* mb-1 para menos margen */}
+                    <p className="text-gray-600 text-sm">
+                        Aquí puedes revisar los productos que has añadido a tu carrito.
+                    </p>
+                </div>
                 {cartItems.map((item) => (
                     <div
                         key={item.id_producto}
                         className="flex flex-col sm:flex-row gap-6 p-6 bg-white border border-gray-200 rounded-xl shadow-md transition-shadow duration-300 ease-in-out hover:shadow-lg"
                     >
-                        <div className="relative w-full sm:w-40 h-40 rounded-lg overflow-hidden">
+                        <div className="relative w-60 h-60 sm:w-40 sm:h-40 rounded-lg overflow-hidden">
                             <Image
                                 src={item.imagen_principal}
                                 alt={item.nombre}
@@ -139,7 +147,7 @@ const Cart = () => {
                                 <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
                                     <button
                                         onClick={() => updateQuantity(item.id_producto, item.cantidad - 1)}
-                                        className="p-2 text-gray-600 hover:text-orange-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="cursor-pointer p-2 text-gray-600 hover:text-orange-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                                         disabled={item.cantidad <= 1}
                                     >
                                         <FaMinus size={16} />
@@ -149,16 +157,17 @@ const Cart = () => {
                                     </span>
                                     <button
                                         onClick={() => updateQuantity(item.id_producto, item.cantidad + 1)}
-                                        className="p-2 text-gray-600 hover:text-orange-500 focus:outline-none"
+                                        className="cursor-pointer p-2 text-gray-600 hover:text-orange-500 focus:outline-none"
                                     >
                                         <FaPlus size={16} />
                                     </button>
                                 </div>
                                 <button
                                     onClick={() => removeItem(item.id_producto)}
-                                    className="text-red-500 hover:text-red-600 focus:outline-none transition-colors duration-200"
+                                    className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 transition-all duration-200"
                                 >
-                                    <FaTrash size={20} className="cursor-pointer" />
+                                    <FaTrash size={16} className="cursor-pointer" />
+                                    <span className="cursor-pointer text-sm font-medium">Eliminar</span>
                                 </button>
                             </div>
                             <p className="text-sm text-gray-600 mt-2">
@@ -168,7 +177,7 @@ const Cart = () => {
                     </div>
                 ))}
             </div>
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 sm:pt-19">
                 <div className="bg-white p-8 rounded-xl shadow-lg sticky top-28 border border-gray-200">
                     <h2 className="text-xl font-semibold text-gray-900 mb-6">Resumen de la compra</h2>
                     <div className="space-y-4 mb-8">
