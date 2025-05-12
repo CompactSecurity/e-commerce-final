@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 
 interface CartItem {
     id_producto: number;
@@ -19,6 +20,12 @@ interface CartItem {
 const Cart = () => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [preferenceId, setPreferenceId] = useState<string>('');
+
+    // Initialize MercadoPago
+    useEffect(() => {
+        initMercadoPago(process.env.NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY!);
+    }, []);
 
     useEffect(() => {
         const savedCart = localStorage.getItem('cart');
@@ -67,6 +74,33 @@ const Cart = () => {
 
     const calculateTotal = () => {
         return cartItems.reduce((total, item) => total + calculateSubtotal(item), 0);
+    };
+
+    const createPreference = async () => {
+        try {
+            const response = await fetch('http://localhost:4000/api/create-preference', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ cartItems }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.details || 'Error creating preference');
+            }
+
+            const data = await response.json();
+            if (!data.preferenceId) {
+                throw new Error('No preference ID received');
+            }
+            
+            setPreferenceId(data.preferenceId);
+        } catch (error) {
+            console.error('Error creating preference:', error);
+            toast.error('Error al procesar el pago. Por favor, intente nuevamente.');
+        }
     };
 
     if (isLoading) {
@@ -193,11 +227,17 @@ const Cart = () => {
                             </div>
                         </div>
                     </div>
-                    <button
-                        className="cursor-pointer w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white py-3 rounded-full hover:scale-102 hover:shadow-md transition-all duration-200 font-semibold"
-                    >
-                        Proceder al pago
-                    </button>
+                    
+                    {preferenceId ? (
+                        <Wallet initialization={{ preferenceId }} />
+                    ) : (
+                        <button
+                            onClick={createPreference}
+                            className="cursor-pointer w-full bg-gradient-to-r from-orange-400 to-orange-500 text-white py-3 rounded-full hover:scale-102 hover:shadow-md transition-all duration-200 font-semibold"
+                        >
+                            Proceder al pago
+                        </button>
+                    )}
                     {cartItems.length > 0 && (
                         <div className="mt-4 text-center text-sm text-gray-600">
                             <div className="flex items-center justify-center gap-2">
