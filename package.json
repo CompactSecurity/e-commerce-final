@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mercadopago/sdk-react": "^1.0.3",
     "framer-motion": "^12.6.3",
     "lucide-react": "^0.487.0",
     "mercadopago": "^2.5.0",
