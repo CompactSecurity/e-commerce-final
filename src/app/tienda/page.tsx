@@ -8,10 +8,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 
-import { StaticImageData } from 'next/image';
-import casco from '../../assets/Categorias/facial.jpg';
-import guantes from '../../assets/Categorias/cabeza.jpg';
-import lentes from '../../assets/Categorias/manos.jpg';
 
 // Tipos de datos
 interface Product {
@@ -535,6 +531,11 @@ const ShopPage = () => {
                                                     {product.cotizable == 1 && (
                                                         <div className="bg-green-600 text-white text-xs px-2 py-0.5 rounded font-medium shadow">
                                                             Cotizable
+                                                        </div>
+                                                    )}
+                                                    {product.destacado == 1 && (
+                                                        <div className="bg-yellow-600 text-white text-xs px-2 py-0.5 rounded font-medium shadow">
+                                                            Destacado
                                                         </div>
                                                     )}
                                                 </div> 
