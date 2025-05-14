@@ -25,7 +25,7 @@ router.post('/create-preference', async (req, res) => {
         const items = cartItems.map(item => ({
             id: item.id_producto.toString(),
             title: item.nombre,
-            unit_price: Number(item.precio_oferta || item.precio),
+            unit_price: Number(item.precio),
             quantity: Number(item.cantidad),
             currency_id: "PEN",
             description: `Producto: ${item.nombre}`
