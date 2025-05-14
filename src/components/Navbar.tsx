@@ -204,16 +204,16 @@ const Navbar = () => {
                                                 <p className="text-gray-600 text-sm">{user.email}</p>
                                                 <p className="text-gray-500 text-xs mt-1 capitalize">{user.rol}</p>
                                             </div>
-                                            <div className="p-2">
-                                                <button
-                                                    onClick={handleLogout}
-                                                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
+                                            <div className="">
+                                                <Link
+                                                    href="/perfil"
+                                                    className="w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100 rounded-md transition-colors block"
                                                 >
-                                                    Cerrar Sesión
-                                                </button>
+                                                    Perfil
+                                                </Link>
                                             </div>
                                             {user && user.rol === 'admin' && (
-                                                <div className="p-2">
+                                                <div className="">
                                                     <Link
                                                         href="/admin"
                                                         className="w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100 rounded-md transition-colors block"
@@ -222,6 +222,14 @@ const Navbar = () => {
                                                     </Link>
                                                 </div>
                                             )}
+                                            <div className="">
+                                                <button
+                                                    onClick={handleLogout}
+                                                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"
+                                                >
+                                                    Cerrar Sesión
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 ) : (
