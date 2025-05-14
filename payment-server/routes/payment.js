@@ -42,7 +42,7 @@ router.post('/create-preference', async (req, res) => {
                 
                 auto_return: "approved",
                 notification_url: "http://localhost:3000/api/notifications",
-                statement_descriptor: "Tu Tienda Online",
+                statement_descriptor: "Compact Seguridad | Tienda",
                 external_reference: Date.now().toString()
             }
         };
