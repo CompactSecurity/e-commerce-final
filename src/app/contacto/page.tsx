@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { 
     FiMapPin, 
@@ -10,16 +10,25 @@ import {
     FiSend,
     FiFacebook,
     FiInstagram,
-    FiYoutube
+    FiYoutube,
+    FiCheck,
+    FiAlertCircle
 } from 'react-icons/fi';
 import { DM_Sans } from 'next/font/google';
 import Image from 'next/image';
 import imagee from '../../assets/carrousel1.png';
+import emailjs from '@emailjs/browser';
+import ConfirmationModal from '../../components/ui/ConfirmationModal';
 
 const DMSans = DM_Sans({
     weight: ['400', '500', '700'],
     subsets: ['latin'],
 });
+
+// EmailJS configuration
+const EMAILJS_SERVICE_ID = 'service_d9jcaja'; 
+const EMAILJS_TEMPLATE_ID = 'template_oicknzs'; 
+const EMAILJS_PUBLIC_KEY = 'ACXpNTunVszEfJY5e';
 
 const ContactPage = () => {
     const [formData, setFormData] = useState({
@@ -28,6 +37,18 @@ const ContactPage = () => {
         phone: '',
         subject: '',
         message: ''
+    });
+    
+    // Add states for form submission
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const formRef = useRef<HTMLFormElement>(null);
+    
+    // Add modal state
+    const [modalState, setModalState] = useState({
+        isOpen: false,
+        title: '',
+        message: '',
+        type: 'success' as const
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -38,18 +59,74 @@ const ContactPage = () => {
         }));
     };
 
+    // Update the handleSubmit function to match your template variables
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Aquí iría la lógica para enviar el formulario
-        console.log('Formulario enviado:', formData);
-        // Resetear el formulario
-        setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            subject: '',
-            message: ''
-        });
+        setIsSubmitting(true);
+        
+        try {
+            // Make sure required fields are not empty
+            if (!formData.email.trim() || !formData.name.trim() || !formData.message.trim()) {
+                throw new Error('Por favor, complete todos los campos requeridos');
+            }
+            
+            // Prepare template parameters to match your HTML template variables
+            const templateParams = {
+                nombre: formData.name,
+                email: formData.email,
+                telefono: formData.phone || 'No especificado',
+                mensaje: formData.message,
+                asunto: formData.subject || 'Contacto desde la web'
+            };
+            
+            // Send email using EmailJS
+            const result = await emailjs.send(
+                EMAILJS_SERVICE_ID,
+                EMAILJS_TEMPLATE_ID,
+                templateParams,
+                EMAILJS_PUBLIC_KEY
+            );
+            
+            console.log('Email sent successfully:', result.text);
+            
+            // Show success modal
+            setModalState({
+                isOpen: true,
+                title: '¡Mensaje Enviado!',
+                message: 'Gracias por contactarnos. Nos pondremos en contacto contigo lo antes posible.',
+                type: 'success'
+            });
+            
+            // Reset form
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                subject: '',
+                message: ''
+            });
+            
+        } catch (error) {
+            console.error('Error sending email:', error);
+            
+            // Show error modal
+            setModalState({
+                isOpen: true,
+                title: 'Error',
+                message: error instanceof Error ? error.message : 'Hubo un problema al enviar el mensaje. Por favor, inténtalo de nuevo.',
+                type: 'error'
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+    
+    // Function to close the modal
+    const closeModal = () => {
+        setModalState(prev => ({
+            ...prev,
+            isOpen: false
+        }));
     };
 
     const contactInfo = [
@@ -129,7 +206,7 @@ const ContactPage = () => {
                             <h2 className="text-2xl font-bold text-gray-900 mb-6">
                                 Envíanos un mensaje
                             </h2>
-                            <form onSubmit={handleSubmit} className="space-y-6">
+                            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div>
                                         <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -142,6 +219,7 @@ const ContactPage = () => {
                                             value={formData.name}
                                             onChange={handleChange}
                                             required
+                                            disabled={isSubmitting}
                                             className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                         />
                                     </div>
@@ -156,6 +234,7 @@ const ContactPage = () => {
                                             value={formData.email}
                                             onChange={handleChange}
                                             required
+                                            disabled={isSubmitting}
                                             className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                         />
                                     </div>
@@ -171,6 +250,7 @@ const ContactPage = () => {
                                             name="phone"
                                             value={formData.phone}
                                             onChange={handleChange}
+                                            disabled={isSubmitting}
                                             className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                         />
                                     </div>
@@ -184,6 +264,7 @@ const ContactPage = () => {
                                             value={formData.subject}
                                             onChange={handleChange}
                                             required
+                                            disabled={isSubmitting}
                                             className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                         >
                                             <option value="">Selecciona una opción</option>
@@ -204,6 +285,7 @@ const ContactPage = () => {
                                         value={formData.message}
                                         onChange={handleChange}
                                         required
+                                        disabled={isSubmitting}
                                         rows={4}
                                         className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                                     />
@@ -212,10 +294,23 @@ const ContactPage = () => {
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     type="submit"
-                                    className="w-full bg-orange-500 text-white py-3 px-6 rounded-lg font-medium hover:bg-orange-600 transition-colors duration-300 flex items-center justify-center gap-2"
+                                    disabled={isSubmitting}
+                                    className="cursor-pointer w-full bg-orange-500 text-white py-3 px-6 rounded-lg font-medium hover:bg-orange-600 transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                                 >
-                                    <FiSend className="w-5 h-5" />
-                                    Enviar mensaje
+                                    {isSubmitting ? (
+                                        <>
+                                            <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            Enviando...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <FiSend className="cursor-pointer w-5 h-5" />
+                                            Enviar mensaje
+                                        </>
+                                    )}
                                 </motion.button>
                             </form>
                         </motion.div>
@@ -302,8 +397,18 @@ const ContactPage = () => {
                     </div>
                 </div>
             </section>
+            
+            {/* Add ConfirmationModal component */}
+            <ConfirmationModal
+                isOpen={modalState.isOpen}
+                title={modalState.title}
+                message={modalState.message}
+                type={modalState.type}
+                onConfirm={closeModal}
+                onClose={closeModal}
+            />
         </main>
     );
 };
 
-export default ContactPage; 
+export default ContactPage;
