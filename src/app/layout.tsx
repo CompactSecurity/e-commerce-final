@@ -4,7 +4,10 @@ import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { CartProvider } from "@/context/CartContext";
 import { Toaster } from "react-hot-toast";
+import { initEmailJS } from '../utils/emailjs';
 
+// Initialize EmailJS
+initEmailJS();
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
