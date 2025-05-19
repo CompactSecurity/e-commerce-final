@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaPlus, FaMinus, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaMinus, FaTrash, FaBoxOpen } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react';
 
@@ -114,6 +114,7 @@ const Cart = () => {
     if (cartItems.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[400px] px-4">
+                <FaBoxOpen size={64} className="text-gray-300 mb-4" />
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Tu carrito está vacío</h2>
                 <p className="text-gray-600 mb-8">¡Agrega algunos productos para comenzar!</p>
                 <Link 
