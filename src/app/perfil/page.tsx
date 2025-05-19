@@ -193,7 +193,7 @@ const ProfilePage = () => {
                                             {user.nombre} {user.apellidos}
                                         </h1>
                                         <p className="text-gray-500 mt-1">
-                                            Miembro desde {formatDate(user.fecha_registro)}
+                                            Miembro desde {user.fecha_registro ? formatDate(user.fecha_registro) : '(No disponible)'}
                                         </p>
                                     </div>
                                     <button
@@ -255,7 +255,7 @@ const ProfilePage = () => {
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-500">Teléfono</p>
-                                        <p className="font-medium text-gray-800">{user.telefono || 'No registrado'}</p>
+                                        <p className="font-medium text-gray-800">{user.telefono || 'No disponible'}</p>
                                     </div>
                                 </div>
                             </div>
