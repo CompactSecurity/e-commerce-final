@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaSearch } from 'react-icons/fa';
 
 interface DeleteProductProps {
     onBack: () => void;
@@ -16,10 +16,24 @@ interface Product {
 
 const DeleteProduct = ({ onBack }: DeleteProductProps) => {
     const [products, setProducts] = useState<Product[]>([]);
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         fetchProducts();
     }, []);
+
+    useEffect(() => {
+        // Filter products based on search term
+        if (searchTerm.trim() === '') {
+            setProducts(allProducts);
+        } else {
+            const filtered = allProducts.filter(product => 
+                product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setProducts(filtered);
+        }
+    }, [searchTerm, allProducts]);
 
     const fetchProducts = async () => {
         try {
@@ -29,6 +43,7 @@ const DeleteProduct = ({ onBack }: DeleteProductProps) => {
             const data = await response.json();
             if (data.status === 'success') {
                 setProducts(data.data);
+                setAllProducts(data.data);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -57,7 +72,11 @@ const DeleteProduct = ({ onBack }: DeleteProductProps) => {
                 
                 if (data.status === 'success') {
                     alert('Producto eliminado exitosamente');
-                    setProducts(products.filter(product => product.id_producto !== id));
+                    const updatedProducts = allProducts.filter(product => product.id_producto !== id);
+                    setAllProducts(updatedProducts);
+                    setProducts(updatedProducts.filter(product => 
+                        product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+                    ));
                 } else {
                     console.error('Server error:', data.mensaje);
                     throw new Error(data.mensaje || 'Error al eliminar el producto');
@@ -79,6 +98,35 @@ const DeleteProduct = ({ onBack }: DeleteProductProps) => {
                 >
                     ✕
                 </button>
+            </div>
+
+            {/* Search bar */}
+            <div className="mb-6 relative">
+                <div className="relative">
+                    <input
+                        type="text"
+                        placeholder="Buscar productos por nombre..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    />
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <FaSearch className="text-gray-400" />
+                    </div>
+                    {searchTerm && (
+                        <button 
+                            onClick={() => setSearchTerm('')}
+                            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                        >
+                            ✕
+                        </button>
+                    )}
+                </div>
+                {searchTerm && (
+                    <p className="mt-2 text-sm text-gray-600">
+                        Mostrando {products.length} de {allProducts.length} productos
+                    </p>
+                )}
             </div>
 
             <div className="overflow-x-auto">
@@ -103,41 +151,49 @@ const DeleteProduct = ({ onBack }: DeleteProductProps) => {
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {products.map((product) => (
-                            <tr key={product.id_producto}>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <img
-                                        src={`http://localhost/e-commerce/uploads/productos/${product.imagen_principal}`}
-                                        alt={product.nombre}
-                                        className="h-10 w-10 object-cover rounded-md"
-                                    />
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-sm font-medium text-gray-900">
-                                        {product.nombre}
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-sm text-gray-900">
-                                        S/ {product.precio.toFixed(2)}
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-sm text-gray-900">
-                                        {product.stock}
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                    <button
-                                        onClick={() => handleDelete(product.id_producto)}
-                                        className="text-red-600 hover:text-red-900 flex items-center cursor-pointer"
-                                    >
-                                        <FaTrash className="mr-1 cursor-pointer" />
-                                        Eliminar
-                                    </button>
+                        {products.length > 0 ? (
+                            products.map((product) => (
+                                <tr key={product.id_producto}>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <img
+                                            src={`http://localhost/e-commerce/uploads/productos/${product.imagen_principal}`}
+                                            alt={product.nombre}
+                                            className="h-10 w-10 object-cover rounded-md"
+                                        />
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="text-sm font-medium text-gray-900">
+                                            {product.nombre}
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="text-sm text-gray-900">
+                                            S/ {product.precio.toFixed(2)}
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <div className="text-sm text-gray-900">
+                                            {product.stock}
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <button
+                                            onClick={() => handleDelete(product.id_producto)}
+                                            className="text-red-600 hover:text-red-900 flex items-center cursor-pointer"
+                                        >
+                                            <FaTrash className="mr-1 cursor-pointer" />
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={5} className="px-6 py-4 text-center text-sm text-gray-500">
+                                    {searchTerm ? 'No se encontraron productos con ese nombre' : 'No hay productos disponibles'}
                                 </td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
             </div>
