@@ -103,4 +103,78 @@ class User {
         
         return $stmt->execute();
     }
+    
+    public function getProfileData($userId) {
+        try {
+            $query = "SELECT id_usuario, nombre, apellidos, email, telefono, 
+                             rol, fecha_registro 
+                      FROM " . $this->table_name . " 
+                      WHERE id_usuario = ? AND estado = 1";
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([$userId]);
+            
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error in getProfileData: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    public function getOrders($userId) {
+        try {
+            $query = "SELECT p.id_pedido, p.fecha_pedido, p.total, p.estado_pedido 
+                      FROM pedidos p 
+                      WHERE p.id_usuario = ? 
+                      ORDER BY p.fecha_pedido DESC";
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([$userId]);
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error in getOrders: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    public function getAddresses($userId) {
+        try {
+            $query = "SELECT id_direccion, direccion, referencia, principal 
+                      FROM direcciones 
+                      WHERE id_usuario = ?";
+            
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([$userId]);
+            
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error in getAddresses: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    public function updateProfile($userId, $data) {
+        try {
+            $query = "UPDATE usuarios SET 
+                     nombre = :nombre,
+                     apellidos = :apellidos,
+                     email = :email,
+                     telefono = :telefono
+                     WHERE id_usuario = :id";
+            
+            $stmt = $this->conn->prepare($query);
+            
+            return $stmt->execute([
+                ':nombre' => $data['nombre'],
+                ':apellidos' => $data['apellidos'],
+                ':email' => $data['email'],
+                ':telefono' => $data['telefono'],
+                ':id' => $userId
+            ]);
+        } catch (PDOException $e) {
+            error_log("Error in updateProfile: " . $e->getMessage());
+            return false;
+        }
+    }
 }

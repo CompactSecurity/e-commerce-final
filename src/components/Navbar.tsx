@@ -213,7 +213,7 @@ const Navbar = () => {
                                                 </Link>
                                             </div>
                                             {user && user.rol === 'admin' && (
-                                                <div className="">
+                                                <div className="p-2">
                                                     <Link
                                                         href="/admin"
                                                         className="w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100 rounded-md transition-colors block"
@@ -222,7 +222,7 @@ const Navbar = () => {
                                                     </Link>
                                                 </div>
                                             )}
-                                            <div className="">
+                                            <div className="p-2">
                                                 <button
                                                     onClick={handleLogout}
                                                     className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 rounded-md transition-colors cursor-pointer"

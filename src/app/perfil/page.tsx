@@ -7,30 +7,150 @@ import Footer from '@/components/Footer';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
+interface User {
+  id_usuario: number;
+  nombre: string;
+  apellidos: string;
+  email: string;
+  telefono: string;
+  rol: string;
+  fecha_registro: string;
+}
+
+interface Order {
+  id_pedido: number;
+  fecha_pedido: string;
+  total: number;
+  estado_pedido: string;
+}
+
+interface Address {
+  id_direccion: number;
+  direccion: string;
+  referencia: string;
+  principal: boolean;
+}
+
 const ProfilePage = () => {
     const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
+    const [orders, setOrders] = useState<Order[]>([]);
+    const [addresses, setAddresses] = useState<Address[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const userData = localStorage.getItem('user');
-        if (userData) {
-            setUser(JSON.parse(userData));
-        }
-    }, []);
+        const fetchProfileData = async () => {
+            try {
+                // Check if we have a user in localStorage first
+                const storedUser = localStorage.getItem('user');
+                
+                const response = await fetch('http://localhost/e-commerce/api/profile/get', {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                console.log('Profile response status:', response.status);
+                
+                if (response.status === 401) {
+                    console.log('Unauthorized: Session may have expired');
+                    
+                    // If we have a stored user, try to use that data temporarily
+                    if (storedUser) {
+                        const userData = JSON.parse(storedUser);
+                        setUser(userData);
+                        setLoading(false);
+                        return;
+                    }
+                    
+                    // Otherwise redirect to login
+                    router.push('/');
+                    return;
+                }
+
+                const data = await response.json();
+                console.log('Profile data:', data);
+                
+                if (data.success) {
+                    setUser(data.data.profile);
+                    setOrders(data.data.orders || []);
+                    setAddresses(data.data.addresses || []);
+                    // Update localStorage with latest user data
+                    localStorage.setItem('user', JSON.stringify(data.data.profile));
+                } else {
+                    throw new Error(data.message || 'Error al cargar el perfil');
+                }
+            } catch (error) {
+                console.error('Error fetching profile:', error);
+                
+                // Try to use localStorage data as fallback
+                const storedUser = localStorage.getItem('user');
+                if (storedUser) {
+                    setUser(JSON.parse(storedUser));
+                } else {
+                    router.push('/');
+                }
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfileData();
+    }, [router]);
+
     const handleLogout = async () => {
         try {
             const response = await fetch('http://localhost/e-commerce/api/auth/logout', {
                 method: 'POST',
+                credentials: 'include'
             });
 
             if (response.ok) {
                 localStorage.removeItem('user');
                 setUser(null);
-                window.location.reload();
+                router.push('/');
             }
         } catch (error) {
             console.error('Error:', error);
         }
+    };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-orange-500"></div>
+            </div>
+        );
+    }
+
+    if (!user) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-center p-8 bg-white rounded-lg shadow-md">
+                    <FaUser className="text-orange-500 text-5xl mx-auto mb-4" />
+                    <h2 className="text-2xl font-bold mb-2">No has iniciado sesión</h2>
+                    <p className="text-gray-600 mb-4">Debes iniciar sesión para ver tu perfil</p>
+                    <button 
+                        onClick={() => router.push('/')}
+                        className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors"
+                    >
+                        Volver al inicio
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
     };
 
     return (
@@ -53,8 +173,12 @@ const ProfilePage = () => {
                             <div className="flex-1 text-center md:text-left">
                                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                                     <div>
-                                        <h1 className="text-3xl font-bold text-gray-800">Nombre del Usuario</h1>
-                                        <p className="text-gray-500 mt-1">Miembro desde Enero 2023</p>
+                                        <h1 className="text-3xl font-bold text-gray-800">
+                                            {user.nombre} {user.apellidos}
+                                        </h1>
+                                        <p className="text-gray-500 mt-1">
+                                            Miembro desde {formatDate(user.fecha_registro)}
+                                        </p>
                                     </div>
                                     <button
                                         onClick={handleLogout}
@@ -66,17 +190,18 @@ const ProfilePage = () => {
                                 </div>
                                 <div className="mt-3 flex flex-wrap justify-center md:justify-start gap-4">
                                     <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">
-                                        5 Pedidos
+                                        {orders.length} Pedido{orders.length !== 1 ? 's' : ''}
                                     </span>
-                                    <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
-                                        Cliente frecuente
-                                    </span>
+                                    {orders.length > 3 && (
+                                        <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                                            Cliente frecuente
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Rest of the profile sections remain the same */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Personal info */}
                         <div className="bg-white shadow-lg rounded-xl p-6 transition-all hover:shadow-xl">
@@ -96,7 +221,7 @@ const ProfilePage = () => {
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-500">Nombre completo</p>
-                                        <p className="font-medium text-gray-800">Juan Pérez</p>
+                                        <p className="font-medium text-gray-800">{user.nombre} {user.apellidos}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
@@ -105,7 +230,7 @@ const ProfilePage = () => {
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-500">Correo electrónico</p>
-                                        <p className="font-medium text-gray-800">juan.perez@example.com</p>
+                                        <p className="font-medium text-gray-800">{user.email}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
@@ -114,7 +239,7 @@ const ProfilePage = () => {
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-500">Teléfono</p>
-                                        <p className="font-medium text-gray-800">+51 987 654 321</p>
+                                        <p className="font-medium text-gray-800">{user.telefono || 'No registrado'}</p>
                                     </div>
                                 </div>
                             </div>
@@ -125,25 +250,41 @@ const ProfilePage = () => {
                             <div className="flex justify-between items-center mb-4 pb-2 border-b border-gray-100">
                                 <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
                                     <FaMapMarkerAlt className="text-orange-500" />
-                                    Dirección Principal
+                                    Dirección
                                 </h2>
                                 <button className="text-orange-500 hover:text-orange-600 p-1 rounded-full hover:bg-orange-50">
                                     <FaEdit className="w-5 h-5" />
                                 </button>
                             </div>
-                            <div className="flex items-start gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
-                                <div className="p-2 bg-orange-50 rounded-full mt-1">
-                                    <FaMapMarkerAlt className="text-orange-500" />
+                            {addresses.length > 0 ? (
+                                <div className="flex items-start gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                                    <div className="p-2 bg-orange-50 rounded-full mt-1">
+                                        <FaMapMarkerAlt className="text-orange-500" />
+                                    </div>
+                                    <div>
+                                        {addresses.map((address, index) => (
+                                            <div key={address.id_direccion} className={index > 0 ? "mt-4 pt-4 border-t border-gray-100" : ""}>
+                                                <p className="font-medium text-gray-800">
+                                                    {address.principal ? 'Dirección Principal' : `Dirección ${index + 1}`}
+                                                </p>
+                                                <p className="text-gray-600 mt-1">{address.direccion}</p>
+                                                {address.referencia && (
+                                                    <p className="text-gray-500 text-sm mt-1">
+                                                        Referencia: {address.referencia}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        ))}
+                                        <button className="mt-3 text-orange-500 text-sm font-medium hover:text-orange-600">
+                                            + Agregar otra dirección
+                                        </button>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p className="font-medium text-gray-800">Casa Principal</p>
-                                    <p className="text-gray-600 mt-1">Av. Javier Prado 1234, Lima 15021</p>
-                                    <p className="text-gray-500 text-sm mt-1">Referencia: Frente al parque</p>
-                                    <button className="mt-3 text-orange-500 text-sm font-medium hover:text-orange-600">
-                                        + Agregar otra dirección
-                                    </button>
+                            ) : (
+                                <div className="text-center py-4 text-gray-500">
+                                    No hay direcciones registradas
                                 </div>
-                            </div>
+                            )}
                         </div>
 
                         {/* Orders */}
@@ -157,32 +298,52 @@ const ProfilePage = () => {
                                     <FaBoxOpen className="w-5 h-5" />
                                 </button>
                             </div>
-                            <div className="border rounded-lg divide-y overflow-hidden">
-                                {[1, 2, 3].map(order => (
-                                    <div key={order} className="p-4 hover:bg-gray-50 transition-colors group">
-                                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                                            <div className="flex items-center gap-3">
-                                                <div className="hidden sm:block p-2 bg-orange-50 rounded-full group-hover:bg-orange-100 transition-colors">
-                                                    <FaBoxOpen className="text-orange-500 text-sm" />
-                                                </div>
-                                                <div>
-                                                    <p className="font-medium text-gray-800">Pedido #ORD-202300{order}</p>
-                                                    <p className="text-sm text-gray-500">Realizado el 15/0{order}/2023</p>
+                            {orders.length > 0 ? (
+                                <>
+                                    <div className="border rounded-lg divide-y overflow-hidden">
+                                        {orders.map(order => (
+                                            <div key={order.id_pedido} className="p-4 hover:bg-gray-50 transition-colors group">
+                                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="hidden sm:block p-2 bg-orange-50 rounded-full group-hover:bg-orange-100 transition-colors">
+                                                            <FaBoxOpen className="text-orange-500 text-sm" />
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-medium text-gray-800">Pedido #{order.id_pedido}</p>
+                                                            <p className="text-sm text-gray-500">
+                                                                Realizado el {formatDate(order.fecha_pedido)}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col sm:items-end">
+                                                        <p className="font-medium text-gray-800">S/ {order.total.toFixed(2)}</p>
+                                                        <p className={`text-sm font-medium ${
+                                                            order.estado_pedido === 'entregado' ? 'text-green-500' : 
+                                                            order.estado_pedido === 'enviado' ? 'text-blue-500' : 
+                                                            order.estado_pedido === 'procesando' ? 'text-yellow-500' : 
+                                                            order.estado_pedido === 'cancelado' ? 'text-red-500' : 
+                                                            'text-gray-500'
+                                                        }`}>
+                                                            {order.estado_pedido}
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="flex flex-col sm:items-end">
-                                                <p className="font-medium text-gray-800">S/ {150 + (order * 50)}.00</p>
-                                                <p className={`text-sm font-medium ${order === 1 ? 'text-green-500' : order === 2 ? 'text-yellow-500' : 'text-red-500'}`}>
-                                                    {order === 1 ? 'Entregado' : order === 2 ? 'En camino' : 'Cancelado'}
-                                                </p>
-                                            </div>
-                                        </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                            <button className="w-full mt-4 py-2 text-orange-500 font-medium rounded-lg hover:bg-orange-50 transition-colors">
-                                Ver todos los pedidos
-                            </button>
+                                </>
+                            ) : (
+                                <div className="text-center py-8">
+                                    <FaBoxOpen className="text-gray-300 text-5xl mx-auto mb-4" />
+                                    <p className="text-gray-500">No tienes pedidos realizados</p>
+                                    <button 
+                                        onClick={() => router.push('/tienda')}
+                                        className="cursor-pointer mt-4 bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors"
+                                    >
+                                        Ir a la tienda
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

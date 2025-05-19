@@ -149,6 +149,22 @@ if ($controller === 'productos') {
             break;
     }
 }
+if ($controller === 'profile') {
+    require_once __DIR__ . '/controllers/ProfileController.php';
+    $controller_instance = new ProfileController();
+    
+    switch ($action) {
+        case 'get':
+            $controller_instance->getProfile();
+            exit;
+        case 'update':
+            $controller_instance->updateProfile();
+            exit;
+        case 'address':
+            $controller_instance->updateAddress();
+            exit;
+    }
+}
 // cargar y ejecutar los controladores segun la peticion del cliente
 $controller_name = ucfirst($controller) . 'Controller';
 $controller_file = __DIR__ . '/controllers/' . $controller_name . '.php';
