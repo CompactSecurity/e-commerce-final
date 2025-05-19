@@ -122,11 +122,12 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose, onOpenLo
                         apellidos: formData.apellido,
                         email: formData.email,
                         password: formData.password,
-                        telefono: formData.telefono
+                        telefono: formData.telefono 
                     }),
                 });
 
                 const data = await response.json();
+                console.log('Register response:', data); // Add logging to debug
 
                 if (data.status === 'success') {
                     onClose();

@@ -64,6 +64,9 @@ class AuthController {
     public function register() {
         $data = json_decode(file_get_contents("php://input"));
         
+        // Debug incoming data
+        error_log('Register data: ' . print_r($data, true));
+        
         if(!empty($data->nombre) && !empty($data->apellidos) && 
            !empty($data->email) && !empty($data->password)) {
             
@@ -76,6 +79,7 @@ class AuthController {
             $this->user->apellidos = $data->apellidos;
             $this->user->email = $data->email;
             $this->user->password = password_hash($data->password, PASSWORD_DEFAULT);
+            $this->user->telefono = isset($data->telefono) ? $data->telefono : ''; // Handle telefono
             $this->user->rol = 'cliente';
             
             if($this->user->create()) {

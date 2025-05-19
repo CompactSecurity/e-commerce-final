@@ -27,6 +27,15 @@ class User {
     
         $stmt = $this->conn->prepare($query);
         
+        // Debug values being inserted
+        error_log('Creating user with data: ' . print_r([
+            "nombre" => $this->nombre,
+            "apellidos" => $this->apellidos,
+            "email" => $this->email,
+            "telefono" => $this->telefono,
+            "rol" => $this->rol
+        ], true));
+        
         return $stmt->execute([
             ":nombre" => $this->nombre,
             ":apellidos" => $this->apellidos,
