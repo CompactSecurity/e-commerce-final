@@ -154,7 +154,7 @@ const DownloadCatalog = () => {
                         {!showForm && (
                             <motion.button
                                 onClick={() => setShowForm(true)}
-                                className="bg-orange-500 text-white px-8 py-4 rounded-xl font-medium text-lg
+                                className="cursor-pointer bg-orange-500 text-white px-8 py-4 rounded-xl font-medium text-lg
                                          shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50
                                          flex items-center gap-3"
                                 whileHover={{ scale: 1.02 }}
@@ -189,7 +189,7 @@ const DownloadCatalog = () => {
                                                 resetForm();
                                                 setShowForm(false);
                                             }}
-                                            className="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-xl font-medium
+                                            className="cursor-pointer bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-xl font-medium
                                                     transition-colors flex items-center justify-center gap-2 mx-auto"
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
@@ -248,7 +248,7 @@ const DownloadCatalog = () => {
                                                 <button
                                                     type="button"
                                                     onClick={() => setShowForm(false)}
-                                                    className="px-6 py-3 border border-white/20 rounded-xl text-white hover:bg-white/10 transition-colors"
+                                                    className="cursor-pointer px-6 py-3 border border-white/20 rounded-xl text-white hover:bg-white/10 transition-colors"
                                                     disabled={isSubmitting}
                                                 >
                                                     Cancelar
