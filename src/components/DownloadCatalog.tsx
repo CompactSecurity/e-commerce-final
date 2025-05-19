@@ -303,11 +303,11 @@ const DownloadCatalog = () => {
                                     <div className="flex items-center gap-4 text-sm">
                                         <div className="flex items-center gap-2">
                                             <FiFile className="w-5 h-5" />
-                                            <span>PDF - 15MB</span>
+                                            <span>PDF</span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <FiMonitor className="w-5 h-5" />
-                                            <span>Optimizado</span>
+                                            <FiDownloadCloud className="w-5 h-5" />
+                                            <span>Descarga Gratuita</span>
                                         </div>
                                     </div>
                                 </div>
