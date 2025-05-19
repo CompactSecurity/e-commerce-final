@@ -389,7 +389,7 @@ const Navbar = () => {
                                 </div>
                             </div>
                             
-                            {/* Improved mobile user and cart section - UNCHANGED as requested */}
+                            {/* Botones de admin y cliente */}
                             <div className="mt-6 pt-6 border-t border-white/10">
                                 <div className="flex flex-col space-y-4">
                                     {user ? (
@@ -403,11 +403,11 @@ const Navbar = () => {
                                                     <p className="text-white/70 text-xs">{user.email}</p>
                                                 </div>
                                             </div>
-                                            <div className="grid grid-cols-2 gap-2 mt-2">
+                                            <div className="grid grid-cols-1 gap-2 mt-2">
                                                 <Link
                                                     href="/perfil"
                                                     onClick={() => setIsMobileMenuOpen(false)}
-                                                    className="bg-orange-500 text-white text-center py-2 px-3 rounded-md text-sm font-medium hover:bg-orange-600 transition-colors"
+                                                    className="bg-orange-500 text-white text-center py-2 px-3 rounded-md text-sm font-medium hover:bg-orange-600 transition-colors w-full"
                                                 >
                                                     Mi Perfil
                                                 </Link>
@@ -420,9 +420,10 @@ const Navbar = () => {
                                                         Admin
                                                     </Link>
                                                 )}
+                                                
                                                 <button
                                                     onClick={handleLogout}
-                                                    className="col-span-2 bg-red-500 text-white text-center py-2 px-3 rounded-md text-sm font-medium hover:bg-red-600 transition-colors mt-2"
+                                                    className="bg-red-500 text-white text-center py-2 px-3 rounded-md text-sm font-medium hover:bg-red-600 transition-colors"
                                                 >
                                                     Cerrar Sesión
                                                 </button>
