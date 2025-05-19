@@ -204,7 +204,7 @@ const Navbar = () => {
                                                 <p className="text-gray-600 text-sm">{user.email}</p>
                                                 <p className="text-gray-500 text-xs mt-1 capitalize">{user.rol}</p>
                                             </div>
-                                            <div className="">
+                                            <div className="p-2">
                                                 <Link
                                                     href="/perfil"
                                                     className="w-full text-left px-4 py-2 text-sm text-blue-600 hover:bg-gray-100 rounded-md transition-colors block"
@@ -232,14 +232,14 @@ const Navbar = () => {
                                             </div>
                                         </div>
                                     </div>
-                                ) : (
-                                    <button
-                                        onClick={() => setIsLoginModalOpen(true)}
-                                        className="text-white hover:text-orange-500 transition-colors"
-                                    >
-                                        <FaUser className="text-xl cursor-pointer" />
-                                    </button>
-                                )}
+                                    ) : (
+                                        <button
+                                            onClick={() => setIsLoginModalOpen(true)}
+                                            className="text-white hover:text-orange-500 transition-colors"
+                                        >
+                                            <FaUser className="text-xl cursor-pointer" />
+                                        </button>
+                                    )}
                                 
                                 {/* Add Cart Link */}
                                 <Link 
@@ -324,38 +324,75 @@ const Navbar = () => {
                                 <span className='cursor-pointer' >¡Top Ofertas!</span>
                                 <FaTag className="w-4 h-4 cursor-pointer" />
                             </button>
-                            <div className="flex items-center justify-center space-x-6 pt-4">
-                                {/* Carrito de compras dentro del menu de movil */}
-                                <Link 
-                                    href="/cart" 
-                                    className="relative text-white hover:text-orange-500 transition-colors"
-                                >
-                                    <FaShoppingCart className="w-5 h-5" />
-                                    {itemsCount > 0 && (
-                                        <span className="absolute -top-1 -right-2 bg-orange-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                                            {itemsCount}
-                                        </span>
-                                    )}
-                                </Link>
-                                
-                                {user ? (
-                                    <div className="text-white">
-                                        <div className="text-center mb-2">{`${user.nombre} ${user.apellidos}`}</div>
+                            
+                            {/* Improved mobile user and cart section */}
+                            <div className="mt-6 pt-6 border-t border-white/10">
+                                <div className="flex flex-col space-y-4">
+                                    {user ? (
+                                        <div className="bg-white/10 rounded-lg p-4">
+                                            <div className="flex items-center space-x-3 mb-3">
+                                                <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center">
+                                                    <FaUser className="text-white" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-white font-medium">{`${user.nombre} ${user.apellidos}`}</p>
+                                                    <p className="text-white/70 text-xs">{user.email}</p>
+                                                </div>
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-2 mt-2">
+                                                <Link
+                                                    href="/perfil"
+                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                    className="bg-orange-500 text-white text-center py-2 px-3 rounded-md text-sm font-medium hover:bg-orange-600 transition-colors"
+                                                >
+                                                    Mi Perfil
+                                                </Link>
+                                                {user.rol === 'admin' && (
+                                                    <Link
+                                                        href="/admin"
+                                                        onClick={() => setIsMobileMenuOpen(false)}
+                                                        className="bg-blue-500 text-white text-center py-2 px-3 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors"
+                                                    >
+                                                        Admin
+                                                    </Link>
+                                                )}
+                                                <button
+                                                    onClick={handleLogout}
+                                                    className="col-span-2 bg-red-500 text-white text-center py-2 px-3 rounded-md text-sm font-medium hover:bg-red-600 transition-colors mt-2"
+                                                >
+                                                    Cerrar Sesión
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
                                         <button
-                                            onClick={handleLogout}
-                                            className="text-red-500 hover:text-red-600 transition-colors"
+                                            onClick={() => {
+                                                setIsMobileMenuOpen(false);
+                                                setIsLoginModalOpen(true);
+                                            }}
+                                            className="flex items-center justify-center space-x-2 bg-orange-500 text-white py-3 px-4 rounded-lg hover:bg-orange-600 transition-colors w-full"
                                         >
-                                            Cerrar Sesión
+                                            <FaUser />
+                                            <span>Iniciar Sesión</span>
                                         </button>
-                                    </div>
-                                ) : (
-                                    <button
-                                        onClick={() => setIsLoginModalOpen(true)}
-                                        className='text-white hover:text-orange-500 transition-colors'
+                                    )}
+                                    
+                                    <Link 
+                                        href="/cart"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="flex items-center justify-center space-x-2 bg-white/10 text-white py-3 px-4 rounded-lg hover:bg-white/20 transition-colors"
                                     >
-                                        <FaUser className='w-5 h-5' />
-                                    </button>
-                                )}
+                                        <div className="relative">
+                                            <FaShoppingCart className="text-xl" />
+                                            {itemsCount > 0 && (
+                                                <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                                    {itemsCount}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <span>Mi Carrito</span>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
