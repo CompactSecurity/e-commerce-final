@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { FaUserPlus } from 'react-icons/fa';
+import ConfirmationModal from '../ui/ConfirmationModal';
 
 interface AddAdminProps {
     onBack: () => void;
@@ -23,6 +24,14 @@ const AddAdmin = ({ onBack }: AddAdminProps) => {
         rol: 'admin'
     });
 
+    // Add modal state
+    const [modalState, setModalState] = useState({
+        isOpen: false,
+        title: '',
+        message: '',
+        type: 'success' as const
+    });
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
@@ -40,7 +49,15 @@ const AddAdmin = ({ onBack }: AddAdminProps) => {
 
             const data = await response.json();
             if (data.status === 'success') {
-                alert('Administrador registrado exitosamente');
+                // Replace alert with modal
+                setModalState({
+                    isOpen: true,
+                    title: '¡Registro Exitoso!',
+                    message: 'Administrador registrado exitosamente',
+                    type: 'success'
+                });
+                
+                // Reset form data
                 setFormData({
                     nombre: '',
                     apellidos: '',
@@ -48,13 +65,18 @@ const AddAdmin = ({ onBack }: AddAdminProps) => {
                     password: '',
                     rol: 'admin'
                 });
-            } else {
-                alert(data.mensaje || 'Error al registrar administrador');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('Error al conectar con el servidor');
         }
+    };
+
+    // Function to close the modal
+    const closeModal = () => {
+        setModalState(prev => ({
+            ...prev,
+            isOpen: false
+        }));
     };
 
     return (
@@ -109,6 +131,16 @@ const AddAdmin = ({ onBack }: AddAdminProps) => {
                     Registrar Administrador
                 </button>
             </form>
+
+            {/* Add ConfirmationModal component */}
+            <ConfirmationModal
+                isOpen={modalState.isOpen}
+                title={modalState.title}
+                message={modalState.message}
+                type={modalState.type}
+                onConfirm={closeModal}
+                onClose={closeModal}
+            />
         </div>
     );
 };

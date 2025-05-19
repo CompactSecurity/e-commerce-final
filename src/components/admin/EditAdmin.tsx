@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { FaEdit, FaSave } from 'react-icons/fa';
+import ConfirmationModal from '../ui/ConfirmationModal';
 
 interface Admin {
     id_usuario: number;
@@ -16,6 +17,14 @@ interface EditAdminProps {
 const EditAdmin = ({ onBack }: EditAdminProps) => {
     const [admins, setAdmins] = useState<Admin[]>([]);
     const [editingAdmin, setEditingAdmin] = useState<Admin | null>(null);
+    
+    // Modal state
+    const [modalState, setModalState] = useState({
+        isOpen: false,
+        title: '',
+        message: '',
+        type: 'success' as const
+    });
 
     useEffect(() => {
         fetchAdmins();
@@ -52,14 +61,28 @@ const EditAdmin = ({ onBack }: EditAdminProps) => {
             if (data.status === 'success') {
                 setEditingAdmin(null);
                 fetchAdmins();
-                alert('Administrador actualizado exitosamente');
+                
+                // Show success modal
+                setModalState({
+                    isOpen: true,
+                    title: 'Operación Exitosa',
+                    message: 'Administrador actualizado exitosamente',
+                    type: 'success'
+                });
             } else {
-                alert(data.mensaje || 'Error al actualizar administrador');
+                console.error('Error:', data.mensaje);
             }
         } catch (error) {
-            console.error('Error:', error);
-            alert('Error al conectar con el servidor');
+                console.error('Error:', error);
         }
+    };
+
+    // Function to close the modal
+    const closeModal = () => {
+        setModalState(prev => ({
+            ...prev,
+            isOpen: false
+        }));
     };
 
     return (
@@ -123,6 +146,16 @@ const EditAdmin = ({ onBack }: EditAdminProps) => {
                     </div>
                 ))}
             </div>
+
+            {/* Confirmation Modal */}
+            <ConfirmationModal
+                isOpen={modalState.isOpen}
+                title={modalState.title}
+                message={modalState.message}
+                type={modalState.type}
+                onConfirm={closeModal}
+                onClose={closeModal}
+            />
         </div>
     );
 };

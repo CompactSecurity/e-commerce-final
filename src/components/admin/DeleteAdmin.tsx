@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa';
+import ConfirmationModal from '../ui/ConfirmationModal';
 
 interface Admin {
     id_usuario: number;
@@ -15,6 +16,22 @@ interface DeleteAdminProps {
 
 const DeleteAdmin = ({ onBack }: DeleteAdminProps) => {
     const [admins, setAdmins] = useState<Admin[]>([]);
+    const [selectedAdminId, setSelectedAdminId] = useState<number | null>(null);
+    
+    // Modal states
+    const [confirmModal, setConfirmModal] = useState({
+        isOpen: false,
+        title: '',
+        message: '',
+        type: 'warning' as const
+    });
+    
+    const [resultModal, setResultModal] = useState({
+        isOpen: false,
+        title: '',
+        message: '',
+        type: 'success' as const
+    });
 
     useEffect(() => {
         fetchAdmins();
@@ -34,30 +51,56 @@ const DeleteAdmin = ({ onBack }: DeleteAdminProps) => {
         }
     };
 
-    const handleDelete = async (id: number) => {
-        if (window.confirm('¿Está seguro de eliminar este administrador?')) {
-            try {
-                const response = await fetch(`http://localhost/e-commerce/api/auth/delete-admin/${id}`, {
-                    method: 'GET', 
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                });
+    const initiateDelete = (id: number) => {
+        const admin = admins.find(a => a.id_usuario === id);
+        if (!admin) return;
+        
+        setSelectedAdminId(id);
+        setConfirmModal({
+            isOpen: true,
+            title: 'Confirmar Eliminación',
+            message: `¿Está seguro de eliminar al administrador ${admin.nombre} ${admin.apellidos}?`,
+            type: 'warning'
+        });
+    };
 
-                const data = await response.json();
-                if (data.status === 'success') {
-                    alert('Administrador eliminado exitosamente');
-                    // Refrescar la lista de administradores después de eliminar
-                    fetchAdmins();
-                } else {
-                    alert(data.mensaje || 'Error al eliminar administrador');
+    const handleDelete = async () => {
+        if (!selectedAdminId) return;
+        
+        try {
+            const response = await fetch(`http://localhost/e-commerce/api/auth/delete-admin/${selectedAdminId}`, {
+                method: 'GET', 
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error al conectar con el servidor');
+            });
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                setResultModal({
+                    isOpen: true,
+                    title: 'Operación Exitosa',
+                    message: 'Administrador eliminado exitosamente',
+                    type: 'success'
+                });
+                // Refrescar la lista de administradores después de eliminar
+                fetchAdmins();
+            } else {
+               console.error('Error:', data.mensaje); 
             }
+        } catch (error) {
+            console.error('Error:', error);
         }
+    };
+
+    const closeConfirmModal = () => {
+        setConfirmModal(prev => ({...prev, isOpen: false}));
+        setSelectedAdminId(null);
+    };
+
+    const closeResultModal = () => {
+        setResultModal(prev => ({...prev, isOpen: false}));
     };
 
     return (
@@ -71,7 +114,7 @@ const DeleteAdmin = ({ onBack }: DeleteAdminProps) => {
                             <p className="text-gray-600 text-sm">{admin.email}</p>
                         </div>
                         <button
-                            onClick={() => handleDelete(admin.id_usuario)}
+                            onClick={() => initiateDelete(admin.id_usuario)}
                             className="p-2 text-red-600 hover:bg-red-100 rounded-full transition-colors cursor-pointer"
                         >
                             <FaTrash />
@@ -79,6 +122,29 @@ const DeleteAdmin = ({ onBack }: DeleteAdminProps) => {
                     </div>
                 ))}
             </div>
+
+            {/* Confirmation Modal */}
+            <ConfirmationModal
+                isOpen={confirmModal.isOpen}
+                title={confirmModal.title}
+                message={confirmModal.message}
+                type={confirmModal.type}
+                confirmText="Eliminar"
+                cancelText="Cancelar"
+                onConfirm={handleDelete}
+                onCancel={closeConfirmModal}
+                onClose={closeConfirmModal}
+            />
+
+            {/* Result Modal */}
+            <ConfirmationModal
+                isOpen={resultModal.isOpen}
+                title={resultModal.title}
+                message={resultModal.message}
+                type={resultModal.type}
+                onConfirm={closeResultModal}
+                onClose={closeResultModal}
+            />
         </div>
     );
 };
