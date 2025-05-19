@@ -292,40 +292,104 @@ const Navbar = () => {
                                 <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-orange-500">
                                     <FaSearch />
                                 </button>
+                                
+                            </div>
+                            {/* Ofertas móvil - Mejorado */}
+                            <div className="mt-4">
+                                <button
+                                    onClick={() => {
+                                        setIsOffersOpen(!isOffersOpen);
+                                        setIsMobileMenuOpen(false);
+                                    }}
+                                    className="flex items-center justify-between w-full bg-orange-500 text-white py-3.5 px-4 rounded-xl hover:bg-orange-600 transition-colors"
+                                >
+                                    <span className="font-medium">¡Top Ofertas!</span>
+                                    <FaTag className="w-4 h-4" />
+                                </button>
                             </div>
 
-                            {/* Enlaces principales */}
-                            <div className="space-y-2">
-                                <Link href="/" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
-                                    Inicio
-                                </Link>
-                                <Link href="/nosotros" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
-                                    Nosotros
-                                </Link>
-                                <Link href="/tienda" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
-                                    Tienda
-                                </Link>
-                                <Link href="/contacto" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
-                                    Contacto
-                                </Link>
-                                <Link href="/faq" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
-                                    FAQ
-                                </Link>
-                                <Link href="/blog" className="block text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
-                                    Blog
-                                </Link>
+                            {/* Enlaces principales - Mejorados para móvil */}
+                            <div className="space-y-2 mt-4">
+                                <h3 className="text-white text-sm font-medium uppercase tracking-wider mb-2 px-2">Navegación</h3>
+                                <div className="bg-white/10 rounded-xl overflow-hidden">
+                                    <Link 
+                                        href="/" 
+                                        className="flex items-center text-white hover:bg-white/20 py-3.5 px-4 border-b border-white/10 transition-colors"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        <span className="flex-1">Inicio</span>
+                                    </Link>
+                                    <Link 
+                                        href="/nosotros" 
+                                        className="flex items-center text-white hover:bg-white/20 py-3.5 px-4 border-b border-white/10 transition-colors"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        <span className="flex-1">Nosotros</span>
+                                    </Link>
+                                    <Link 
+                                        href="/tienda" 
+                                        className="flex items-center text-white hover:bg-white/20 py-3.5 px-4 border-b border-white/10 transition-colors"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        <span className="flex-1">Tienda</span>
+                                    </Link>
+                                    <Link 
+                                        href="/contacto" 
+                                        className="flex items-center text-white hover:bg-white/20 py-3.5 px-4 border-b border-white/10 transition-colors"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        <span className="flex-1">Contacto</span>
+                                    </Link>
+                                    <Link 
+                                        href="/faq" 
+                                        className="flex items-center text-white hover:bg-white/20 py-3.5 px-4 border-b border-white/10 transition-colors"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        <span className="flex-1">FAQ</span>
+                                    </Link>
+                                    <Link 
+                                        href="/blog" 
+                                        className="flex items-center text-white hover:bg-white/20 py-3.5 px-4 transition-colors"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                        <span className="flex-1">Blog</span>
+                                    </Link>
+                                    
+                                </div>
                             </div>
 
-                            {/* Ofertas móvil */}
-                            <button
-                                onClick={() => setIsOffersOpen(!isOffersOpen)}
-                                className="cursor-pointer w-full flex items-center justify-between text-white hover:text-orange-500 py-3 px-4 rounded-lg hover:bg-white/10 transition-colors"
-                            >
-                                <span className='cursor-pointer' >¡Top Ofertas!</span>
-                                <FaTag className="w-4 h-4 cursor-pointer" />
-                            </button>
                             
-                            {/* Improved mobile user and cart section */}
+                            
+                            {/* Contact info for mobile */}
+                            <div className="mt-6 bg-white/10 rounded-xl p-4">
+                                <h3 className="text-white text-sm font-medium uppercase tracking-wider mb-3">Contáctanos</h3>
+                                <div className="space-y-3">
+                                    <div className="flex items-center text-white">
+                                        <FaPhone className="text-orange-500 mr-3 flex-shrink-0" />
+                                        <span>976 687 566</span>
+                                    </div>
+                                    <div className="flex items-center text-white">
+                                        <FaEnvelope className="text-orange-500 mr-3 flex-shrink-0" />
+                                        <span className="break-all">compact.estudios@gmail.com</span>
+                                    </div>
+                                    <div className="flex items-center space-x-4 mt-2 pt-2 border-t border-white/10">
+                                        <span className="text-white text-sm">Síguenos:</span>
+                                        <div className="flex space-x-4">
+                                            <Link href="https://www.instagram.com/compactepp/" target="_blank" className="text-white hover:text-orange-500 transition-colors">
+                                                <FaInstagram />
+                                            </Link>
+                                            <Link href="https://www.facebook.com/compactseguridad" target="_blank" className="text-white hover:text-orange-500 transition-colors">
+                                                <FaFacebook />
+                                            </Link>
+                                            <Link href="https://www.youtube.com/@Compactepp" target="_blank" className="text-white hover:text-orange-500 transition-colors">
+                                                <FaYoutube />
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            {/* Improved mobile user and cart section - UNCHANGED as requested */}
                             <div className="mt-6 pt-6 border-t border-white/10">
                                 <div className="flex flex-col space-y-4">
                                     {user ? (
