@@ -6,6 +6,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import perfil from '@/assets/perfil/perfil.jpg'
+import Image from 'next/image';
 
 interface User {
   id_usuario: number;
@@ -162,13 +164,27 @@ const ProfilePage = () => {
                     {/* Profile header with logout button */}
                     <div className="bg-white shadow-lg rounded-xl p-6 mb-8">
                         <div className="flex flex-col md:flex-row items-center gap-6">
-                            <div className="relative group">
-                                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center shadow-inner">
-                                    <FaUser className="text-orange-400 text-5xl" />
+                            <div className="relative">
+                                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center shadow-inner overflow-hidden">
+                                    <Image 
+                                        src={perfil} 
+                                        alt="Perfil de usuario"
+                                        width={128}
+                                        height={128}
+                                        className="object-cover"
+                                        onError={(e) => {
+                                            // Fallback to icon if image fails to load
+                                            const target = e.target as HTMLImageElement;
+                                            target.style.display = 'none';
+                                            const parent = target.parentElement;
+                                            if (parent) {
+                                                const icon = document.createElement('div');
+                                                icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="#f97316" width="48" height="48"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>';
+                                                parent.appendChild(icon);
+                                            }
+                                        }}
+                                    />
                                 </div>
-                                <button className="absolute bottom-0 right-0 bg-orange-500 text-white p-3 rounded-full hover:bg-orange-600 transition-all transform group-hover:scale-110 shadow-md">
-                                    <FaEdit className="w-4 h-4" />
-                                </button>
                             </div>
                             <div className="flex-1 text-center md:text-left">
                                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
