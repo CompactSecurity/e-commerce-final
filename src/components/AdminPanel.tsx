@@ -109,122 +109,171 @@ const AdminPanel = () => {
                 return <ViewPedidos onBack={() => setCurrentView('main')} />;
             default:
                 return (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <button
-                            onClick={() => setCurrentView('add')}
-                            className="p-6 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <FaUserPlus className="text-4xl text-blue-600" />
-                            <span className="text-lg font-medium text-blue-800">Agregar Administrador</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('delete')}
-                            className="p-6 bg-red-100 rounded-lg hover:bg-red-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <FaUserMinus className="text-4xl text-red-600" />
-                            <span className="text-lg font-medium text-red-800">Eliminar Administrador</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('edit')}
-                            className="p-6 bg-green-100 rounded-lg hover:bg-green-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <FaUserEdit className="text-4xl text-green-600" />
-                            <span className="text-lg font-medium text-green-800">Editar Administrador</span>
-                        </button>
+                    <div className="space-y-10">
+                        {/* Sección de Administradores */}
+                        <div className="border-b pb-6">
+                            <h2 className="text-2xl font-bold mb-4 text-gray-800 border-l-4 border-blue-500 pl-3">
+                                Gestión de Administradores
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <button
+                                    onClick={() => setCurrentView('add')}
+                                    className="p-6 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <FaUserPlus className="text-4xl text-blue-600" />
+                                    <span className="text-lg font-medium text-blue-800">Agregar Administrador</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentView('delete')}
+                                    className="p-6 bg-red-100 rounded-lg hover:bg-red-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <FaUserMinus className="text-4xl text-red-600" />
+                                    <span className="text-lg font-medium text-red-800">Eliminar Administrador</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentView('edit')}
+                                    className="p-6 bg-green-100 rounded-lg hover:bg-green-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <FaUserEdit className="text-4xl text-green-600" />
+                                    <span className="text-lg font-medium text-green-800">Editar Administrador</span>
+                                </button>
+                            </div>
+                        </div>
 
-                        {/* Blog management buttons */}
-                        <button
-                            onClick={() => setCurrentView('add-blog')}
-                            className="p-6 bg-purple-100 rounded-lg hover:bg-purple-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <FaBlog className="text-4xl text-purple-600" />
-                            <span className="text-lg font-medium text-purple-800">Agregar Blog</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('delete-blog')}
-                            className="p-6 bg-orange-100 rounded-lg hover:bg-orange-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <FaBlog className="text-4xl text-orange-600" />
-                            <span className="text-lg font-medium text-orange-800">Eliminar Blog</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('edit-blog')}
-                            className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <FaBlog className="text-4xl text-teal-600" />
-                            <span className="text-lg font-medium text-teal-800">Editar Blog</span>
-                        </button>
+                        {/* Sección de Blogs */}
+                        <div className="border-b pb-6">
+                            <h2 className="text-2xl font-bold mb-4 text-gray-800 border-l-4 border-purple-500 pl-3">
+                                Gestión de Blogs
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <button
+                                    onClick={() => setCurrentView('add-blog')}
+                                    className="p-6 bg-purple-100 rounded-lg hover:bg-purple-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <FaBlog className="text-4xl text-purple-600" />
+                                    <span className="text-lg font-medium text-purple-800">Agregar Blog</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentView('delete-blog')}
+                                    className="p-6 bg-orange-100 rounded-lg hover:bg-orange-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <FaBlog className="text-4xl text-orange-600" />
+                                    <span className="text-lg font-medium text-orange-800">Eliminar Blog</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentView('edit-blog')}
+                                    className="p-6 bg-teal-100 rounded-lg hover:bg-teal-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <FaBlog className="text-4xl text-teal-600" />
+                                    <span className="text-lg font-medium text-teal-800">Editar Blog</span>
+                                </button>
+                            </div>
+                        </div>
 
-                        {/* Category management buttons */}
-                        <button
-                            onClick={() => setCurrentView('add-category')}
-                            className="p-6 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <FaFolderPlus className="text-4xl text-indigo-600" />
-                            <span className="text-lg font-medium text-indigo-800">Agregar Categoría</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('delete-category')}
-                            className="p-6 bg-pink-100 rounded-lg hover:bg-pink-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <FaFolderMinus className="text-4xl text-pink-600" />
-                            <span className="text-lg font-medium text-pink-800">Eliminar Categoría</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('edit-category')}
-                            className="p-6 bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <FaFolder className="text-4xl text-yellow-600" />
-                            <span className="text-lg font-medium text-yellow-800">Editar Categoría</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('add-marca')}
-                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <AiFillProduct className="text-4xl text-gray-600" />
-                            <span className="text-lg font-medium text-gray-800">Agregar Marca</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('delete-marca')}
-                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <AiFillDelete className="text-4xl text-gray-600" />
-                            <span className="text-lg font-medium text-gray-800">Eliminar Marca</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('edit-marca')}
-                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <AiOutlineEdit className="text-4xl text-gray-600" />
-                            <span className="text-lg font-medium text-gray-800">Editar Marca</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('add-product')}
-                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <AiOutlineProduct className="text-4xl text-gray-600" />
-                            <span className="text-lg font-medium text-gray-800">Agregar Producto</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('delete-product')}
-                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <AiOutlineDelete className="text-4xl text-gray-600" />
-                            <span className="text-lg font-medium text-gray-800">Eliminar Producto</span>
-                        </button>
-                        <button
-                            onClick={() => setCurrentView('edit-product')}
-                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
-                        >
-                            <AiOutlineEdit className="text-4xl text-gray-600" />
-                            <span className="text-lg font-medium text-gray-800">Editar Producto</span>
-                        </button>
-                        <button 
-                            onClick={() => setCurrentView('view-pedidos')}
-                            className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer">
-                            <FaUserEdit className="text-4xl text-gray-600" />
-                            <span className="text-lg font-medium text-gray-800">Ver pedidos</span>
-                        </button>
+                        {/* Sección de Categorías */}
+                        <div className="border-b pb-6">
+                            <h2 className="text-2xl font-bold mb-4 text-gray-800 border-l-4 border-indigo-500 pl-3">
+                                Gestión de Categorías
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <button
+                                    onClick={() => setCurrentView('add-category')}
+                                    className="p-6 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <FaFolderPlus className="text-4xl text-indigo-600" />
+                                    <span className="text-lg font-medium text-indigo-800">Agregar Categoría</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentView('delete-category')}
+                                    className="p-6 bg-pink-100 rounded-lg hover:bg-pink-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <FaFolderMinus className="text-4xl text-pink-600" />
+                                    <span className="text-lg font-medium text-pink-800">Eliminar Categoría</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentView('edit-category')}
+                                    className="p-6 bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <FaFolder className="text-4xl text-yellow-600" />
+                                    <span className="text-lg font-medium text-yellow-800">Editar Categoría</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Sección de Marcas */}
+                        <div className="border-b pb-6">
+                            <h2 className="text-2xl font-bold mb-4 text-gray-800 border-l-4 border-gray-500 pl-3">
+                                Gestión de Marcas
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <button
+                                    onClick={() => setCurrentView('add-marca')}
+                                    className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <AiFillProduct className="text-4xl text-gray-600" />
+                                    <span className="text-lg font-medium text-gray-800">Agregar Marca</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentView('delete-marca')}
+                                    className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <AiFillDelete className="text-4xl text-gray-600" />
+                                    <span className="text-lg font-medium text-gray-800">Eliminar Marca</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentView('edit-marca')}
+                                    className="p-6 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <AiOutlineEdit className="text-4xl text-gray-600" />
+                                    <span className="text-lg font-medium text-gray-800">Editar Marca</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Sección de Productos */}
+                        <div className="border-b pb-6">
+                            <h2 className="text-2xl font-bold mb-4 text-gray-800 border-l-4 border-green-500 pl-3">
+                                Gestión de Productos
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <button
+                                    onClick={() => setCurrentView('add-product')}
+                                    className="p-6 bg-green-100 rounded-lg hover:bg-green-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <AiOutlineProduct className="text-4xl text-green-600" />
+                                    <span className="text-lg font-medium text-green-800">Agregar Producto</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentView('delete-product')}
+                                    className="p-6 bg-red-100 rounded-lg hover:bg-red-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <AiOutlineDelete className="text-4xl text-red-600" />
+                                    <span className="text-lg font-medium text-red-800">Eliminar Producto</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentView('edit-product')}
+                                    className="p-6 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors flex flex-col items-center gap-4 cursor-pointer"
+                                >
+                                    <AiOutlineEdit className="text-4xl text-blue-600" />
+                                    <span className="text-lg font-medium text-blue-800">Editar Producto</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Sección de Pedidos */}
+                        <div>
+                            <h2 className="text-2xl font-bold mb-4 text-gray-800 border-l-4 border-orange-500 pl-3">
+                                Gestión de Pedidos
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <button 
+                                    onClick={() => setCurrentView('view-pedidos')}
+                                    className="p-6 bg-orange-100 rounded-lg hover:bg-orange-200 transition-colors flex flex-col items-center gap-4 cursor-pointer">
+                                    <FaUserEdit className="text-4xl text-orange-600" />
+                                    <span className="text-lg font-medium text-orange-800">Ver pedidos</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 );
         }
