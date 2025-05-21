@@ -28,7 +28,7 @@ class BlogController {
         $imagen_portada = '';
         if (isset($_FILES['imagen_portada'])) {
             $file = $_FILES['imagen_portada'];
-            $upload_dir = __DIR__ . '/../uploads/blog/';
+            $upload_dir = __DIR__ . '/../../uploads/blog/';
             
             if (!file_exists($upload_dir)) {
                 mkdir($upload_dir, 0777, true);
@@ -40,7 +40,7 @@ class BlogController {
 
             if (move_uploaded_file($file['tmp_name'], $target_path)) {
                 // Store the relative path in the database
-                $imagen_portada = '/api/uploads/blog/' . $filename;
+                $imagen_portada = '/uploads/blog/' . $filename;
             } else {
                 $this->response->sendError(500, "Error al subir la imagen");
                 return;
