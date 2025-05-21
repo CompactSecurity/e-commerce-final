@@ -121,7 +121,7 @@ const ContactPage = () => {
         }
     };
     
-    // Function to close the modal
+    // Funcion para cerrar el modal
     const closeModal = () => {
         setModalState(prev => ({
             ...prev,
