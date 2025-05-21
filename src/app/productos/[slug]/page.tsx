@@ -255,7 +255,7 @@ export default function ProductPage() {
                                                     </>
                                                 )}
                                             </div>
-                                            {product.precio_oferta > 0 && (
+                                            {product.precio_oferta > 0 && Number(product.cotizable) !== 1 && (
                                                 <p className="text-sm text-green-600 mt-2">
                                                     ¡Ahorras S/ {(product.precio_oferta - product.precio).toFixed(2)}!
                                                 </p>
