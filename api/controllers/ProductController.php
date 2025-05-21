@@ -163,7 +163,10 @@ class ProductController {
             if (empty($_POST) && !empty($_FILES)) {
                 parse_str(file_get_contents("php://input"), $_POST);
             }
-
+    
+            // Log the incoming data for debugging
+            error_log("Update data received: " . print_r($_POST, true));
+    
             // Validate required fields
             $required = ['nombre', 'precio', 'stock', 'id_categoria', 'id_marca'];
             foreach ($required as $field) {
@@ -172,7 +175,18 @@ class ProductController {
                     return;
                 }
             }
-
+    
+            // Process checkbox values correctly - use the exact string values from the form
+            $cotizable = (isset($_POST['cotizable']) && $_POST['cotizable'] === '1') ? 1 : 0;
+            $agregable_carrito = (isset($_POST['agregable_carrito']) && $_POST['agregable_carrito'] === '1') ? 1 : 0;
+            
+            // Ensure mutual exclusivity
+            if ($cotizable === 1) {
+                $agregable_carrito = 0;
+            }
+            
+            error_log("Checkbox values after processing - cotizable: $cotizable, agregable_carrito: $agregable_carrito");
+    
             $updateData = [
                 'nombre' => $_POST['nombre'],
                 'descripcion' => $_POST['descripcion'] ?? '',
@@ -181,11 +195,11 @@ class ProductController {
                 'stock' => intval($_POST['stock']),
                 'id_categoria' => intval($_POST['id_categoria']),
                 'id_marca' => intval($_POST['id_marca']),
-                'cotizable' => isset($_POST['cotizable']) ? 1 : 0,
-                'agregable_carrito' => isset($_POST['agregable_carrito']) ? 1 : 0,
-                'estado' => isset($_POST['estado']) ? 1 : 0
+                'cotizable' => $cotizable,
+                'agregable_carrito' => $agregable_carrito,
+                'estado' => isset($_POST['estado']) && $_POST['estado'] === '1' ? 1 : 0
             ];
-
+    
             // Handle file upload
             if (!empty($_FILES['imagen_principal']['name'])) {
                 $upload_dir = __DIR__ . '/../../public/uploads/productos/';
@@ -193,7 +207,7 @@ class ProductController {
                 if (!file_exists($upload_dir)) {
                     mkdir($upload_dir, 0777, true);
                 }
-
+    
                 $filename = uniqid() . '_' . basename($_FILES['imagen_principal']['name']);
                 $target_path = $upload_dir . $filename;
                 
@@ -201,7 +215,7 @@ class ProductController {
                     $updateData['imagen_principal'] = '/uploads/productos/' . $filename;
                 }
             }
-
+    
             if ($this->model->update($id, $updateData)) {
                 $this->response->sendSuccess(200, [
                     "status" => "success",
@@ -216,6 +230,7 @@ class ProductController {
             $this->response->sendError(500, "Error del servidor: " . $e->getMessage());
         }
     }
+    
 
     public function getAll() {
         $productos = $this->model->getAll();
