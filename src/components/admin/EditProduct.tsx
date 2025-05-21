@@ -33,6 +33,8 @@ interface Brand {
 
 const EditProduct = ({ onBack }: EditProductProps) => {
     const [products, setProducts] = useState<Product[]>([]);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+    const [searchTerm, setSearchTerm] = useState('');
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [categories, setCategories] = useState<Category[]>([]);
     const [brands, setBrands] = useState<Brand[]>([]);
@@ -45,6 +47,18 @@ const EditProduct = ({ onBack }: EditProductProps) => {
         fetchCategories();
         fetchBrands();
     }, []);
+
+    // Add this useEffect for filtering products
+    useEffect(() => {
+        if (searchTerm.trim() === '') {
+            setFilteredProducts(products);
+        } else {
+            const filtered = products.filter(product => 
+                product.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            setFilteredProducts(filtered);
+        }
+    }, [searchTerm, products]);
 
     const fetchProducts = async () => {
         try {
@@ -191,6 +205,11 @@ const EditProduct = ({ onBack }: EditProductProps) => {
         }
     };
 
+    // Add the search handler function
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+    };
+
     return (
         <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between mb-6">
@@ -204,66 +223,86 @@ const EditProduct = ({ onBack }: EditProductProps) => {
             </div>
 
             {!selectedProduct ? (
-                <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Imagen
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Nombre
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Precio
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Stock
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Acciones
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {products.map((product) => (
-                                <tr key={product.id_producto}>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <img
-                                            src={`http://localhost/e-commerce/uploads/productos/${product.imagen_principal}`}
-                                            alt={product.nombre}
-                                            className="h-10 w-10 object-cover rounded-md"
-                                        />
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="text-sm font-medium text-gray-900">
-                                            {product.nombre}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="text-sm text-gray-900">
-                                            S/ {product.precio.toFixed(2)}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="text-sm text-gray-900">
-                                            {product.stock}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <button
-                                            onClick={() => handleSelectProduct(product)}
-                                            className="text-orange-600 hover:text-orange-900 flex items-center cursor-pointer"
-                                        >
-                                            <FaEdit className="mr-1" />
-                                            Editar
-                                        </button>
-                                    </td>
+                <>
+                    {/* Add the search input */}
+                    <div className="mb-4">
+                        <div className="relative">
+                            <input
+                                type="text"
+                                placeholder="Buscar productos por nombre..."
+                                value={searchTerm}
+                                onChange={handleSearch}
+                                className="w-full p-2 pl-10 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                            />
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50">
+                                <tr>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Imagen
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Nombre
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Precio
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Stock
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Acciones
+                                    </th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                                {filteredProducts.map((product) => (
+                                    <tr key={product.id_producto}>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <img
+                                                src={`http://localhost/e-commerce/uploads/productos/${product.imagen_principal}`}
+                                                alt={product.nombre}
+                                                className="h-10 w-10 object-cover rounded-md"
+                                            />
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="text-sm font-medium text-gray-900">
+                                                {product.nombre}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="text-sm text-gray-900">
+                                                S/ {product.precio.toFixed(2)}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <div className="text-sm text-gray-900">
+                                                {product.stock}
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            <button
+                                                onClick={() => handleSelectProduct(product)}
+                                                className="text-orange-600 hover:text-orange-900 flex items-center cursor-pointer"
+                                            >
+                                                <FaEdit className="mr-1" />
+                                                Editar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
             ) : (
                 <form onSubmit={handleUpdate} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
