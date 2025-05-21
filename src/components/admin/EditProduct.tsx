@@ -101,10 +101,26 @@ const EditProduct = ({ onBack }: EditProductProps) => {
         
         if (type === 'checkbox') {
             const { checked } = e.target as HTMLInputElement;
-            setSelectedProduct(prev => ({
-                ...prev!,
-                [name]: checked ? 1 : 0
-            }));
+            
+            // Handle mutually exclusive checkboxes for cotizable and agregable_carrito
+            if (name === 'cotizable' && checked) {
+                setSelectedProduct(prev => ({
+                    ...prev!,
+                    cotizable: 1,
+                    agregable_carrito: 0
+                }));
+            } else if (name === 'agregable_carrito' && checked) {
+                setSelectedProduct(prev => ({
+                    ...prev!,
+                    cotizable: 0,
+                    agregable_carrito: 1
+                }));
+            } else {
+                setSelectedProduct(prev => ({
+                    ...prev!,
+                    [name]: checked ? 1 : 0
+                }));
+            }
         } else {
             setSelectedProduct(prev => ({
                 ...prev!,
@@ -303,36 +319,39 @@ const EditProduct = ({ onBack }: EditProductProps) => {
                             </select>
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Precio de Oferta
-                            </label>
-                            <input
-                                type="number"
-                                name="precio"
-                                value={selectedProduct.precio}
-                                onChange={handleInputChange}
-                                step="0.01"
-                                className="w-full p-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
-                                required
-                            />
-                        </div>
+                        {/* Conditionally render price fields only when product is not cotizable */}
+                        {selectedProduct.cotizable !== 1 && (
+                            <>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Precio de Oferta
+                                    </label>
+                                    <input
+                                        type="number"
+                                        name="precio"
+                                        value={selectedProduct.precio}
+                                        onChange={handleInputChange}
+                                        step="0.01"
+                                        className="w-full p-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                                        required
+                                    />
+                                </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Precio Normal
-                            </label>
-                            <input
-                                type="number"
-                                name="precio_oferta"
-                                value={selectedProduct.precio_oferta || ''}
-                                onChange={handleInputChange}
-                                step="0.01"
-                                className="w-full p-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
-                            />
-                        </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                        Precio Normal
+                                    </label>
+                                    <input
+                                        type="number"
+                                        name="precio_oferta"
+                                        value={selectedProduct.precio_oferta || ''}
+                                        onChange={handleInputChange}
+                                        step="0.01"
+                                        className="w-full p-2 border rounded-lg focus:ring-orange-500 focus:border-orange-500"
+                                    />
+                                </div>
 
-                        <div>
+                                <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Stock
                             </label>
@@ -345,6 +364,10 @@ const EditProduct = ({ onBack }: EditProductProps) => {
                                 required
                             />
                         </div>
+                            </>
+                        )}
+
+                        
                     </div>
 
                     <div>
