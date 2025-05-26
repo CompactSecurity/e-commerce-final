@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { FaUserPlus, FaUserMinus, FaUserEdit, FaArrowLeft, FaBlog, FaEdit, FaFolderMinus, FaFolderPlus, FaFolder } from 'react-icons/fa';
+import { FaUserPlus, FaUserMinus, FaUserEdit, FaArrowLeft, FaBlog, FaFolderMinus, FaFolderPlus, FaFolder } from 'react-icons/fa';
 import { AiOutlineProduct, AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { AiFillDelete, AiFillProduct } from "react-icons/ai";
 import AddAdmin from './admin/AddAdmin';

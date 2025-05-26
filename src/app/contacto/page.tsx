@@ -10,9 +10,7 @@ import {
     FiSend,
     FiFacebook,
     FiInstagram,
-    FiYoutube,
-    FiCheck,
-    FiAlertCircle
+    FiYoutube
 } from 'react-icons/fi';
 import { DM_Sans } from 'next/font/google';
 import Image from 'next/image';

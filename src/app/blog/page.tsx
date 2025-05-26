@@ -2,10 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { Search, Calendar, User, Plus, Trash, Edit } from 'lucide-react'
-import { StaticImageData } from 'next/image'
+import {  Calendar, User, Plus, Trash, Edit } from 'lucide-react'
 import imagee from '@/assets/carrousel1.png'
-import epp02 from '@/assets/carrousel2.png'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
@@ -21,7 +19,6 @@ interface BlogPost {
   is_featured: boolean
 }
 
-const categories = ['Todos', 'Seguridad Industrial', 'Normativas', 'EPP', 'Consejos Laborales']
 
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState('Todos')

@@ -3,10 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import logo from '../assets/logo.png';
-import logo2 from '../assets/logo2.jpg';
 import Image from 'next/image';
 // Add FaShoppingCart to your imports
-import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaStar, FaStarHalfAlt, FaTimes, FaShoppingCart } from 'react-icons/fa';
+import { FaPhone, FaUser, FaEnvelope, FaInstagram, FaFacebook, FaYoutube, FaSearch, FaBars, FaTag, FaTimes, FaShoppingCart } from 'react-icons/fa';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
 import ForgotPasswordModal from './ForgotPasswordModal';

@@ -13,7 +13,6 @@ import {
     FiFileText,
     FiDownloadCloud,
     FiFile,
-    FiMonitor,
     FiCheck,
     FiAlertCircle
 } from 'react-icons/fi';

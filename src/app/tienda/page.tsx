@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { FaSearch, FaStar, FaShoppingCart, FaFilter, FaTimes, FaWhatsapp } from 'react-icons/fa';
-import { IoGrid, IoList } from 'react-icons/io5';
+import { FaSearch, FaShoppingCart, FaFilter, FaWhatsapp } from 'react-icons/fa';
+import { IoGrid } from 'react-icons/io5';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';

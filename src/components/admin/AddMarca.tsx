@@ -1,6 +1,5 @@
 'use client'
 import React, { useState, useRef } from 'react';
-import { FaArrowLeft } from 'react-icons/fa';
 import Image from 'next/image';
 
 interface AddMarcasProps {
