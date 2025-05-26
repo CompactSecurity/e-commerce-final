@@ -158,7 +158,7 @@ const DeleteProduct = ({ onBack }: DeleteProductProps) => {
                     {filterType !== 'todos' && (
                         <span> ({filterType === 'cotizable' ? 'cotizables' : 'agregables al carrito'})</span>
                     )}
-                    {searchTerm && <span> que contienen "{searchTerm}"</span>}
+                    {searchTerm && <span> que contienen &quot;{searchTerm}&quot;</span>}
                 </div>
             </div>
 
