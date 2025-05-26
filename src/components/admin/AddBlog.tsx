@@ -70,6 +70,7 @@ const AddBlog = ({ onBack }: AddBlogProps) => {
     };
 
     // En la parte del render, actualizar el componente Image
+    {/*
     {previewUrl && (
         <div className="relative w-24 h-24">
             <Image
@@ -81,7 +82,8 @@ const AddBlog = ({ onBack }: AddBlogProps) => {
                 loader={({ src }) => src.startsWith('blob') ? src : `http://localhost${src}`}
             />
         </div>
-    )}
+    )}    
+    */}
     return (
         <div className="max-w-2xl mx-auto">
             <h2 className="text-2xl font-bold mb-6">Agregar Nuevo Blog</h2>
