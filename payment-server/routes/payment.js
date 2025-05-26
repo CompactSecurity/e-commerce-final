@@ -7,8 +7,6 @@ const path = require('path');
 // Configure dotenv again in this file
 dotenv.config({ path: path.join(__dirname, '..', '.env') });
 
-// Add console.log to debug
-console.log('Access Token:', process.env.MERCADO_PAGO_ACCESS_TOKEN ? 'Found' : 'Not Found');
 
 const client = new MercadoPagoConfig({ 
     accessToken: process.env.MERCADO_PAGO_ACCESS_TOKEN
