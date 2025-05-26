@@ -1,5 +1,5 @@
 > [!NOTE]
-> @utor: PetusoTwo
+> Autor: PetusoTwo
 
 >[!IMPORTANT]
 >Github: https://github.com/PetusoTwo
