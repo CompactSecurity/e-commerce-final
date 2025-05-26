@@ -182,3 +182,35 @@ if (file_exists($controller_file)) {
     http_response_code(404);
     echo json_encode(["message" => "Controller not found"]);
 }
+
+// Rutas para pedidos
+if ($controller === 'pedidos') {
+    require_once __DIR__ . '/controllers/PedidoController.php';
+    $controller_instance = new PedidoController();
+    
+    switch ($action) {
+        case 'create':
+            $controller_instance->create();
+            break;
+        case 'get-all':
+            $controller_instance->getAll();
+            break;
+        case 'get-by-id':
+            $controller_instance->getById($id);
+            break;
+        case 'get-by-user':
+            $controller_instance->getByUser();
+            break;
+        case 'update-status':
+            $controller_instance->updateStatus($id);
+            break;
+        case 'update-payment':
+            $controller_instance->updatePaymentInfo($id);
+            break;
+        default:
+            header('HTTP/1.1 404 Not Found');
+            echo json_encode(['status' => 'error', 'message' => 'Endpoint not found']);
+            break;
+    }
+    exit;
+}
