@@ -12,10 +12,22 @@ interface CartItem {
   imagen_principal: string;
 }
 
+// Define a proper type for the product parameter
+interface Product {
+  id_producto: number;
+  nombre: string;
+  precio: number | string;
+  precio_oferta: number | string | null;
+  stock: number;
+  imagen_principal: string;
+  cotizable: number | string;
+  agregable_carrito: number | string;
+}
+
 interface CartContextType {
   items: CartItem[];
   itemsCount: number;
-  addItem: (product: any, quantity?: number) => void;
+  addItem: (product: Product, quantity?: number) => void;
   removeItem: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
@@ -46,7 +58,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items]);
 
-  const addItem = useCallback((product: any, quantity: number = 1) => {
+  const addItem = useCallback((product: Product, quantity: number = 1) => {
     if (Number(product.cotizable) === 1) {
       toast.error('Este producto es solo para cotización');
       return;
