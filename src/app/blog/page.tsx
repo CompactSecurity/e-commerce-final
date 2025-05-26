@@ -21,7 +21,7 @@ interface BlogPost {
 
 
 export default function Blog() {
-  const [selectedCategory, setSelectedCategory] = useState('Todos')
+  // Removed the unused selectedCategory state
   const [searchQuery, setSearchQuery] = useState('')
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
@@ -58,10 +58,10 @@ export default function Blog() {
   }, []);
 
   const filteredPosts = blogPosts.filter(post => {
-    const matchesCategory = selectedCategory === 'Todos' || post.category === selectedCategory
+    // Removed the matchesCategory check since we're not filtering by category anymore
     const matchesSearch = post.titulo.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          post.excerpt.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
+    return matchesSearch
   })
 
 
