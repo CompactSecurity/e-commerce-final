@@ -64,7 +64,6 @@ export default function Blog() {
     return matchesCategory && matchesSearch
   })
 
-  const featuredPost = blogPosts.find(post => post.is_featured)
 
   // Admin Controls
   const handleDelete = async (id: number) => {
@@ -130,7 +129,18 @@ export default function Blog() {
 
         {/* Search and Categories */}
         <div className="mb-12">
-          {/* ... existing search and categories code ... */}
+          {/* Add search and category filters to use the state setters */}
+          <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <div className="flex-1">
+              <input
+                type="text"
+                placeholder="Buscar artículos..."
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
 
           {/* Blog Posts Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -169,13 +179,19 @@ export default function Blog() {
                           {isAdmin && (
                             <div className="mt-4 flex gap-2 justify-end">
                               <button
-                                onClick={() => window.location.href = `/admin/blog/edit/${post.id_blog}`}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  window.location.href = `/admin/blog/edit/${post.id_blog}`;
+                                }}
                                 className="p-2 text-green-600 hover:bg-green-50 rounded"
                               >
                                 <Edit size={20} />
                               </button>
                               <button
-                                onClick={() => handleDelete(post.id_blog)}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleDelete(post.id_blog);
+                                }}
                                 className="p-2 text-red-600 hover:bg-red-50 rounded"
                               >
                                 <Trash size={20} />
@@ -184,12 +200,7 @@ export default function Blog() {
                           )}
                         </div>
                       </Link>
-                      {/* Admin controls remain outside the link */}
-                      {isAdmin && (
-                          <div className="p-6 pt-0 flex gap-2 justify-end">
-                              {/* ... admin controls ... */}
-                          </div>
-                      )}
+                      {/* Remove duplicate admin controls */}
                 </article>
             ))}
           </div>
