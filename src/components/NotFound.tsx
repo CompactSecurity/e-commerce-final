@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { DM_Sans } from 'next/font/google';
 import Image from 'next/image';
@@ -10,14 +10,7 @@ const DMSans = DM_Sans({ weight: ['400', '500', '700'], subsets: ['latin'] });
 
 const NotFound = () => {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/tienda?search=${encodeURIComponent(searchQuery)}`);
-    }
-  };
+  // Removed unused searchQuery state and handleSearch function
 
   return (
     <main className={`min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 ${DMSans.className}`}>
