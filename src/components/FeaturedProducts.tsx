@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/navigation';
+
 import { FaWhatsapp, FaShoppingCart } from 'react-icons/fa';
 import { FiHeart, FiEye, FiShoppingCart as FiCart } from 'react-icons/fi';
 import { DM_Sans } from 'next/font/google';
@@ -62,12 +62,9 @@ const FeaturedProducts = () => {
   const ProductCard = ({ product }: { product: Product }) => {
     const { addItem } = useCart();
     const [isHovered, setIsHovered] = useState(false);
-    const router = useRouter();
+
     const [isWishlist, setIsWishlist] = useState(false);
 
-    const handleViewDetails = () => {
-      router.push(`/productos/${product.slug}`);
-    };
 
     const handleAddToCart = (e: React.MouseEvent) => {
       e.stopPropagation();
