@@ -12,7 +12,7 @@ interface CartItem {
   imagen_principal: string;
 }
 
-// Define a proper type for the product parameter
+// Define una interfz para representar un producto en el carrito
 interface Product {
   id_producto: number;
   nombre: string;
