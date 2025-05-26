@@ -131,7 +131,7 @@ const ViewPedidos = ({ onBack }: { onBack: () => void }) => {
 
             {filteredPedidos.length === 0 ? (
                 <div className="bg-white p-8 rounded-lg shadow-md text-center">
-                    <h3 className="text-xl font-medium text-gray-800 mb-2">No hay pedidos por hoy 👀</h3>
+                    <h3 className="text-xl font-medium text-gray-800 mb-2">No hay pedidos para hoy 👀</h3>
                     <p className="text-gray-600">No se encontraron pedidos con el estado seleccionado. Intentalo mas tarde.</p>
                 </div>
             ) : (
