@@ -14,7 +14,7 @@ interface EditAdminProps {
     onBack: () => void;
 }
 
-const EditAdmin = ({ onBack }: EditAdminProps) => {
+const EditAdmin = ({  }: EditAdminProps) => {
     const [admins, setAdmins] = useState<Admin[]>([]);
     const [editingAdmin, setEditingAdmin] = useState<Admin | null>(null);
     

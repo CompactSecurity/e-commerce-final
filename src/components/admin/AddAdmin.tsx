@@ -15,7 +15,7 @@ interface AdminFormData {
     rol: string;
 }
 
-const AddAdmin = ({ onBack }: AddAdminProps) => {
+const AddAdmin = ({  }: AddAdminProps) => {
     const [formData, setFormData] = useState<AdminFormData>({
         nombre: '',
         apellidos: '',

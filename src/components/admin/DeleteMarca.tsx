@@ -13,7 +13,7 @@ interface DeleteMarcasProps {
     onBack: () => void;
 }
 
-const DeleteMarcas = ({ onBack }: DeleteMarcasProps) => {
+const DeleteMarcas = ({  }: DeleteMarcasProps) => {
     const [marcas, setMarcas] = useState<Marca[]>([]);
 
     useEffect(() => {

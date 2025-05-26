@@ -14,7 +14,7 @@ interface Pedido {
     email?: string;
 }
 
-const ViewPedidos = ({ onBack }: { onBack: () => void }) => {
+const ViewPedidos = ({  }: { onBack: () => void }) => {
     const [pedidos, setPedidos] = useState<Pedido[]>([]);
     const [filteredPedidos, setFilteredPedidos] = useState<Pedido[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);

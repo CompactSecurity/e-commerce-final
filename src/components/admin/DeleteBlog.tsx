@@ -13,7 +13,7 @@ interface DeleteBlogProps {
     onBack: () => void;
 }
 
-const DeleteBlog = ({ onBack }: DeleteBlogProps) => {
+const DeleteBlog = ({  }: DeleteBlogProps) => {
     const [blogs, setBlogs] = useState<BlogPost[]>([]);
 
     useEffect(() => {

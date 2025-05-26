@@ -14,7 +14,7 @@ interface DeleteAdminProps {
     onBack: () => void;
 }
 
-const DeleteAdmin = ({ onBack }: DeleteAdminProps) => {
+const DeleteAdmin = ({  }: DeleteAdminProps) => {
     const [admins, setAdmins] = useState<Admin[]>([]);
     const [selectedAdminId, setSelectedAdminId] = useState<number | null>(null);
     

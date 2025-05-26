@@ -13,7 +13,7 @@ interface DeleteCategoryProps {
   onBack: () => void;
 }
 
-const DeleteCategory = ({ onBack }: DeleteCategoryProps) => {
+const DeleteCategory = ({  }: DeleteCategoryProps) => {
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {

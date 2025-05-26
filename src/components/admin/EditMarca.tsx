@@ -13,7 +13,7 @@ interface EditMarcasProps {
     onBack: () => void;
 }
 
-const EditMarcas = ({ onBack }: EditMarcasProps) => {
+const EditMarcas = ({  }: EditMarcasProps) => {
     const [marcas, setMarcas] = useState<Marca[]>([]);
     const [selectedMarca, setSelectedMarca] = useState<Marca | null>(null);
 

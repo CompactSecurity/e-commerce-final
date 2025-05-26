@@ -18,7 +18,7 @@ interface EditBlogProps {
     onBack: () => void;
 }
 
-const EditBlog = ({ onBack }: EditBlogProps) => {
+const EditBlog = ({  }: EditBlogProps) => {
     const [blogs, setBlogs] = useState<BlogPost[]>([]);
     const [selectedBlog, setSelectedBlog] = useState<BlogPost | null>(null);
 

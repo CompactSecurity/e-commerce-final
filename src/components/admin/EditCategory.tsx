@@ -15,7 +15,7 @@ interface EditCategoryProps {
   onBack: () => void;
 }
 
-const EditCategory = ({ onBack }: EditCategoryProps) => {
+const EditCategory = ({  }: EditCategoryProps) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
 
