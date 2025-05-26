@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaEye, FaEyeSlash  } from 'react-icons/fa';
 import logo from '../assets/logo.png';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 
@@ -83,7 +82,6 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose, onOpenRegister
         return isValid;
     };
 
-    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

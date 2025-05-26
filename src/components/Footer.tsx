@@ -45,7 +45,7 @@ const Footer = () => {
 
     const router = useRouter(); 
 
-    const handleCategoryClick = (categoryName: string) => {
+    const handleCategoryClick = () => {
         router.push('/tienda');
     };
 
@@ -140,7 +140,7 @@ const handlePetuCodeClick = (e: React.MouseEvent) => {
                             {articleLinks.map((link) => (
                                 <li key={link.id}>
                                     <button
-                                        onClick={() => handleCategoryClick(link.name)}
+                                        onClick={handleCategoryClick}
                                         className="cursor-pointer text-gray-400 hover:text-white transition-colors text-sm text-left w-full"
                                     >
                                         {link.name}
@@ -157,7 +157,7 @@ const handlePetuCodeClick = (e: React.MouseEvent) => {
                             {productLinks.map((link) => (
                                 <li key={link.id}>
                                     <button
-                                        onClick={() => handleCategoryClick(link.name)}
+                                        onClick={handleCategoryClick}
                                         className="cursor-pointer text-gray-400 hover:text-white transition-colors text-sm text-left w-full"
                                     >
                                         {link.name}
