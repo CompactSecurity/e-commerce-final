@@ -68,7 +68,12 @@ const FeaturedProducts = () => {
 
     const handleAddToCart = (e: React.MouseEvent) => {
       e.stopPropagation();
-      addItem(product, 1);
+      addItem({
+        ...product,
+        imagen_principal: typeof product.imagen_principal === 'string' 
+          ? product.imagen_principal 
+          : product.imagen_principal.src
+      }, 1);
     };
 
     const handleToggleWishlist = (e: React.MouseEvent) => {
@@ -321,7 +326,12 @@ const FeaturedProducts = () => {
                     ) : Number(selectedProduct.agregable_carrito) === 1 && selectedProduct.stock > 0 ? (
                       <button 
                         onClick={() => {
-                          addItem(selectedProduct, 1);
+                          addItem({
+                            ...selectedProduct,
+                            imagen_principal: typeof selectedProduct.imagen_principal === 'string' 
+                              ? selectedProduct.imagen_principal 
+                              : selectedProduct.imagen_principal.src
+                          }, 1);
                           closeModal();
                         }}
                         className="cursor-pointer w-full bg-orange-500 text-white py-3 px-4 rounded-md hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-1 transition-colors duration-200 ease-in-out flex items-center justify-center gap-2 text-sm font-medium"
