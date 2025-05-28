@@ -500,15 +500,28 @@ const ShopPage = () => {
 
                         {/* Grid de productos */}
                         <div className={viewMode === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-6'}>
-                            {sortedProducts.length > 0 ? (
+                            {loading ? (
+                                // Loading state - display skeleton loaders
+                                Array.from({ length: 6 }).map((_, index) => (
+                                    <div key={`skeleton-${index}`} className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden animate-pulse">
+                                        <div className="w-full h-60 bg-gray-200"></div>
+                                        <div className="p-4">
+                                            <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                                            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                                            <div className="mt-4 h-8 bg-gray-200 rounded"></div>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : sortedProducts.length > 0 ? (
                                 sortedProducts.map((product) => (
-                                    // Replace the motion.div wrapper with Link component
+                                    // Existing product rendering code
                                     <Link href={`/productos/${product.slug}`} passHref key={product.id_producto}>
                                         <motion.div
                                             initial={{ opacity: 0, y: 15 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             className={`bg-gray-50 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden cursor-pointer flex flex-col ${viewMode === 'list' ? 'sm:flex-row' : ''}`}
                                         >
+                                            {/* Rest of the product card code */}
                                             <div className={`relative ${viewMode === 'list' ? 'w-full sm:w-48 h-48' : 'w-full h-60'}`}>
                                                 <Image
                                                     src={product.imagen_principal || '/placeholder.jpg'}
