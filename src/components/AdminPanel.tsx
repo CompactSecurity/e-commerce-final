@@ -34,7 +34,7 @@ const AdminPanel = () => {
         apellidos: '',
         email: '',
         password: '',
-        rol: 'admin' // Setting default role
+        rol: 'admin' // configurado por defectop 
     });
 
     const handleSubmit = async (e: React.FormEvent) => {
