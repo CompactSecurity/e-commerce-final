@@ -93,9 +93,9 @@ export default function ProductPage() {
                 } else {
                     throw new Error(data.mensaje || 'Error al cargar el producto');
                 }
-            } catch (error: any) {
+            } catch (error: unknown) {
                 console.error('Error:', error);
-                setError(error.message || 'Error al cargar el producto');
+                setError(error instanceof Error ? error.message : 'Error al cargar el producto');
             } finally {
                 setLoading(false);
             }
