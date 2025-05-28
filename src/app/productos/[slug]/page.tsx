@@ -69,7 +69,7 @@ export default function ProductPage() {
                     try {
                         const errorData = await response.json();
                         errorMessage = errorData.mensaje || errorMessage;
-                    } catch (e) {
+                    } catch {
                         errorMessage = response.statusText || errorMessage;
                     }
                     throw new Error(errorMessage);
