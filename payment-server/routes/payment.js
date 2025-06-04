@@ -74,7 +74,7 @@ router.post('/create-preference', async (req, res) => {
 
         res.json({ 
             preferenceId: response.id,
-            message: 'Preference created successfully'
+            message: 'Preferencia creada exitosamente'
         });
     } catch (error) {
         console.error('Detailed error information:', {
