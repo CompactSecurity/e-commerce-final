@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-05-2025 a las 16:00:44
+-- Tiempo de generación: 04-06-2025 a las 15:32:09
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -248,9 +248,9 @@ INSERT INTO `productos` (`id_producto`, `id_categoria`, `nombre`, `slug`, `descr
 (90, 10, 'Malla Liviana', 'malla-liviana', 'Ligera, versátil y resistente.\r\nLa Malla Liviana es una solución práctica para delimitaciones temporales, señalización de áreas de trabajo o protección en obras de construcción. Fabricada en polietileno de alta densidad, ofrece buena resistencia al desgarro y a la intemperie, sin comprometer la facilidad de transporte e instalación.\r\nIdeal para usos en obras viales, eventos, cerramientos provisorios y más.\r\n\r\n', 0.00, 0.00, 0, '/uploads/productos/680960fcb7644_Malla-Liviana-300x300.jpg', 1, 0, '2025-04-23 16:51:56', 1, 0, 11),
 (91, 4, 'Orejeras V29', 'orejeras-v29', 'Diseñadas para ofrecer una protección auditiva confiable en entornos ruidosos. Las V29 cuentan con almohadillas suaves y confortables que aseguran un ajuste ergonómico durante largas jornadas de trabajo. Su diseño liviano y ajustable proporciona una excelente atenuación del ruido sin comprometer la comodidad. Ideales para uso en industrias, talleres, construcción y actividades al aire libre donde el control del ruido es esencial.', 95.00, 100.00, 20, '/uploads/productos/680964f0570e3_orejeras.jpg', 1, 1, '2025-04-23 17:08:48', 0, 1, 11),
 (94, 5, 'Respirador Reutilizable', 'respirador-reutilizable', 'Diseñado para brindar protección efectiva contra partículas, vapores y gases según el tipo de filtro utilizado. Este respirador reutilizable se ajusta cómodamente al rostro gracias a su diseño ergonómico y material flexible. Ideal para entornos industriales, trabajos con químicos, pintura, construcción o agricultura. Compatible con filtros intercambiables, es una opción económica y ecológica para el uso prolongado, sin sacrificar la seguridad respiratoria.', 75.00, 90.00, 50, '/uploads/productos/68096c157632b_respirador.jpg', 1, 1, '2025-04-23 17:39:17', 0, 1, 13),
-(95, 8, 'Mascara de Soldar', 'mascara-de-soldar', 'Protege tu rostro y visión con esta máscara para soldar de alta resistencia, diseñada para trabajos de soldadura eléctrica, MIG, TIG o por arco. Cuenta con visor abatible o filtro automático (según el modelo), que se oscurece al detectar el arco eléctrico, ofreciendo comodidad y protección instantánea. Su estructura liviana y ajustable permite largas jornadas de uso sin fatiga. Ideal para talleres, industrias metalúrgicas y trabajos de mantenimiento.', 0.00, 0.00, 0, '/uploads/productos/68096cee743d7_mascara de soldas.jpeg', 1, 0, '2025-04-23 17:42:54', 1, 0, 11),
-(117, 10, 'Camiseta de Alta Visibilidad PW3', 'asdasd', 'La Camiseta de Alta Visibilidad de Manga Larga PW3 combina seguridad, confort y estilo moderno.\r\nFabricada con tejidos transpirables y ligeros, ofrece máxima comodidad durante largas jornadas laborales.\r\nSu diseño de alta visibilidad, con cintas reflectantes segmentadas, proporciona una excelente protección en entornos de baja iluminación o alto riesgo.\r\nIdeal para trabajadores de la construcción, logística, mantenimiento vial y sectores industriales que requieren ropa certificada de seguridad.', 120.00, 160.00, 20, '/uploads/productos/682de42890dcf_Camiseta-de-Alta-Visibilidad-de-Manga-Larga-PW3.jpg', 0, 0, '2025-05-21 09:29:43', 0, 1, 14),
-(118, 10, 'Camiseta de Alta Visibilidad PW3', 'camiseta-de-alta-visibilidad-pw3', 'La Camiseta de Alta Visibilidad de Manga Larga PW3 combina seguridad, confort y estilo moderno.\r\nFabricada con tejidos transpirables y ligeros, ofrece máxima comodidad durante largas jornadas laborales.\r\nSu diseño de alta visibilidad, con cintas reflectantes segmentadas, proporciona una excelente protección en entornos de baja iluminación o alto riesgo.\r\nIdeal para trabajadores de la construcción, logística, mantenimiento vial y sectores industriales que requieren ropa certificada de seguridad.', 200.00, 300.00, 80, '/uploads/productos/682de6f160c25_Camiseta-de-Alta-Visibilidad-de-Manga-Larga-PW3.jpg', 1, 0, '2025-05-21 09:45:05', 0, 1, 14);
+(95, 8, 'Mascara de Soldar', 'mascara-de-soldar', 'Protege tu rostro y visión con esta máscara para soldar de alta resistencia, diseñada para trabajos de soldadura eléctrica, MIG, TIG o por arco. Cuenta con visor abatible o filtro automático (según el modelo), que se oscurece al detectar el arco eléctrico, ofreciendo comodidad y protección instantánea. Su estructura liviana y ajustable permite largas jornadas de uso sin fatiga. Ideal para talleres, industrias metalúrgicas y trabajos de mantenimiento.', 120.00, 200.00, 90, '/uploads/productos/68096cee743d7_mascara de soldas.jpeg', 1, 0, '2025-04-23 17:42:54', 0, 1, 11),
+(118, 10, 'Camiseta de Alta Visibilidad PW3', 'camiseta-de-alta-visibilidad-pw3', 'La Camiseta de Alta Visibilidad de Manga Larga PW3 combina seguridad, confort y estilo moderno.\r\nFabricada con tejidos transpirables y ligeros, ofrece máxima comodidad durante largas jornadas laborales.\r\nSu diseño de alta visibilidad, con cintas reflectantes segmentadas, proporciona una excelente protección en entornos de baja iluminación o alto riesgo.\r\nIdeal para trabajadores de la construcción, logística, mantenimiento vial y sectores industriales que requieren ropa certificada de seguridad.', 200.00, 300.00, 80, '/uploads/productos/682de6f160c25_Camiseta-de-Alta-Visibilidad-de-Manga-Larga-PW3.jpg', 1, 0, '2025-05-21 09:45:05', 0, 1, 14),
+(122, 7, 'Pruebo', 'pruebo', 'Esto es una prueba', 2.00, 1.00, 10, '/uploads/productos/6839eb13aecba_ZAPATO DIELECTRICO ECONO.png', 1, 0, '2025-05-30 12:29:55', 0, 1, 14);
 
 -- --------------------------------------------------------
 
@@ -277,7 +277,9 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellidos`, `email`, `password`, `telefono`, `direccion`, `rol`, `fecha_registro`, `estado`) VALUES
 (8, 'Admin Jose', 'Edgardo', 'administradorCompact@gmail.com', '$2y$10$NfK9WsBtaklNipYdxeRQU.haTBtx76C4PtadxTCW2S9PIylt20Ofy', NULL, NULL, 'admin', '2025-04-14 12:19:17', 1),
-(60, 'Test', 'torres', 'testtorres@gmail.com', '$2y$10$523ZJv9YNPRImfqfmWFQYOde0gk5hPEv4Hn1YI7BnwXJcNMPRRN3O', '976243901', NULL, 'cliente', '2025-05-26 08:56:30', 1);
+(60, 'Test', 'torres', 'testtorres@gmail.com', '$2y$10$523ZJv9YNPRImfqfmWFQYOde0gk5hPEv4Hn1YI7BnwXJcNMPRRN3O', '976243901', NULL, 'cliente', '2025-05-26 08:56:30', 1),
+(62, 'Mercado', 'pp', 'pedrocespedes21@gmail.com', '$2y$10$bw9VNurR0ylRztkUm5sKTu5/iLemz5Uwp8NFTEt2bjkh8GjYnEB3.', '976217463', NULL, 'cliente', '2025-05-26 16:20:39', 1),
+(64, 'Jose', 'Castillo', 'compact.estudios@gmail.com', '$2y$10$0RyxXEwJHTPnIFhS33RzFuhpsVrQpg4b2EHD9rqajd9n6yZh1.XRK', '976687566', NULL, 'cliente', '2025-05-30 12:27:12', 1);
 
 --
 -- Índices para tablas volcadas
@@ -379,7 +381,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `blog`
 --
 ALTER TABLE `blog`
-  MODIFY `id_blog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id_blog` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT de la tabla `carritos`
@@ -439,13 +441,13 @@ ALTER TABLE `pedido_items`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- Restricciones para tablas volcadas
