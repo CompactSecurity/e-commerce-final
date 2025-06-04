@@ -68,7 +68,9 @@ const Cart = () => {
     };
 
     const calculateSubtotal = (item: CartItem) => {
-        const price = item.precio || item.precio_oferta;
+        {/* cambiar pot:  // Fix: Explicitly check if precio_oferta is not null, otherwise use precio
+        const price = item.precio_oferta !== null ? item.precio_oferta : item.precio;*/}
+        const price = item.precio !== null ? item.precio : item.precio_oferta; 
         return price * item.cantidad;
     };
 
