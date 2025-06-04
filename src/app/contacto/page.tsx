@@ -85,8 +85,8 @@ const ContactPage = () => {
                 EMAILJS_PUBLIC_KEY
             );
             
-            
-            // Show success modal
+
+            // Mostrar modal de éxito cuando el correo se envía correctamente 
             setModalState({
                 isOpen: true,
                 title: '¡Mensaje Enviado!',
