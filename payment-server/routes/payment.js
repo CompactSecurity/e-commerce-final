@@ -33,9 +33,9 @@ router.post('/create-preference', async (req, res) => {
             body: {
                 items,
                 back_urls: {
-                    success: "https://www.google.com",
-                    failure: "https://www.google.com",
-                    pending: "https://www.google.com"
+                    success: "https://www.google.com", //aca debe ir la url de la pagina de confirmacion de pago
+                    failure: "https://www.google.com", //aca debe ir la url de la pagina de error de pago
+                    pending: "https://www.google.com" //aca debe ir la url de la pagina de pago pendiente
                 },
                 
                 auto_return: "approved",
