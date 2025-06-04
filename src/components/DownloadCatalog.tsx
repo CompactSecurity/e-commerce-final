@@ -51,12 +51,12 @@ const DownloadCatalog = () => {
         setSubmitError('');
     
         try {
-            // Make sure email is not empty
+            // Asegurarse de que el correo electrónico no esté vacío
             if (!formData.email.trim()) {
                 throw new Error('El correo electrónico es obligatorio');
             }
     
-            // Prepare template parameters - ensure all required fields are included
+            // Preparar las variables para el correo electrónico
             const templateParams = {
                 to_name: formData.name,
                 to_email: formData.email,
@@ -69,17 +69,19 @@ const DownloadCatalog = () => {
                 catalog_url: CATALOG_PDF_URL
             };
     
-            // Send email using EmailJS
+            // Enviar el correo electrónico usando EmailJS
             const result = await emailjs.send(
                 EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
                 templateParams,
                 EMAILJS_PUBLIC_KEY
             );
+
+            console.log('Email enviado correctamente:', result.text);
     
             setSubmitSuccess(true);
             
-            // Trigger download after successful email
+            // Descargar el catálogo automáticamente
             setTimeout(() => {
                 window.open(CATALOG_PDF_URL, '_blank');
             }, 1000);
