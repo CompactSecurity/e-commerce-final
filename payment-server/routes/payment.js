@@ -45,7 +45,7 @@ router.post('/create-preference', async (req, res) => {
             }
         };
 
-        console.log('Attempting to create preference with data:', JSON.stringify(preferenceData, null, 2));
+
 
         const preference = new Preference(client);
         let response;
@@ -70,7 +70,7 @@ router.post('/create-preference', async (req, res) => {
             throw new Error('No preference ID received from Mercado Pago');
         }
 
-        console.log('Preference created successfully with ID:', response.id);
+
 
         res.json({ 
             preferenceId: response.id,

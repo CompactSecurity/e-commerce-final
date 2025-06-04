@@ -85,7 +85,6 @@ const ContactPage = () => {
                 EMAILJS_PUBLIC_KEY
             );
             
-            console.log('Email sent successfully:', result.text);
             
             // Show success modal
             setModalState({

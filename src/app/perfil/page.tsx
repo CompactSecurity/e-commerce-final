@@ -55,7 +55,7 @@ const ProfilePage = () => {
                     }
                 });
 
-                console.log('Profile response status:', response.status);
+
                 
                 if (response.status === 401) {
                     console.log('Unauthorized: Session may have expired');
@@ -74,7 +74,7 @@ const ProfilePage = () => {
                 }
 
                 const data = await response.json();
-                console.log('Profile data:', data);
+
                 
                 if (data.success) {
                     setUser(data.data.profile);

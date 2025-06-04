@@ -77,7 +77,6 @@ const DownloadCatalog = () => {
                 EMAILJS_PUBLIC_KEY
             );
     
-            console.log('Email sent successfully:', result.text);
             setSubmitSuccess(true);
             
             // Trigger download after successful email
