@@ -112,7 +112,7 @@ const ContactPage = () => {
                 isOpen: true,
                 title: 'Error',
                 message: error instanceof Error ? error.message : 'Hubo un problema al enviar el mensaje. Por favor, inténtalo de nuevo.',
-                type: 'error'
+                type: 'success' as const
             });
         } finally {
             setIsSubmitting(false);
