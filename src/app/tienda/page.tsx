@@ -6,7 +6,6 @@ import { FaSearch, FaShoppingCart, FaFilter, FaWhatsapp } from 'react-icons/fa';
 import { IoGrid } from 'react-icons/io5';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCart } from '@/context/CartContext';
 
 
 // Tipos de datos
@@ -23,6 +22,8 @@ interface Product {
     cotizable: number;
     agregable_carrito: number;
     estado: number;
+    slug: string;
+    destacado: number;
 }
 
 interface Category {
@@ -32,6 +33,7 @@ interface Category {
 
 interface Brand {
     id_marca: number;
+    id?: number;  // Hacemos id opcional ya que puede venir como id_marca o id
     nombre: string;
 }
 
@@ -45,8 +47,6 @@ interface FilterOptions {
 }
 
 const ShopPage = () => {
-    const { addItem } = useCart();
-    
     // State declarations
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [products, setProducts] = useState<Product[]>([]);
@@ -91,7 +91,7 @@ const ShopPage = () => {
 
                 // Updated data handling
                 setProducts(Array.isArray(productsData.data?.data) ? 
-                    productsData.data.data.map(product => ({
+                    productsData.data.data.map((product: Product) => ({
                         ...product,
                         precio: Number(product.precio),
                         precio_oferta: Number(product.precio_oferta || 0)
@@ -99,7 +99,7 @@ const ShopPage = () => {
                 []);
                 setTotalPages(productsData.data?.totalPages || 1);
                 setCategories(Array.isArray(categoriesData.data) ? categoriesData.data : []);
-                setBrands(Array.isArray(brandsData.data) ? brandsData.data.filter(brand => brand.id_marca || brand.id) : []);
+                setBrands(Array.isArray(brandsData.data) ? brandsData.data.filter((brand: Brand) => brand.id_marca || brand.id) : []);
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setProducts([]);
@@ -114,7 +114,7 @@ const ShopPage = () => {
     }, [currentPage]); // Agregar currentPage como dependencia
 
     // Agregar esta función para manejar el cambio de filtros
-    const handleFilterChange = (filterType: keyof typeof filters, value: any) => {
+    const handleFilterChange = (filterType: keyof typeof filters, value: string[] | [number, number] | string) => {
         setFilters(prev => ({
             ...prev,
             [filterType]: value

@@ -67,15 +67,13 @@ const Cart = () => {
         toast.success('Producto eliminado del carrito');
     };
 
-    const calculateSubtotal = (item: CartItem) => {
-        {/* cambiar pot:  // Fix: Explicitly check if precio_oferta is not null, otherwise use precio
-        const price = item.precio_oferta !== null ? item.precio_oferta : item.precio;*/}
-        const price = item.precio !== null ? item.precio : item.precio_oferta; 
+    const calculateItemTotal = (item: CartItem) => {
+        const price = item.precio_oferta !== null && item.precio_oferta > 0 ? item.precio_oferta : item.precio;
         return price * item.cantidad;
     };
 
     const calculateTotal = () => {
-        return cartItems.reduce((total, item) => total + calculateSubtotal(item), 0);
+        return cartItems.reduce((total, item) => total + calculateItemTotal(item), 0);
     };
 
     const createPreference = async () => {
@@ -208,7 +206,7 @@ const Cart = () => {
                                 </button>
                             </div>
                             <p className="text-sm text-gray-600 mt-2">
-                                Subtotal: <span className="font-semibold">S/ {calculateSubtotal(item).toFixed(2)}</span>
+                                Subtotal: <span className="font-semibold">S/ {calculateItemTotal(item).toFixed(2)}</span>
                             </p>
                         </div>
                     </div>

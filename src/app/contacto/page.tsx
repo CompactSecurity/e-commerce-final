@@ -78,7 +78,7 @@ const ContactPage = () => {
             };
             
             // Send email using EmailJS
-            const result = await emailjs.send(
+            await emailjs.send(
                 EMAILJS_SERVICE_ID,
                 EMAILJS_TEMPLATE_ID,
                 templateParams,

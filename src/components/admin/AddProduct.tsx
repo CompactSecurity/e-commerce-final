@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useRef, useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface AddProductProps {
     onBack: () => void;
@@ -349,13 +350,13 @@ const AddProduct = ({ onBack }: AddProductProps) => {
                             accept="image/*"
                         />
                         {previewUrl && (
-                            <div className="relative w-24 h-24">
-                                <img
-                                    src={previewUrl}
-                                    alt="Preview"
-                                    className="w-full h-full object-cover rounded-lg"
-                                />
-                            </div>
+                            <Image 
+                                src={previewUrl} 
+                                alt="Preview" 
+                                width={200} 
+                                height={200}
+                                className="mt-2 rounded-lg object-cover"
+                            />
                         )}
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { FaTrash, FaSearch } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface DeleteProductProps {
     onBack: () => void;
@@ -191,10 +192,12 @@ const DeleteProduct = ({ onBack }: DeleteProductProps) => {
                             products.map((product) => (
                                 <tr key={product.id_producto}>
                                     <td className="px-6 py-4 whitespace-nowrap">
-                                        <img
-                                            src={`http://localhost/e-commerce/uploads/productos/${product.imagen_principal}`}
+                                        <Image 
+                                            src={product.imagen_principal} 
                                             alt={product.nombre}
-                                            className="h-10 w-10 object-cover rounded-md"
+                                            width={100}
+                                            height={100}
+                                            className="w-24 h-24 object-cover rounded-lg"
                                         />
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap">

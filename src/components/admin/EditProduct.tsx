@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef } from 'react';
 import { FaEdit, FaSave } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface EditProductProps {
     onBack: () => void;
@@ -442,15 +443,13 @@ const EditProduct = ({ onBack }: EditProductProps) => {
                                 className="hidden"
                                 accept="image/*"
                             />
-                            {previewUrl && (
-                                <div className="relative w-24 h-24">
-                                    <img
-                                        src={previewUrl}
-                                        alt="Preview"
-                                        className="w-full h-full object-cover rounded-lg"
-                                    />
-                                </div>
-                            )}
+                            <Image 
+                                src={previewUrl || selectedProduct.imagen_principal} 
+                                alt="Preview"
+                                width={200}
+                                height={200}
+                                className="mt-2 rounded-lg object-cover"
+                            />
                         </div>
                     </div>
 

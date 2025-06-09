@@ -20,57 +20,7 @@ import DeleteProduct from './admin/DeleteProduct';
 import EditProduct from './admin/EditProduct';
 import ViewPedidos from './admin/ViewPedidos';
 
-interface AdminFormData {
-    nombre: string;
-    apellidos: string;
-    email: string;
-    password: string;
-    rol: string;
-}
-
 const AdminPanel = () => {
-    const [formData, setFormData] = useState<AdminFormData>({
-        nombre: '',
-        apellidos: '',
-        email: '',
-        password: '',
-        rol: 'admin' // configurado por defectop 
-    });
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('http://localhost/e-commerce/api/auth/register-admin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    ...formData,
-                    rol: 'admin' //solo para el rol de admin
-                }),
-            });
-
-            const data = await response.json();
-            if (data.status === 'success') {
-                alert('Administrador registrado exitosamente');
-                setFormData({
-                    nombre: '',
-                    apellidos: '',
-                    email: '',
-                    password: '',
-                    rol: 'admin'
-                });
-            } else {
-                alert(data.mensaje || 'Error al registrar administrador');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error al conectar con el servidor');
-        }
-    };
-
     const [currentView, setCurrentView] = useState<string>('main');
 
     const renderView = () => {

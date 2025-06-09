@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiYoutube, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { DM_Sans } from 'next/font/google';
+import Image from 'next/image';
 
 const DMSans = DM_Sans({
     weight: ['400', '500', '700'],
@@ -111,9 +112,11 @@ const YoutubeSection = () => {
                                 className="relative w-full h-full cursor-pointer group"
                                 onClick={() => setShowVideo(true)}
                             >
-                                <img
+                                <Image 
                                     src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
                                     alt={currentVideo.title}
+                                    width={320}
+                                    height={180}
                                     className="w-full h-full object-cover"
                                 />
                                 <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition-all duration-300 flex items-center justify-center">
